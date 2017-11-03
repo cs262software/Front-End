@@ -24,7 +24,7 @@ class MainHeader extends Component {
                                 <li className="dropdown">
                 					<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Director<span className="caret"></span></a>
                 					<ul className="dropdown-menu">
-                                        <li><Link to='/director/manage-sharing'>Manage Sharing</Link></li>
+                                        <li><Link to='/director/manage-files'>Manage Files</Link></li>
                                         <li><Link to='/director/manage-crew'>Manage Crew</Link></li>
                 					</ul>
                 				</li>
