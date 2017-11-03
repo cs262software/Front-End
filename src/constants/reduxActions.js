@@ -2,12 +2,9 @@ var reduxActions = {
     // MainHeader actions...
 
     // LoginPage actions...
-
-
-
-    GET_USER_REQUEST: 'GET_USER_REQUEST',
-    GET_USER_SUCCESS: 'GET_USER_SUCCESS',
-    GET_USER_FAILURE: 'GET_USER_FAILURE'
+    GET_LOGIN_REQUEST: 'GET_LOGIN_REQUEST',
+    GET_LOGIN_SUCCESS: 'GET_LOGIN_SUCCESS',
+    GET_LOGIN_FAILURE: 'GET_LOGIN_FAILURE'
 
     // HomePage actions...
 };
