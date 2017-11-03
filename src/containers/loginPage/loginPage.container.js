@@ -23,12 +23,12 @@ class LoginPage extends Component {
 
     handleLogin() {
         console.log(this.state.username + " " + this.state.password)
-        let creds = {
-            username: this.state.username,
-            password: this.state.password
-        }
-
-        this.props.getLogin(creds);
+        // let creds = {
+        //     username: this.state.username,
+        //     password: this.state.password
+        // }
+        //
+        // this.props.getLogin(creds);
     }
 
     render() {
