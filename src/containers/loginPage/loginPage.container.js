@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import LoginBox from './components/loginBox.js';
-import { getLogin } from './loginPage.actions';
+import { postLogin } from './loginPage.actions';
 
 class LoginPage extends Component {
     constructor() {
@@ -22,23 +23,29 @@ class LoginPage extends Component {
     }
 
     handleLogin() {
-        console.log(this.state.username + " " + this.state.password)
-        // let creds = {
-        //     username: this.state.username,
-        //     password: this.state.password
-        // }
-        //
-        // this.props.getLogin(creds);
+        let creds = {
+            username: this.state.username,
+            password: this.state.password
+        }
+
+        this.props.postLogin(creds);
     }
 
     render() {
         return (
             <div className="login-bg">
-                <LoginBox
-                    loginStatus={this.props.loginStatus}
-                    handleFieldChange={this.handleFieldChange}
-                    handleLogin={this.handleLogin}
-                />
+                { (this.props.postLoginStatus && this.props.postLoginStatus.userId) ?
+                    <Redirect to={{
+                        pathname: '/',
+                        state: { from: this.props.location }
+                    }}/> :
+
+                    <LoginBox
+                        loginStatus={this.props.loginStatus}
+                        handleFieldChange={this.handleFieldChange}
+                        handleLogin={this.handleLogin}
+                    />
+                }
             </div>
         );
     }
@@ -47,8 +54,9 @@ class LoginPage extends Component {
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
-        // loginStatus: state.login.getLoginStatus.data
+        location: state.router.pathname,
+        postLoginStatus: state.loginPageReducers.postLoginStatus.data
     };
 }
 
-export default connect(mapStateToProps, { getLogin })(LoginPage);
+export default connect(mapStateToProps, { postLogin })(LoginPage);

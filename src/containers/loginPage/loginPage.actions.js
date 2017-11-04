@@ -1,8 +1,8 @@
 import reduxActions from '../../constants/reduxActions';
 
-export function getLogin(data) {
+export function postLogin(creds) {
     return {
-        type: reduxActions.GET_LOGIN_REQUEST,
-        data
+        type: reduxActions.POST_LOGIN_REQUEST,
+        creds
     }
 }

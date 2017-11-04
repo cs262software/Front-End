@@ -19,7 +19,7 @@ class MainHeader extends Component {
                         	<ul className="nav navbar-nav navbar-right">
                                 <li><Link to='/'>Home</Link></li>
                                 <li><Link to='/schedule'>Schedule</Link></li>
-                                <li><Link to='/blocking'>Blocking</Link></li>
+                                <li><Link to='/messages'>Messages</Link></li>
                                 <li><Link to='/files'>Files</Link></li>
                                 <li className="dropdown">
                 					<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Director<span className="caret"></span></a>

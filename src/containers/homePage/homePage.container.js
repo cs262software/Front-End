@@ -19,6 +19,7 @@ function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
         // prop: reduxValue
+        //user: state.postLoginStatus
     };
 }
 

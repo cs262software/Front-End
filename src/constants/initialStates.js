@@ -1,7 +1,8 @@
 const defaultState = {
     fetching: false,
     fetched: false,
-    error: null
+    error: null,
+    data: null
 };
 
 const arrayState = {

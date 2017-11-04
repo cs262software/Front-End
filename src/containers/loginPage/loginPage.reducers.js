@@ -6,15 +6,15 @@ import reduxActions from '../../constants/reduxActions';
 import { defaultState, objectState, arrayState } from '../../constants/initialStates';
 import { requestState, successState, failureState } from '../../constants/nextStates';
 
-export function getLoginStatus(state = arrayState, action) {
+export function postLoginStatus(state = defaultState, action) {
     switch (action.type) {
-        case reduxActions.GET_LOGIN_REQUEST:
+        case reduxActions.POST_LOGIN_REQUEST:
             return requestState(state);
 
-        case reduxActions.GET_LOGIN_SUCCESS:
+        case reduxActions.POST_LOGIN_SUCCESS:
             return successState(state, action);
 
-        case reduxActions.GET_LOGIN_FAILURE:
+        case reduxActions.POST_LOGIN_FAILURE:
             return failureState(state, action);
 
         default:
@@ -23,7 +23,7 @@ export function getLoginStatus(state = arrayState, action) {
 }
 
 const loginPageReducers = combineReducers({
-    getLoginStatus
+    postLoginStatus
 });
 
 export default loginPageReducers;

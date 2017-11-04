@@ -9,6 +9,7 @@ import {
 
 import {
     // loginPageFlow,
+    postLoginFlow
 } from '../containers/loginPage/loginPage.sagas';
 
 import {
@@ -21,7 +22,7 @@ export default function* Sagas() {
         //fork(mainHeaderFlow),
 
         // loginPage sagas...
-
+        fork(postLoginFlow)
 
         // homePage sagas...
 
