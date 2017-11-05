@@ -1,6 +1,6 @@
 // REQUEST actions are intercepted by sagas before arriving here.
 // The saga then dispatches either a SUCCESS or FAILURE.
-// Consider using macros for the common returns below.
+
 import { combineReducers } from 'redux';
 import reduxActions from '../../constants/reduxActions';
 import { defaultState, objectState, arrayState } from '../../constants/initialStates';
@@ -16,6 +16,9 @@ export function postLoginStatus(state = defaultState, action) {
 
         case reduxActions.POST_LOGIN_FAILURE:
             return failureState(state, action);
+
+        case reduxActions.LOGOUT:
+            return defaultState;
 
         default:
             return state;

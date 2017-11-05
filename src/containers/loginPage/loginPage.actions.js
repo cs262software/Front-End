@@ -4,5 +4,11 @@ export function postLogin(creds) {
     return {
         type: reduxActions.POST_LOGIN_REQUEST,
         creds
-    }
+    };
+}
+
+export function logout() {
+    return {
+        type: reduxActions.LOGOUT
+    };
 }

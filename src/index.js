@@ -11,6 +11,8 @@ import Routes from './config/routes';
 import Sagas from './config/sagas';
 import './config/styles/index.css';
 
+import StateLoader from "./config/stateLoader"
+
 // Initialize browser history object.
 const history = createBrowserHistory();
 // Initialize sagas.
@@ -18,6 +20,7 @@ let sagaMiddleware = createSagaMiddleware();
 // Initialize the redux store.
 let store = createStore(
     connectRouter(history)(Reducers),
+    StateLoader.loadState(),
     compose(
         applyMiddleware(
             routerMiddleware(history),
@@ -26,9 +29,15 @@ let store = createStore(
     ),
 );
 
+// Whenever the store changes, save it to the local storage.
+store.subscribe(() => {
+    StateLoader.saveState(store.getState());
+});
+
 // Run the available sagas.
 sagaMiddleware.run(Sagas);
 
+// React Render Root.
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import LoginBox from './components/loginBox.js';
 import { postLogin } from './loginPage.actions';
 
@@ -14,6 +15,10 @@ class LoginPage extends Component {
 
         this.handleFieldChange = this.handleFieldChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.push('/login');
     }
 
     handleFieldChange(e) {
@@ -34,18 +39,11 @@ class LoginPage extends Component {
     render() {
         return (
             <div className="login-bg">
-                { (this.props.postLoginStatus && this.props.postLoginStatus.userId) ?
-                    <Redirect to={{
-                        pathname: '/',
-                        state: { from: this.props.location }
-                    }}/> :
-
-                    <LoginBox
-                        loginStatus={this.props.loginStatus}
-                        handleFieldChange={this.handleFieldChange}
-                        handleLogin={this.handleLogin}
-                    />
-                }
+                <LoginBox
+                    loginStatus={this.props.loginStatus}
+                    handleFieldChange={this.handleFieldChange}
+                    handleLogin={this.handleLogin}
+                />
             </div>
         );
     }
@@ -59,4 +57,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { postLogin })(LoginPage);
+export default connect(mapStateToProps, { postLogin, push })(LoginPage);

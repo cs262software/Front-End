@@ -6,12 +6,13 @@
 // The saga will then trigger either a "SUCCESS" or "FAILURE" action.
 
 var reduxActions = {
-    // MainHeader actions...
-
     // LoginPage actions...
     POST_LOGIN_REQUEST: 'POST_LOGIN_REQUEST',
     POST_LOGIN_SUCCESS: 'POST_LOGIN_SUCCESS',
-    POST_LOGIN_FAILURE: 'POST_LOGIN_FAILURE'
+    POST_LOGIN_FAILURE: 'POST_LOGIN_FAILURE',
+    LOGOUT: 'LOGOUT'
+
+    // MainHeader actions...
 
     // HomePage actions...
 };
