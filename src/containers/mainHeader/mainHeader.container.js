@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import { logout } from '../loginPage/loginPage.actions';
 
 class MainHeader extends Component {
@@ -19,13 +18,10 @@ class MainHeader extends Component {
             <div>
                 <nav className="navbar navbar-inverse navbar-static-top">
                 	<div className="container">
-
                 		<div className="navbar-header">
                 			<a className="navbar-brand" href="/">Theatre Software Suite</a>
                 		</div>
-
                 		<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
                         	<ul className="nav navbar-nav navbar-right">
                                 <li><Link to='/'>Home</Link></li>
                                 <li><Link to='/schedule'>Schedule</Link></li>
@@ -38,12 +34,7 @@ class MainHeader extends Component {
                                         <li><Link to='/director/manage-crew'>Manage Crew</Link></li>
                 					</ul>
                 				</li>
-
-                                { (this.props.postLoginStatus && this.props.postLoginStatus.userId) ?
-                                    <button className="navbar-btn btn btn-dark" onClick={this.handleLogout}>Logout</button> :
-                                    null
-                                }
-
+                                <li><button className="navbar-btn btn btn-dark" onClick={this.handleLogout}>Logout</button></li>
                 			</ul>
                 		</div>
                 	</div>
@@ -56,8 +47,7 @@ class MainHeader extends Component {
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
-        location: state.router.pathname,
-        postLoginStatus: state.loginPageReducers.postLoginStatus.data
+        // Add as needed.
     };
 }
 

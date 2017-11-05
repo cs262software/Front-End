@@ -1,4 +1,3 @@
-import { push } from 'connected-react-router'
 import { Put, Get, Post, Delete } from './api';
 import { fork, call, put, takeLatest } from 'redux-saga/effects';
 import reduxActions from '../constants/reduxActions';

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import MainHeader from '../mainHeader/mainHeader.container';
 
 //import {} from './homePage.actions';

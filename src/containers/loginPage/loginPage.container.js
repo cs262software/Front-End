@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import LoginBox from './components/loginBox.js';
 import { postLogin } from './loginPage.actions';
