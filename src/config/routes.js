@@ -38,3 +38,10 @@ export default withRouter(connect(
         // Name of imported action.
     }
 )(Routes));
+
+// export default connect(
+//     mapStateToProps,
+//     {/* add imported action creators here so they can be dispatched using this.props.[action creator name] */
+//         // Name of imported action.
+//     }
+// )(Routes);

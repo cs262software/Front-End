@@ -10,10 +10,9 @@ export function* postLoginFlow() {
 export function* postLogin(action) {
 	const {res, err} = yield call(Post, endpoints.POST_LOGIN, action.creds);
 	if (res) {
-		yield put ({ type: reduxActions.POST_LOGIN_SUCCESS, data: res.json });
+		yield put({ type: reduxActions.POST_LOGIN_SUCCESS, data: res.json });
 	}
 	else if (err) {
-		console.log(err);
-		yield put({ type: reduxActions.POST_LOGIN_FAILURE, error: err });
+		yield put({ type: reduxActions.POST_LOGIN_FAILURE, error: err.json });
 	}
 }

@@ -8,6 +8,7 @@ import { requestState, successState, failureState } from '../../constants/nextSt
 
 export function postLoginStatus(state = defaultState, action) {
     switch (action.type) {
+
         case reduxActions.POST_LOGIN_REQUEST:
             return requestState(state);
 

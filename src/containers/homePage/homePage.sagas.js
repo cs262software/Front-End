@@ -1,7 +1,7 @@
-import { Get, Post, Put, Delete } from '../../config/api';
-import { call, put, takeLatest } from 'redux-saga/effects';
-import reduxActions from '../../constants/reduxActions';
-import endpoints from '../../constants/endpoints';
+// import { Get, Post, Put, Delete } from '../../config/api';
+// import { call, put, takeLatest } from 'redux-saga/effects';
+// import reduxActions from '../../constants/reduxActions';
+// import endpoints from '../../constants/endpoints';
 
 // homePage sagas...
 
