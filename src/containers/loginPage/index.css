@@ -1,0 +1,28 @@
+.login-bg {
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    background-size: cover;
+}
+h2 {
+    font-weight: bold;
+    font-size: 30px;
+}
+.login-box {
+    background-color: white;
+    position: fixed;
+    width: 22%;
+    height: 100%;
+    padding: 30px;
+}
+input {
+    padding: 5px 10px;
+    border: 0;
+    border-bottom: 2px solid rgb(221, 221, 221);
+    margin: 10px 0;
+    width: 100%;
+}
+.btn-primary {
+    width: 100%;
+    margin-top: 20px;
+}

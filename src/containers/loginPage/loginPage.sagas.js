@@ -13,6 +13,7 @@ export function* postLogin(action) {
 		yield put ({ type: reduxActions.POST_LOGIN_SUCCESS, data: res.json });
 	}
 	else if (err) {
-		yield put({ type: reduxActions.POST_LOGIN_FAILURE, error: err});
+		console.log(err);
+		yield put({ type: reduxActions.POST_LOGIN_FAILURE, error: err });
 	}
 }

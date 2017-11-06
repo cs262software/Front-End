@@ -37,7 +37,7 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div className="login-bg">
+            <div className="login-bg" style={{backgroundImage: 'url(img/background.png)'}}>
                 <LoginBox
                     loginStatus={this.props.loginStatus}
                     handleFieldChange={this.handleFieldChange}
