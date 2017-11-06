@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MainHeader from '../mainHeader/mainHeader.container';
+import { DropdownButton} from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 
 class FilesPage extends Component {
 
