@@ -4,6 +4,7 @@ import HomePage from '../containers/homePage/homePage.container';
 import LoginPage from '../containers/loginPage/loginPage.container';
 import ManageFilesPage from '../containers/manageFilesPage/manageFiles.container';
 import SchedulePage from '../containers/schedulePage/schedulePage.container';
+import FilesPage from '../containers/filesPage/filesPage.container';
 
 class Routes extends Component {
   render() {
@@ -13,6 +14,7 @@ class Routes extends Component {
             <Route exact path='/login' component={LoginPage}/>
             <Route exact path='/director/manage-files' component={ManageFilesPage}/>
             <Route exact path='/schedule' component={SchedulePage}/>
+            <Route exact path='/files' component={FilesPage}/>
         </Switch>
     );
   }
