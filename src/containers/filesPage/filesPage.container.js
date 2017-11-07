@@ -18,6 +18,10 @@ class FilesPage extends Component {
 
 }
 
+//TODO: add in Act/Scene selector
+//TODO: add in line display (scrollable textview?), blocking(textbox), personal notes (textbox)
+//TODO: add "state" to the class, selectedScript, selectedScene, selectedLine, associatedBlocking, associatedNotes, user? etc.
+
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
