@@ -16,3 +16,17 @@ export function* postLogin(action) {
 		yield put({ type: reduxActions.POST_LOGIN_FAILURE, error: err.json });
 	}
 }
+
+export function* postNewUserFlow() {
+	yield takeLatest(reduxActions.POST_NEW_USER_REQUEST, postNewUser);
+}
+
+export function* postNewUser(action) {
+	const {res, err} = yield call(Post, endpoints.POST_NEW_USER, action.data);
+	if (res) {
+		yield put({ type: reduxActions.POST_NEW_USER_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.POST_NEW_USER_FAILURE, error: err.json });
+	}
+}

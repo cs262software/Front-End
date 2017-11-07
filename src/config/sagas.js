@@ -5,7 +5,8 @@ import { fork /*, call, put, takeLatest */ } from 'redux-saga/effects';
 
 // loginPage sagas...
 import {
-    postLoginFlow
+    postLoginFlow,
+    postNewUserFlow
 } from '../containers/loginPage/loginPage.sagas';
 
 // mainHeader sagas...
@@ -20,6 +21,7 @@ export default function* Sagas() {
     yield [
         // loginPage sagas...
         fork(postLoginFlow),
+        fork(postNewUserFlow)
 
         // mainHeader sagas...
 

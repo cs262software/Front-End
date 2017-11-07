@@ -26,8 +26,29 @@ export function postLoginStatus(state = defaultState, action) {
     }
 }
 
+export function postNewUserStatus(state = defaultState, action) {
+    switch (action.type) {
+
+        case reduxActions.POST_NEW_USER_REQUEST:
+            return requestState(state);
+
+        case reduxActions.POST_NEW_USER_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.POST_NEW_USER_FAILURE:
+            return failureState(state, action);
+
+        case reduxActions.LOGOUT:
+            return defaultState;
+
+        default:
+            return state;
+    }
+}
+
 const loginPageReducers = combineReducers({
-    postLoginStatus
+    postLoginStatus,
+    postNewUserStatus
 });
 
 export default loginPageReducers;

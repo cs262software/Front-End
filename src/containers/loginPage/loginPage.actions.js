@@ -7,6 +7,13 @@ export function postLogin(creds) {
     };
 }
 
+export function postNewUser(data) {
+    return {
+        type: reduxActions.POST_NEW_USER_REQUEST,
+        data: data
+    };
+}
+
 export function logout() {
     return {
         type: reduxActions.LOGOUT
