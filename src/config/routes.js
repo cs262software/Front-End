@@ -7,6 +7,7 @@ import ManageFilesPage from '../containers/manageFilesPage/manageFiles.container
 import FourOhFourPage from '../containers/FourOhFourPage';
 import LoginPage from '../containers/loginPage/loginPage.container';
 
+
 class Routes extends Component {
   render() {
     return (
