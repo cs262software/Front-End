@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux';
+// Remove this next line for prod.
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
@@ -11,6 +13,8 @@ import Routes from './config/routes';
 import Sagas from './config/sagas';
 import './config/styles/index.css';
 
+//import StateLoader from "./config/stateLoader"
+
 // Initialize browser history object.
 const history = createBrowserHistory();
 // Initialize sagas.
@@ -18,7 +22,9 @@ let sagaMiddleware = createSagaMiddleware();
 // Initialize the redux store.
 let store = createStore(
     connectRouter(history)(Reducers),
-    compose(
+    /*StateLoader.loadState(),*/
+    //compose(
+    composeWithDevTools(
         applyMiddleware(
             routerMiddleware(history),
             sagaMiddleware
@@ -26,9 +32,20 @@ let store = createStore(
     ),
 );
 
+// Whenever the store changes, save it to the local storage.
+// store.subscribe(() => {
+//     StateLoader.saveState(store.getState());
+// });
+
+// Whenever the store changes, log it.
+// store.subscribe(() => {
+//     console.log(store.getState());
+// });
+
 // Run the available sagas.
 sagaMiddleware.run(Sagas);
 
+// React Render Root.
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

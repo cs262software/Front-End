@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-
 export const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 export const DEVICE_TOKEN_HEADER = 'X-Device-Token';
 export const USER_DATA_STORAGE_KEY = 'USER_DATA_STORAGE_KEY';
@@ -78,7 +77,7 @@ export default class Api {
                 }
             })
             //         // todo then we need to add a success handler to the contact form so that people only submit once
-            //         // todo then we need to update the forms to allow for subit and error as apposed to just a disabled btn
+            //         // todo then we need to update the forms to allow for submit and error as apposed to just a disabled btn
             .then(
                 function (res) { // success
                     return {res};
