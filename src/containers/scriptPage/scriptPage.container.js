@@ -65,8 +65,8 @@ class ScriptPage extends Component {
 
   render() {
     return (
-        <MainHeader />
         <div>
+        <MainHeader />
           {/*Top Header */}
           <Col lg={12}>
               <h2 style={{float: 'center', textAlign: 'center'}} className ="header">SCRIPT</h2>
