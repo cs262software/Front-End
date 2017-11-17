@@ -65,6 +65,7 @@ class ScriptPage extends Component {
 
   render() {
     return (
+        <MainHeader />
         <div>
           {/*Top Header */}
           <Col lg={12}>
