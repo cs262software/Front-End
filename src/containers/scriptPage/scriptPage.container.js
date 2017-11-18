@@ -102,7 +102,10 @@ class ScriptPage extends Component {
                                 {this.state.playDropdownOption.Name}
                             </Dropdown.Toggle>
                             <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.playDropdownChange}>
-                                {this.props.getAllPlaysStatus.map((play, index) => (<MenuItem eventKey={play}>{play.Name}</MenuItem>))}
+                                {this.props.getAllPlaysStatus
+                                    ? this.props.getAllPlaysStatus.map((play, index) => (<MenuItem eventKey={play}>{play.Name}</MenuItem>))
+                                    : null
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
 
@@ -112,7 +115,10 @@ class ScriptPage extends Component {
                                 {this.state.actDropdownOption}
                             </Dropdown.Toggle>
                             <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.actDropdownChange}>
-                                {this.props.getActsStatus.map((act, index) => (<MenuItem eventKey={act.ActNum}>{act.ActNum}</MenuItem>))}
+                                {this.props.getActsStatus
+                                    ? this.props.getActsStatus.map((act, index) => (<MenuItem eventKey={act.ActNum}>{act.ActNum}</MenuItem>))
+                                    : null
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
 
@@ -122,7 +128,10 @@ class ScriptPage extends Component {
                                 {this.state.sceneDropdownOption}
                             </Dropdown.Toggle>
                             <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.sceneDropdownChange}>
-                                {this.props.getScenesStatus.map((scene, index) => (<MenuItem eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))}
+                                {this.props.getScenesStatus
+                                    ? this.props.getScenesStatus.map((scene, index) => (<MenuItem eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))
+                                    : null
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
 
@@ -132,12 +141,14 @@ class ScriptPage extends Component {
                 <Col sm={6}>
                     <h4>Lines</h4>
                     <ListGroup style={{marginTop: "30px"}}>
-                        {this.props.getLinesStatus.map((line, index) => (
-                            <ListGroupItem onClick={() => this.updateBlocking(line.LineID)}>
-                                <Col xs={4} sm={4} md={4}>{/*line.character*/}Character:</Col>
-                                <Col xs={8} sm={8} md={8}>{line.Text}</Col>
-                            </ListGroupItem>
-                        ))}
+                        {this.props.getLinesStatus
+                            ? this.props.getLinesStatus.map((line, index) => (
+                                <ListGroupItem onClick={() => this.updateBlocking(line.LineID)}>
+                                    <Col xs={4} sm={4} md={4}>{/*line.character*/}Character:</Col>
+                                    <Col xs={8} sm={8} md={8}>{line.Text}</Col>
+                                </ListGroupItem>))
+                            : null
+                        }
                     </ListGroup>
                 </Col>
 

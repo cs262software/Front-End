@@ -20,7 +20,7 @@ let sagaMiddleware = createSagaMiddleware();
 // Initialize the redux store.
 let store = createStore(
     connectRouter(history)(Reducers),
-    StateLoader.loadState(),
+    //StateLoader.loadState(),
     compose(
         applyMiddleware(
             routerMiddleware(history),
@@ -30,9 +30,9 @@ let store = createStore(
 );
 
 // Whenever the store changes, save it to the local storage.
-store.subscribe(() => {
-    StateLoader.saveState(store.getState());
-});
+// store.subscribe(() => {
+//     StateLoader.saveState(store.getState());
+// });
 
 // Whenever the store changes, log it.
 // store.subscribe(() => {
