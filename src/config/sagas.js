@@ -18,7 +18,7 @@ import {
 } from '../containers/homePage/homePage.sagas';
 
 import {
-  getPlaysFlow,
+  getAllPlaysFlow,
   getActsFlow,
   getScenesFlow,
   getLinesFlow
@@ -33,7 +33,7 @@ export default function* Sagas() {
         // mainHeader sagas...
 
         // homePage sagas...
-        fork(getPlaysFlow),
+        fork(getAllPlaysFlow),
         fork(getActsFlow),
         fork(getScenesFlow),
         fork(getLinesFlow)

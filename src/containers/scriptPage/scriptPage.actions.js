@@ -1,29 +1,31 @@
 import reduxActions from '../../constants/reduxActions';
 
-export function getPlays(data) {
+export function getAllPlays() {
     return {
-        type: reduxActions.GET_PLAY_REQUEST,
-        data: data
+        type: reduxActions.GET_ALL_PLAYS_REQUEST
     };
 }
 
-export function getActs(data) {
+export function getActs(playID) {
     return {
-        type: reduxActions.GET_ACT_REQUEST,
-        data: data
+        type: reduxActions.GET_ACTS_REQUEST,
+        PlayID: playID
     };
 }
 
-export function getScenes(data) {
+export function getScenes(playID, actNum) {
     return {
-        type: reduxActions.GET_SCENE_REQUEST,
-        data: data
+        type: reduxActions.GET_SCENES_REQUEST,
+        PlayID: playID,
+        ActNum: actNum
     };
 }
 
-export function getLines(data) {
+export function getLines(playID, actNum, sceneNum) {
     return {
-        type: reduxActions.GET_LINE_REQUEST,
-        data: data
+        type: reduxActions.GET_LINES_REQUEST,
+        PlayID: playID,
+        ActNum: actNum,
+        SceneNum: sceneNum
     };
 }

@@ -6,16 +6,16 @@ import reduxActions from '../../constants/reduxActions';
 import { defaultState, objectState, arrayState } from '../../constants/initialStates';
 import { requestState, successState, failureState } from '../../constants/nextStates';
 
-export function getPlayStatus(state = defaultState, action) {
+export function getAllPlaysStatus(state = defaultState, action) {
     switch (action.type) {
 
-        case reduxActions.GET_PLAY_REQUEST:
+        case reduxActions.GET_ALL_PLAYS_REQUEST:
             return requestState(state);
 
-        case reduxActions.GET_PLAY_SUCCESS:
+        case reduxActions.GET_ALL_PLAYS_SUCCESS:
             return successState(state, action);
 
-        case reduxActions.GET_PLAY_FAILURE:
+        case reduxActions.GET_ALL_PLAYS_FAILURE:
             return failureState(state, action);
 
         default:
@@ -23,16 +23,17 @@ export function getPlayStatus(state = defaultState, action) {
     }
 }
 
-export function getActStatus(state = defaultState, action) {
+export function getActsStatus(state = defaultState, action) {
     switch (action.type) {
 
-        case reduxActions.GET_ACT_REQUEST:
+        case reduxActions.GET_ACTS_REQUEST:
             return requestState(state);
 
-        case reduxActions.GET_ACT_SUCCESS:
+        case reduxActions.GET_ACTS_SUCCESS:
+            console.log(action);
             return successState(state, action);
 
-        case reduxActions.GET_ACT_FAILURE:
+        case reduxActions.GET_ACTS_FAILURE:
             return failureState(state, action);
 
         default:
@@ -40,16 +41,16 @@ export function getActStatus(state = defaultState, action) {
     }
 }
 
-export function getSceneStatus(state = defaultState, action) {
+export function getScenesStatus(state = defaultState, action) {
     switch (action.type) {
 
-        case reduxActions.GET_SCENE_REQUEST:
+        case reduxActions.GET_SCENES_REQUEST:
             return requestState(state);
 
-        case reduxActions.GET_SCENE_SUCCESS:
+        case reduxActions.GET_SCENES_SUCCESS:
             return successState(state, action);
 
-        case reduxActions.GET_SCENE_FAILURE:
+        case reduxActions.GET_SCENES_FAILURE:
             return failureState(state, action);
 
         default:
@@ -57,16 +58,16 @@ export function getSceneStatus(state = defaultState, action) {
     }
 }
 
-export function getLineStatus(state = defaultState, action) {
+export function getLinesStatus(state = defaultState, action) {
     switch (action.type) {
 
-        case reduxActions.GET_LINE_REQUEST:
+        case reduxActions.GET_LINES_REQUEST:
             return requestState(state);
 
-        case reduxActions.GET_LINE_SUCCESS:
+        case reduxActions.GET_LINES_SUCCESS:
             return successState(state, action);
 
-        case reduxActions.GET_LINE_FAILURE:
+        case reduxActions.GET_LINES_FAILURE:
             return failureState(state, action);
 
         default:
@@ -74,10 +75,10 @@ export function getLineStatus(state = defaultState, action) {
     }
 }
 const scriptPageReducers = combineReducers({
-    getPlayStatus,
-    getActStatus,
-    getSceneStatus,
-    getLineStatus
+    getAllPlaysStatus,
+    getActsStatus,
+    getScenesStatus,
+    getLinesStatus
 });
 
 export default scriptPageReducers;

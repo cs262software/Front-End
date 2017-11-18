@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import MainHeader from '../mainHeader/mainHeader.container';
-import {Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col} from 'react-bootstrap';
-import { getPlays, getActs, getScenes, getLines } from './scriptPage.actions';
+import { Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col } from 'react-bootstrap';
+import { getAllPlays, getActs, getScenes, getLines } from './scriptPage.actions';
 
 import '../scriptPage/scriptPage.container.css'
 
@@ -16,123 +16,137 @@ import '../scriptPage/scriptPage.container.css'
 
 class ScriptPage extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      playDropdownOption: "Please Select a Play",
-      actDropdownOption: "Please Select an Act",
-      sceneDropdownOption: "Please Select a Scene",
-      playList: [{ name: "Romeo and Juliet" }, { name: "King Lear" }, { name: "Les Miserables" }],
-      actList: [{ name: "Act 1" }, { name: "Act 2" }, { name: "Act 3" }],
-      sceneList: [{ name: "Scene 1" }, { name: "Scene 2" }, { name: "Scene 3" }],
-      lines: [{ number: 1, character: "GREG", text: "Hi John sdflkjasdflkj adslfkj asdflkjsdlkj asdf klj"},
-              { number: 2, character: "JOHN", text: "Hi Greg"},
-              { number: 3, character: "GREG", text: "How you doing?"},
-              { number: 4, character: "GREG", text: "Good."}],
-      currentLineBlocking: "Here is a blocking instruction"
-    };
+        this.state = {
+            playDropdownOption: {
+                Name: "Please Select a Play",
+                PlayID: null
+            },
+            actDropdownOption: "Please Select an Act",
+            sceneDropdownOption: "Please Select a Scene",
+            currentLineBlocking: "Here is a blocking instruction"
+        };
 
-    this.playDropdownChange = this.playDropdownChange.bind(this);
-    this.actDropdownChange = this.actDropdownChange.bind(this);
-    this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
-    this.updateBlocking = this.updateBlocking.bind(this);
-  }
+        this.playDropdownChange = this.playDropdownChange.bind(this);
+        this.actDropdownChange = this.actDropdownChange.bind(this);
+        this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
+        this.updateBlocking = this.updateBlocking.bind(this);
+    }
 
-  componentWillMount() {
-    this.props.push('/')
-  }
+    componentWillMount() {
+        // We should already be at the "/" route when we display this component.
+        // No need to change the path.
+        //this.props.push('/')
 
-  playDropdownChange(value) {
-    this.setState({
-      playDropdownOption: value
-      //update available acts/scenes
-    });
-    console.log(this.props.getPlayStatus);
-  }
+        // When this component is mounted, get a list of all available plays.
+        this.props.getAllPlays();
+    }
 
-  actDropdownChange(value) {
-    this.setState({
-      actDropdownOption: value
-      //update available scenes
-    });
-    this.props.getPlays();
-  }
+    playDropdownChange(value) {
+        this.setState({
+            playDropdownOption: value
+        });
 
-  sceneDropdownChange(value) {
-    this.setState({
-      sceneDropdownOption: value
-    });
-  }
+        // When a play is selected, get a list of acts.
+        this.props.getActs(value.PlayID);
+    }
 
-  updateBlocking(lineNumber) {
-    console.log(lineNumber)
-    //update state so that current blocking instructions are for lineNumber
-  }
+    actDropdownChange(value) {
+        this.setState({
+            actDropdownOption: value
+        });
 
-  render() {
-    return (
-        <div>
-        <MainHeader />
-          {/*Top Header */}
-          <Col lg={12}>
-              <h2 style={{float: 'center', textAlign: 'center'}} className ="header">SCRIPT</h2>
-          </Col>
+        // When an act is selected, get a list of scenes.
+        this.props.getScenes(
+            this.state.playDropdownOption.PlayID,
+            value
+        );
+    }
 
-          {/*Initial Play DropDown
-          <Col lg={12}>
-            <ButtonToolbar>
-            </ButtonToolbar>
-          </Col>*/}
+    sceneDropdownChange(value) {
+        this.setState({
+            sceneDropdownOption: value
+        });
 
-          {/*Act and Scene Dropdowns*/}
-          <Col sm={3}>
-            <ButtonToolbar>
-              <h4>Play</h4>
-              <Dropdown vertical block style={{marginBottom: "20px"}}>
-                <Dropdown.Toggle vertical block>
-                  {this.state.playDropdownOption}
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.playDropdownChange}>
-                    {this.state.playList.map((play, index) => (<MenuItem eventKey={play.name}>{play.name}</MenuItem>))}
-                </Dropdown.Menu>
-              </Dropdown>
-              <h4>Act</h4>
-              <Dropdown vertical block style={{marginBottom: "20px"}}>
-                <Dropdown.Toggle vertical block>
-                  {this.state.actDropdownOption}
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.actDropdownChange}>
-                    {this.state.actList.map((act, index) => (<MenuItem eventKey={act.name}>{act.name}</MenuItem>))}
-                </Dropdown.Menu>
-              </Dropdown>
-              <h4>Scene</h4>
-              <Dropdown vertical block style={{marginBottom: "10px"}}>
-                <Dropdown.Toggle vertical block>
-                  {this.state.sceneDropdownOption}
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.sceneDropdownChange}>
-                    {this.state.sceneList.map((scene, index) => (<MenuItem eventKey={scene.name}>{scene.name}</MenuItem>))}
-                </Dropdown.Menu>
-              </Dropdown>
-            </ButtonToolbar>
-          </Col>
+        // When a scene is selected, get a list of lines.
+        this.props.getLines(
+            this.state.playDropdownOption.PlayID,
+            this.state.actDropdownOption,
+            value
+        );
+    }
 
-          <Col sm={6}>
-            <ListGroup style={{marginTop: "30px"}}>
-              {this.state.lines.map((line, index) => (
-                <ListGroupItem onClick={() => this.updateBlocking(line.number)}>
-                  <Col xs={3} sm={2} md={1}>{line.character}:</Col> <Col xs={9} sm={10} md={11}>{line.text}</Col>
-                </ListGroupItem>))}
-            </ListGroup>
-          </Col>
+    updateBlocking(lineNumber) {
+        console.log(lineNumber)
+        //update state so that current blocking instructions are for lineNumber
+    }
 
-          <Col sm={3}>
-            <p style={{marginTop: "30px"}}>{this.state.currentLineBlocking} </p>
-          </Col>
-        </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <MainHeader />
+
+                {/*Top Header */}
+                <Col lg={12}>
+                    <h2 style={{float: 'center', textAlign: 'center'}} className ="header">SCRIPT</h2>
+                </Col>
+
+                <Col sm={3}>
+                    <ButtonToolbar>
+
+                        <h4>Play</h4>
+                        <Dropdown vertical block style={{marginBottom: "20px"}}>
+                            <Dropdown.Toggle vertical block>
+                                {this.state.playDropdownOption.Name}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.playDropdownChange}>
+                                {this.props.getAllPlaysStatus.map((play, index) => (<MenuItem eventKey={play}>{play.Name}</MenuItem>))}
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        <h4>Act</h4>
+                        <Dropdown vertical block style={{marginBottom: "20px"}}>
+                            <Dropdown.Toggle vertical block>
+                                {this.state.actDropdownOption}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.actDropdownChange}>
+                                {this.props.getActsStatus.map((act, index) => (<MenuItem eventKey={act.ActNum}>{act.ActNum}</MenuItem>))}
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        <h4>Scene</h4>
+                        <Dropdown vertical block style={{marginBottom: "10px"}}>
+                            <Dropdown.Toggle vertical block>
+                                {this.state.sceneDropdownOption}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu style={{width: "100%", textAlign: "center"}} onSelect={this.sceneDropdownChange}>
+                                {this.props.getScenesStatus.map((scene, index) => (<MenuItem eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))}
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                    </ButtonToolbar>
+                </Col>
+
+                <Col sm={6}>
+                    <h4>Lines</h4>
+                    <ListGroup style={{marginTop: "30px"}}>
+                        {this.props.getLinesStatus.map((line, index) => (
+                            <ListGroupItem onClick={() => this.updateBlocking(line.LineID)}>
+                                <Col xs={4} sm={4} md={4}>{/*line.character*/}Character:</Col>
+                                <Col xs={8} sm={8} md={8}>{line.Text}</Col>
+                            </ListGroupItem>
+                        ))}
+                    </ListGroup>
+                </Col>
+
+                <Col sm={3}>
+                    <p style={{marginTop: "30px"}}>{this.state.currentLineBlocking}</p>
+                </Col>
+            </div>
+        );
+    }
 }
 //TODO: add "state" to the class, selectedScript, selectedScene, selectedLine, associatedBlocking, associatedNotes, user? etc.
 
@@ -140,11 +154,11 @@ function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
         location: state.router.pathname,
-        getPlayStatus: state.scriptPageReducers.getPlayStatus.data,
-        getActStatus: state.scriptPageReducers.getActStatus.data,
-        getSceneStatus: state.scriptPageReducers.getSceneStatus.data,
-        getLineStatus: state.scriptPageReducers.getLineStatus.data
+        getAllPlaysStatus: state.scriptPageReducers.getAllPlaysStatus.data,
+        getActsStatus: state.scriptPageReducers.getActsStatus.data,
+        getScenesStatus: state.scriptPageReducers.getScenesStatus.data,
+        getLinesStatus: state.scriptPageReducers.getLinesStatus.data
     };
 }
 
-export default connect(mapStateToProps, { getPlays, getActs, getScenes, getLines, push })(ScriptPage);
+export default connect(mapStateToProps, { getAllPlays, getActs, getScenes, getLines, push })(ScriptPage);

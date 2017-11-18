@@ -13,7 +13,7 @@ class Routes extends Component {
   render() {
     return (
         <div>
-            { (this.props.postLoginStatus && this.props.postLoginStatus.userId) ?
+            { (this.props.postLoginStatus && this.props.postLoginStatus.userID) ?
                 <Switch>
                     <Route exact path='/' component={ScriptPage}/>
                     <Route exact path='/schedule' component={SchedulePage}/>
