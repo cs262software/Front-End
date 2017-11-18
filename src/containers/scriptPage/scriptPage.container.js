@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import MainHeader from '../mainHeader/mainHeader.container';
 import {Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col} from 'react-bootstrap';
-//import styled, { keyframes, css } from 'styled-components';
+import { getPlays, getActs, getScenes, getLines } from './scriptPage.actions';
+
 import '../scriptPage/scriptPage.container.css'
-//import { MenuItem } from 'react-bootstrap';
 
 //import {} from './homePage.actions';
 
@@ -38,11 +39,16 @@ class ScriptPage extends Component {
     this.updateBlocking = this.updateBlocking.bind(this);
   }
 
+  componentWillMount() {
+    this.props.push('/')
+  }
+
   playDropdownChange(value) {
     this.setState({
       playDropdownOption: value
       //update available acts/scenes
     });
+    console.log(this.props.getPlayStatus);
   }
 
   actDropdownChange(value) {
@@ -50,6 +56,7 @@ class ScriptPage extends Component {
       actDropdownOption: value
       //update available scenes
     });
+    this.props.getPlays();
   }
 
   sceneDropdownChange(value) {
@@ -72,10 +79,17 @@ class ScriptPage extends Component {
               <h2 style={{float: 'center', textAlign: 'center'}} className ="header">SCRIPT</h2>
           </Col>
 
-          {/*Initial Play DropDown*/}
+          {/*Initial Play DropDown
           <Col lg={12}>
             <ButtonToolbar>
-              <Dropdown vertical block>
+            </ButtonToolbar>
+          </Col>*/}
+
+          {/*Act and Scene Dropdowns*/}
+          <Col sm={3}>
+            <ButtonToolbar>
+              <h4>Play</h4>
+              <Dropdown vertical block style={{marginBottom: "20px"}}>
                 <Dropdown.Toggle vertical block>
                   {this.state.playDropdownOption}
                 </Dropdown.Toggle>
@@ -83,13 +97,8 @@ class ScriptPage extends Component {
                     {this.state.playList.map((play, index) => (<MenuItem eventKey={play.name}>{play.name}</MenuItem>))}
                 </Dropdown.Menu>
               </Dropdown>
-            </ButtonToolbar>
-          </Col>
-
-          {/*Act and Scene Dropdowns*/}
-          <Col sm={3}>
-            <ButtonToolbar>
-              <Dropdown vertical block style={{marginTop: "40px", marginBottom: "10px"}}>
+              <h4>Act</h4>
+              <Dropdown vertical block style={{marginBottom: "20px"}}>
                 <Dropdown.Toggle vertical block>
                   {this.state.actDropdownOption}
                 </Dropdown.Toggle>
@@ -97,7 +106,8 @@ class ScriptPage extends Component {
                     {this.state.actList.map((act, index) => (<MenuItem eventKey={act.name}>{act.name}</MenuItem>))}
                 </Dropdown.Menu>
               </Dropdown>
-              <Dropdown vertical block style={{marginTop: "10px", marginBottom: "20px"}}>
+              <h4>Scene</h4>
+              <Dropdown vertical block style={{marginBottom: "10px"}}>
                 <Dropdown.Toggle vertical block>
                   {this.state.sceneDropdownOption}
                 </Dropdown.Toggle>
@@ -109,7 +119,7 @@ class ScriptPage extends Component {
           </Col>
 
           <Col sm={6}>
-            <ListGroup style={{marginTop: "40px"}}>
+            <ListGroup style={{marginTop: "30px"}}>
               {this.state.lines.map((line, index) => (
                 <ListGroupItem onClick={() => this.updateBlocking(line.number)}>
                   <Col xs={3} sm={2} md={1}>{line.character}:</Col> <Col xs={9} sm={10} md={11}>{line.text}</Col>
@@ -118,7 +128,7 @@ class ScriptPage extends Component {
           </Col>
 
           <Col sm={3}>
-            <p style={{marginTop: "40px"}}>{this.state.currentLineBlocking} </p>
+            <p style={{marginTop: "30px"}}>{this.state.currentLineBlocking} </p>
           </Col>
         </div>
     );
@@ -129,12 +139,12 @@ class ScriptPage extends Component {
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
-        // prop: reduxValue
+        location: state.router.pathname,
+        getPlayStatus: state.scriptPageReducers.getPlayStatus.data,
+        getActStatus: state.scriptPageReducers.getActStatus.data,
+        getSceneStatus: state.scriptPageReducers.getSceneStatus.data,
+        getLineStatus: state.scriptPageReducers.getLineStatus.data
     };
 }
 
-export default connect(
-    mapStateToProps,{/* add imported action creators here so they can be dispatched using this.props.[action creator name] */
-        // Name of imported action.
-    }
-)(ScriptPage);
+export default connect(mapStateToProps, { getPlays, getActs, getScenes, getLines, push })(ScriptPage);

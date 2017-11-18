@@ -4,12 +4,14 @@ import { combineReducers } from 'redux';
 // import { requestState, successState, failureState } from '../constants/nextStates';
 
 import loginPageReducers from '../containers/loginPage/loginPage.reducers';
+import scriptPageReducers from '../containers/scriptPage/scriptPage.reducers';
 //import mainHeaderReducers from '../containers/mainHeader/mainHeader.reducers';
 //import homePageReducers from '../containers/homePage/homePage.reducers';
 
 // Root Reducer...
 const Reducers = combineReducers({
-    loginPageReducers
+    loginPageReducers,
+    scriptPageReducers
 });
 
 export default Reducers;

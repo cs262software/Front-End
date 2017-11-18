@@ -3,7 +3,11 @@ export const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 export const DEVICE_TOKEN_HEADER = 'X-Device-Token';
 export const USER_DATA_STORAGE_KEY = 'USER_DATA_STORAGE_KEY';
 export const ENDPOINTS = {
-    login: "/api/login"
+    login: "/api/login",
+    plays: "/api/plays/all",
+    acts: "/api/acts",
+    scenes: "/api/scenes",
+    lines: "/api/plays/lines"
 };
 
 
