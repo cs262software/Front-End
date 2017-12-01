@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import MainHeader from '../mainHeader/mainHeader.container';
+import StageView from './components/stageView';
 import { Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col } from 'react-bootstrap';
 import { getAllPlays, getActs, getScenes, getLines, getBlockingByLine } from './scriptPage.actions';
 
@@ -157,6 +158,11 @@ class ScriptPage extends Component {
                 <Col sm={3}>
                     <p style={{marginTop: "30px"}}>{this.state.currentLineBlocking}</p>
                 </Col>
+
+                <div className="stage-view">
+                    <StageView jsonData={this.props.getBlockingByLineStatus}/>
+                </div>
+
             </div>
         );
     }
@@ -170,8 +176,9 @@ function mapStateToProps(state) {
         getAllPlaysStatus: state.scriptPageReducers.getAllPlaysStatus.data,
         getActsStatus: state.scriptPageReducers.getActsStatus.data,
         getScenesStatus: state.scriptPageReducers.getScenesStatus.data,
-        getLinesStatus: state.scriptPageReducers.getLinesStatus.data
+        getLinesStatus: state.scriptPageReducers.getLinesStatus.data,
+        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLine.data
     };
 }
 
-export default connect(mapStateToProps, { getAllPlays, getActs, getScenes, getLines, push })(ScriptPage);
+export default connect(mapStateToProps, { getAllPlays, getActs, getScenes, getLines, getBlockingByLine push })(ScriptPage);
