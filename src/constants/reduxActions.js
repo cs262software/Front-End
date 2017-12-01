@@ -14,12 +14,15 @@ var reduxActions = {
     POST_NEW_USER_REQUEST: 'POST_NEW_USER_REQUEST',
     POST_NEW_USER_SUCCESS: 'POST_NEW_USER_SUCCESS',
     POST_NEW_USER_FAILURE: 'POST_NEW_USER_FAILURE',
-    
-    LOGOUT: 'LOGOUT'
+
+    LOGOUT: 'LOGOUT',
 
     // MainHeader actions...
 
     // HomePage actions...
+    GET_ALL_PLAYS_REQUEST: 'GET_ALL_PLAYS_REQUEST',
+    GET_ALL_PLAYS_SUCCESS: 'GET_ALL_PLAYS_SUCCESS',
+    GET_ALL_PLAYS_FAILURE: 'GET_ALL_PLAYS_FAILURE'
 };
 
 export default reduxActions;

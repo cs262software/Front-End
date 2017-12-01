@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 
 import loginPageReducers from '../containers/loginPage/loginPage.reducers';
 //import mainHeaderReducers from '../containers/mainHeader/mainHeader.reducers';
-//import homePageReducers from '../containers/homePage/homePage.reducers';
+import homePageReducers from '../containers/homePage/homePage.reducers';
 
 // Root Reducer...
 const Reducers = combineReducers({

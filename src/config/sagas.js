@@ -15,17 +15,27 @@ import {
 
 // homePage sagas...
 import {
-} from '../containers/homePage/homePage.sagas';
+    getBlockingByLineFlow,
+    getAllPlaysFlow,
+    getActsFlow,
+    getScenesFlow,
+    getLinesFlow
+} from '../containers/scriptPage/scriptPage.sagas';
 
 export default function* Sagas() {
     yield [
         // loginPage sagas...
         fork(postLoginFlow),
-        fork(postNewUserFlow)
+        fork(postNewUserFlow),
 
         // mainHeader sagas...
 
         // homePage sagas...
+        fork(getBlockingByLineFlow),
+        fork(getAllPlaysFlow),
+        fork(getActsFlow),
+        fork(getScenesFlow),
+        fork(getLinesFlow)
 
     ];
 }
