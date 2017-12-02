@@ -8,18 +8,15 @@ import { Message } from 'react-unity-webgl';
 class UnityPage extends Component {
 
   onClick () {
-	Message("Falling Cube", "Bounce");
+	//Message("Falling Cube", "Bounce");
 	console.log("Warning: Sent bounce messgae");
   }
 
   render() {
     return (
 	<div className="app">
-	   <Unity src="Build/testReact.json" />
-	   <div onClick={this.onClick.bind(this)}> 
-		...Bounce...
-	   </div>
-         </div>
+	   <Unity src="Build/blocking_demo.json" />
+        </div>
     );
   }
 }
