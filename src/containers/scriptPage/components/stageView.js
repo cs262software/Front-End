@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import { groupBy } from 'lodash';
+import Unity from 'react-unity-webgl';
+import { SendMessage, RegisterExternalListener } from 'react-unity-webgl';
 
 class StageView extends Component {
-    constructor() {
+    constructor () {
         super();
+        RegisterExternalListener ('OpenMenu', this.openMenu.bind (this));
+    }
+
+    openMenu (menuId) {
     }
 
     // render() {

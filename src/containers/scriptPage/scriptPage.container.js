@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import StageView from './components/stageView';
-import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import { getAllPlays, getActs, getScenes, getLines, getBlockingByLine } from './scriptPage.actions';
 import './index.css';
 
@@ -130,8 +130,15 @@ class ScriptPage extends Component {
                             {this.props.getLinesStatus
                                 ? this.props.getLinesStatus.map((line, index) => (
                                     <ListGroupItem onClick={() => this.getBlockingByLine(line.LineID)}>
-                                        <Col xs={4} sm={4} md={4}>{/*line.character*/}Character:</Col>
-                                        <Col xs={8} sm={8} md={8}>{line.Text}</Col>
+                                        <Col xs={4} sm={4} md={4}>
+                                            {line.CharacterSpeaking
+                                                ? line.CharacterSpeaking
+                                                : ""
+                                            }
+                                        </Col>
+                                        <Col xs={8} sm={8} md={8}>
+                                            {line.Text}
+                                        </Col>
                                     </ListGroupItem>))
                                 : null
                             }

@@ -21,10 +21,22 @@ class LoginPage extends Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.newAccount = this.newAccount.bind(this);
         this.handleNewAccount = this.handleNewAccount.bind(this);
+        this.getRandomInt = this.getRandomInt.bind(this);
     }
 
     componentWillMount() {
         this.props.push('/login');
+
+        // Pick a random image to use as the background.
+        let fileBase = "img/background-";
+        let fileNumber = this.getRandomInt(1, 9); // Change second argument as needed.
+        let fileExt = ".jpg";
+        let filePath = fileBase + fileNumber + fileExt;
+        this.setState({
+            backgroundImageStyle: {
+                backgroundImage: 'url(' + filePath + ')'
+            }
+        });
     }
 
     handleFieldChange(e) {
@@ -57,9 +69,16 @@ class LoginPage extends Component {
         this.props.postNewUser(data);
     }
 
+    // The maximum is exclusive and the minimum is inclusive
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
     render() {
         return (
-            <div className="login-bg" style={{backgroundImage: 'url(img/background.png)'}}>
+            <div className="login-bg" style={this.state.backgroundImageStyle}>
                 <div className="login-box">
                     <h2>Theatre Suite</h2>
                     { this.state.newAccount ?
