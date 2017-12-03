@@ -33,6 +33,6 @@ export function getLines(playID, actNum, sceneNum) {
 export function getBlockingByLine(lineID) {
     return {
         type: reduxActions.GET_BLOCKING_BY_LINE_REQUEST,
-        data: lineID
+        LineID: lineID
     };
 }

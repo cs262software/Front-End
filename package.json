@@ -13,7 +13,8 @@
     "react-scripts": "1.0.16",
     "react-unity-webgl": "^6.1.0",
     "redux": "^3.7.2",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "redux-saga-jwt": "0.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

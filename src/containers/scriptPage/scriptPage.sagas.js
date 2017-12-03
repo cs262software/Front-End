@@ -1,4 +1,4 @@
-import { Get, Post, Put, Delete } from '../../config/api';
+import { Get /*, Post, Put, Delete*/ } from '../../config/api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import reduxActions from '../../constants/reduxActions';
 import endpoints from '../../constants/endpoints';
@@ -22,10 +22,13 @@ export function* getActsFlow() {
 }
 
 export function* getActs(action) {
-	console.log(endpoints.GET_ACTS + action.PlayID);
 	const {res, err} = yield call(Get, endpoints.GET_ACTS + action.PlayID + "/acts", {body: undefined});
 	if (res) {
-		yield put({ type: reduxActions.GET_ACTS_SUCCESS, data: res.json });
+		let data = res.json;
+		if (!Array.isArray(data)) {
+			data = [];
+		}
+		yield put({ type: reduxActions.GET_ACTS_SUCCESS, data: data });
 	}
 	else if (err) {
 		yield put({ type: reduxActions.GET_ACTS_FAILURE, error: err.json });
@@ -65,7 +68,7 @@ export function* getBlockingByLineFlow() {
 }
 
 export function* getBlockingByLine(action) {
-	const {res, err} = yield call(Get, endpoints.GET_BLOCKING + action.data, {body: undefined});
+	const {res, err} = yield call(Get, endpoints.GET_BLOCKING_BY_LINE + action.LineID, {body: undefined});
 	if (res) {
 		yield put({ type: reduxActions.GET_BLOCKING_BY_LINE_SUCCESS, data: res.json });
 	}

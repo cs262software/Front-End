@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import LoginBox from './components/loginBox.js';
 import NewAccountBox from './components/newAccountBox.js';
-import { postLogin, postNewUser } from './loginPage.actions';
+import { postNewUser, login } from './loginPage.actions';
 
 class LoginPage extends Component {
     constructor() {
@@ -39,7 +39,7 @@ class LoginPage extends Component {
             password: this.state.password
         }
 
-        this.props.postLogin(creds);
+        this.props.login(creds);
     }
 
     newAccount() {
@@ -102,9 +102,9 @@ function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
         location: state.router.pathname,
-        postLoginStatus: state.loginPageReducers.postLoginStatus.data,
-        postNewUserStatus: state.loginPageReducers.postNewUserStatus.data
+        postNewUserStatus: state.loginPageReducers.postNewUserStatus.data,
+        loginStatus: state.loginPageReducers.loginStatus.data
     };
 }
 
-export default connect(mapStateToProps, { postLogin, postNewUser, push })(LoginPage);
+export default connect(mapStateToProps, { postNewUser, login, push })(LoginPage);

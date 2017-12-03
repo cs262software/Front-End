@@ -5,12 +5,17 @@ class StageView extends Component {
         super();
     }
 
+    // render() {
+    //     return (
+    //         <Unity
+    //         src='Build/myGame.json'
+    //         loader='Build/UnityLoader.js'
+    //         /* pass in this.props.jsonData into Unity app *//>
+    //     );
+    // }
     render() {
         return (
-            <Unity
-            src='Build/myGame.json'
-            loader='Build/UnityLoader.js'
-            /* pass in this.props.jsonData into Unity app *//>
+            <p>StageView</p>
         );
     }
 
