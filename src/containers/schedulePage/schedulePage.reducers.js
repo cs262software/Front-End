@@ -23,17 +23,50 @@ export function getAllPlaysStatus(state = defaultState, action) {
     }
 }
 
-export function getScheduleStatus(state = defaultState, action) {
+export function getActsStatus(state = defaultState, action) {
     switch (action.type) {
 
-        case reduxActions.GET_SCHEDULE_REQUEST:
+        case reduxActions.GET_ACTS_REQUEST:
             return requestState(state);
 
-        case reduxActions.GET_SCHEDULE_SUCCESS:
-            console.log(action);
+        case reduxActions.GET_ACTS_SUCCESS:
             return successState(state, action);
 
-        case reduxActions.GET_SCHEDULE_FAILURE:
+        case reduxActions.GET_ACTS_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function getScenesStatus(state = defaultState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_SCENES_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_SCENES_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_SCENES_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function getCharactersStatus(state = defaultState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_CHARACTERS_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_CHARACTERS_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_CHARACTERS_FAILURE:
             return failureState(state, action);
 
         default:
@@ -43,7 +76,9 @@ export function getScheduleStatus(state = defaultState, action) {
 
 const schedulePageReducers = combineReducers({
     getAllPlaysStatus,
-    getScheduleStatus,
+    getActsStatus,
+    getSceneStatus,
+    getCharactersStatus,
 });
 
 export default schedulePageReducers;

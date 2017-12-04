@@ -17,17 +17,44 @@ export function* getAllPlays(action) {
 	}
 }
 
-export function* getScheduleFlow() {
-	yield takeLatest(reduxActions.GET_SCHEDULE_REQUEST, getSchedule);
+export function* getActsFlow() {
+	yield takeLatest(reduxActions.GET_ACTS_REQUEST, getAllPlays);
 }
 
-export function* getSchedule(action) {
-	console.log(endpoints.GET_SCHEDULE + action.PlayID);
-	const {res, err} = yield call(Get, endpoints.GET_SCHEDULE + action.PlayID + "/schedule", {body: undefined});
+export function* getActs(action) {
+	const {res, err} = yield call(Get, endpoints.GET_ACTS + action.PlayID + "/acts", {body: undefined});
 	if (res) {
-		yield put({ type: reduxActions.GET_SCHEDULE_SUCCESS, data: res.json });
+		yield put({ type: reduxActions.GET_ACTS_SUCCESS, data: res.json });
 	}
 	else if (err) {
-		yield put({ type: reduxActions.GET_SCHEDULE_FAILURE, error: err.json });
+		yield put({ type: reduxActions.GET_ACTS_FAILURE, error: err.json });
+	}
+}
+
+export function* getScenesFlow() {
+	yield takeLatest(reduxActions.GET_SCENES_REQUEST, getAllPlays);
+}
+
+export function* getScenes(action) {
+	const {res, err} = yield call(Get, endpoints.GET_SCENES + action.PlayID + "/" + action.ActNum + "/scenes", {body: undefined});
+	if (res) {
+		yield put({ type: reduxActions.GET_SCENES_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.GET_SCENES_FAILURE, error: err.json });
+	}
+}
+
+export function* getCharactersFlow() {
+	yield takeLatest(reduxActions.GET_CHARACTERS_REQUEST, getSchedule);
+}
+
+export function* getCharacters(action) {
+	const {res, err} = yield call(Get, endpoints.GET_CHARACTERS + action.PlayID + "/" + action.ActNum + "/" + action.SceneNum + "/characters", {body: undefined});
+	if (res) {
+		yield put({ type: reduxActions.GET_CHARACTERS_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.GET_CHARACTERS_FAILURE, error: err.json });
 	}
 }
