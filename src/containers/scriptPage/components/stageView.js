@@ -9,6 +9,23 @@ class StageView extends Component {
         RegisterExternalListener ('OpenMenu', this.openMenu.bind (this));
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log("hi");
+        // console.log(this.props.characters);
+        // console.log(nextProps);
+        // console.log(groupBy(nextProps), )
+
+        // var grouped = groupBy(nextProps.jsonData, 'CharacterID');
+        // // var grouped = _.mapValues(_.groupBy(cars, 'make'),
+        // //                   clist => clist.map(car => _.omit(car, 'make')));
+        //
+        //                   console.log(grouped);
+        //
+        // for (let CharacterIdKey in grouped) {
+        //
+        // }
+    }
+
     openMenu (menuId) {
     }
 
@@ -22,7 +39,11 @@ class StageView extends Component {
     // }
     render() {
         return (
-            <p>StageView</p>
+            <div className="stage-view">
+                { this.props.blockingData && this.props.characters ?
+                    <p>Blocking</p> : null
+                }
+            </div>
         );
     }
 

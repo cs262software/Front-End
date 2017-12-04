@@ -63,6 +63,20 @@ export function* getLines(action) {
 	}
 }
 
+export function* getCharactersBySceneFlow() {
+	yield takeLatest(reduxActions.GET_CHARACTERS_BY_SCENE_REQUEST, getCharactersByScene);
+}
+
+export function* getCharactersByScene(action) {
+	const {res, err} = yield call(Get, endpoints.GET_CHARACTERS_BY_SCENE + action.PlayID + "/" + action.ActNum + "/" + action.SceneNum, {body: undefined});
+	if (res) {
+		yield put({ type: reduxActions.GET_CHARACTERS_BY_SCENE_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.GET_CHARACTERS_BY_SCENE_FAILURE, error: err.json });
+	}
+}
+
 export function* getBlockingByLineFlow() {
 	yield takeLatest(reduxActions.GET_BLOCKING_BY_LINE_REQUEST, getBlockingByLine);
 }

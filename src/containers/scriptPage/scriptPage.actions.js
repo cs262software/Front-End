@@ -30,6 +30,15 @@ export function getLines(playID, actNum, sceneNum) {
     };
 }
 
+export function getCharactersByScene(playID, actNum, sceneNum) {
+    return {
+        type: reduxActions.GET_CHARACTERS_BY_SCENE_REQUEST,
+        PlayID: playID,
+        ActNum: actNum,
+        SceneNum: sceneNum
+    };
+}
+
 export function getBlockingByLine(lineID) {
     return {
         type: reduxActions.GET_BLOCKING_BY_LINE_REQUEST,

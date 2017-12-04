@@ -11,6 +11,7 @@ var endpoints = {
     GET_ACTS: "/api/plays/", // append :PlayID/acts in the saga",
     GET_SCENES: "/api/plays/", // append :PlayID/:ActNum/scenes in the saga",
     GET_LINES: "/api/plays/", // append :PlayID/:ActNum/:SceneNum/lines in the saga"
+    GET_CHARACTERS_BY_SCENE: "/api/characters/", // append :PlayID/:ActNum/:SceneNum in the saga"
     GET_BLOCKING_BY_LINE: "/api/blocking/" // append :LineID
 };
 
