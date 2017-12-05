@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
-import StageView from './components/stageView';
+import BlockingView from './components/blockingView';
 import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
 import './index.css';
 
@@ -24,7 +24,8 @@ class ScriptPage extends Component {
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
-            showLineDetails: false,
+            selectedLineID: null,
+            showLineDetails: false
         };
 
         this.playDropdownChange = this.playDropdownChange.bind(this);
@@ -48,6 +49,7 @@ class ScriptPage extends Component {
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
+            selectedLineID: null,
             showLineDetails: false
         }, () => this.props.getActs(value.PlayID)); // When a play is selected, get a list of acts.
     }
@@ -57,6 +59,7 @@ class ScriptPage extends Component {
             actDropdownOption: value,
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
+            selectedLineID: null,
             showLineDetails: false,
         }, () => this.props.getScenes(this.state.playDropdownOption.PlayID, value)); // When an act is selected, get a list of scenes.
     }
@@ -65,6 +68,7 @@ class ScriptPage extends Component {
         this.setState({
             sceneDropdownOption: value,
             showLines: !(value === defaultSceneDropdownOption), // Only show lines if the default is not selected.
+            selectedLineID: null,
             showLineDetails: false
         }, () => {
             // When a scene is selected, get a list of lines.
@@ -84,6 +88,7 @@ class ScriptPage extends Component {
 
     onClickLine(LineID) {
         this.setState({
+            selectedLineID: LineID,
             showLineDetails: true
         });
         this.props.getBlockingByLine(LineID);
@@ -105,7 +110,7 @@ class ScriptPage extends Component {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu onSelect={this.playDropdownChange}>
                                         {this.props.getAllPlaysStatus
-                                            ? this.props.getAllPlaysStatus.map((play, index) => (<MenuItem eventKey={play}>{play.Name}</MenuItem>))
+                                            ? this.props.getAllPlaysStatus.map((play, index) => (<MenuItem key={"play-select-menu-item-" + index} eventKey={play}>{play.Name}</MenuItem>))
                                             : null
                                         }
                                     </Dropdown.Menu>
@@ -118,7 +123,7 @@ class ScriptPage extends Component {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu onSelect={this.actDropdownChange}>
                                         {this.props.getActsStatus
-                                            ? this.props.getActsStatus.map((act, index) => (<MenuItem eventKey={act.ActNum}>{act.ActNum}</MenuItem>))
+                                            ? this.props.getActsStatus.map((act, index) => (<MenuItem key={"act-select-menu-item-" + index} eventKey={act.ActNum}>{act.ActNum}</MenuItem>))
                                             : null
                                         }
                                     </Dropdown.Menu>
@@ -131,7 +136,7 @@ class ScriptPage extends Component {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu onSelect={this.sceneDropdownChange}>
                                         {this.props.getScenesStatus
-                                            ? this.props.getScenesStatus.map((scene, index) => (<MenuItem eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))
+                                            ? this.props.getScenesStatus.map((scene, index) => (<MenuItem key={"scene-select-menu-item-" + index} eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))
                                             : null
                                         }
                                     </Dropdown.Menu>
@@ -144,7 +149,7 @@ class ScriptPage extends Component {
                                     <ListGroup>
                                         {this.props.getLinesStatus
                                             ? this.props.getLinesStatus.map((line, index) => (
-                                                <ListGroupItem onClick={() => this.onClickLine(line.LineID)}>
+                                                <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
                                                     <Col xs={4} sm={4} md={4}>
                                                         {line.CharacterSpeaking
                                                             ? line.CharacterSpeaking
@@ -164,11 +169,11 @@ class ScriptPage extends Component {
 
                         { this.state.showLines && this.state.showLineDetails ?
                             <Row className="main-page-row">
-                                <Col sm={3}>
+                                <Col sm={6}>
                                     <div className="blocking-view">
-                                        <StageView
+                                        <BlockingView
+                                            selectedLineID={this.state.selectedLineID}
                                             blockingData={this.props.getBlockingByLineStatus}
-                                            characters={this.props.getCharactersBySceneStatus}
                                         />
                                     </div>
                                 </Col>

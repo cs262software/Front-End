@@ -27,7 +27,3 @@ h1.main-page-header {
 .main-page-content .lines-list-group button:focus {
     z-index: 5;
 }
-
-#play-dropdown {
-    width: 100%;
-}
