@@ -41,7 +41,7 @@ class StageView extends Component {
         return (
             <div className="stage-view">
                 { this.props.blockingData && this.props.characters ?
-                    <p>Blocking</p> : null
+                    <h2>Blocking</h2> : null
                 }
             </div>
         );

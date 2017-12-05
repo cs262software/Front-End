@@ -98,7 +98,7 @@ class ScriptPage extends Component {
                     <div className="main-page-content">
                         <Row className="main-page-row">
                             <Col sm={4}>
-                                <h4>Play</h4>
+                                <h2>Play</h2>
                                 <Dropdown id="play-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.playDropdownOption.Name}
@@ -111,7 +111,7 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
 
-                                <h4>Act</h4>
+                                <h2>Act</h2>
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.actDropdownOption}
@@ -124,7 +124,7 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
 
-                                <h4>Scene</h4>
+                                <h2>Scene</h2>
                                 <Dropdown id="scene-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.sceneDropdownOption}
@@ -140,7 +140,7 @@ class ScriptPage extends Component {
 
                             {this.props.getLinesStatus && this.state.showLines ?
                                 <Col sm={8} className="lines-list-group">
-                                    <h4>Lines</h4>
+                                    <h2>Lines</h2>
                                     <ListGroup>
                                         {this.props.getLinesStatus
                                             ? this.props.getLinesStatus.map((line, index) => (
