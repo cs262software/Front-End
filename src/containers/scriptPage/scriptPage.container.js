@@ -177,8 +177,8 @@ function mapStateToProps(state) {
         getActsStatus: state.scriptPageReducers.getActsStatus.data,
         getScenesStatus: state.scriptPageReducers.getScenesStatus.data,
         getLinesStatus: state.scriptPageReducers.getLinesStatus.data,
-        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLine.data
+        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data
     };
 }
 
-export default connect(mapStateToProps, { getAllPlays, getActs, getScenes, getLines, getBlockingByLine push })(ScriptPage);
+export default connect(mapStateToProps, { getAllPlays, getActs, getScenes, getLines, getBlockingByLine, push })(ScriptPage);

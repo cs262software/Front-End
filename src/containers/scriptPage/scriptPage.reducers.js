@@ -74,11 +74,31 @@ export function getLinesStatus(state = defaultState, action) {
             return state;
     }
 }
+
+export function getBlockingByLineStatus(state = defaultState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_LINES_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_LINES_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_LINES_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,
     getScenesStatus,
-    getLinesStatus
+    getLinesStatus,
+    getBlockingByLine
 });
 
 export default scriptPageReducers;
