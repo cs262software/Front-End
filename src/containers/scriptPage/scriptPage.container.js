@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import BlockingView from './components/blockingView';
 import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
@@ -143,33 +143,31 @@ class ScriptPage extends Component {
                                 </Dropdown>
                             </Col>
 
-                            {this.props.getLinesStatus && this.state.showLines ?
-                                <Col sm={8} className="lines-list-group">
-                                    <h2>Lines</h2>
-                                    <ListGroup>
-                                        {this.props.getLinesStatus
-                                            ? this.props.getLinesStatus.map((line, index) => (
-                                                <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
-                                                    <Col xs={4} sm={4} md={4}>
-                                                        {line.CharacterSpeaking
-                                                            ? line.CharacterSpeaking
-                                                            : ""
-                                                        }
-                                                    </Col>
-                                                    <Col xs={8} sm={8} md={8}>
-                                                        {line.Text}
-                                                    </Col>
-                                                </ListGroupItem>))
-                                            : null
-                                        }
-                                    </ListGroup>
-                                </Col> : null
-                            }
+                            <Col sm={8} className="lines-list-group">
+                                <h2>Lines</h2>
+                                <ListGroup>
+                                    {this.props.getLinesStatus
+                                        ? this.props.getLinesStatus.map((line, index) => (
+                                            <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
+                                                <Col xs={4} sm={4} md={4}>
+                                                    {line.CharacterSpeaking
+                                                        ? line.CharacterSpeaking
+                                                        : ""
+                                                    }
+                                                </Col>
+                                                <Col xs={8} sm={8} md={8}>
+                                                    {line.Text}
+                                                </Col>
+                                            </ListGroupItem>))
+                                        : null
+                                    }
+                                </ListGroup>
+                            </Col>
                         </Row>
 
-                        { this.state.showLines && this.state.showLineDetails ?
+                        <Well>
                             <Row className="main-page-row">
-                                <Col sm={6}>
+                                <Col sm={12}>
                                     <div className="blocking-view">
                                         <BlockingView
                                             selectedLineID={this.state.selectedLineID}
@@ -177,8 +175,8 @@ class ScriptPage extends Component {
                                         />
                                     </div>
                                 </Col>
-                            </Row> : null
-                        }
+                            </Row>
+                        </Well>
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }
             </div>

@@ -1,7 +1,7 @@
-import { Get /*, Put, Post, Delete*/} from './api';
-import { fork, call, put, takeLatest } from 'redux-saga/effects';
-import reduxActions from '../constants/reduxActions';
-import endpoints from '../constants/endpoints';
+// import { Get /*, Put, Post, Delete*/} from './api';
+import { fork /*, call, put, takeLatest*/ } from 'redux-saga/effects';
+// import reduxActions from '../constants/reduxActions';
+// import endpoints from '../constants/endpoints';
 
 // loginPage sagas...
 import {

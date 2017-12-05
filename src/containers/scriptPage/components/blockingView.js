@@ -49,6 +49,7 @@ class BlockingView extends Component {
                 }
                 // Push the results to the formatted data array.
                 formattedData.push({
+                    CharacterID: characterIDKey,
                     CharacterName: characterName,
                     OriginX: originX,
                     OriginY: originY,
@@ -62,8 +63,13 @@ class BlockingView extends Component {
             this.setState({
                 dataToDisplay: formattedData
             }, () => {
-                console.log(JSON.stringify(this.state.dataToDisplay));
-                SendMessage ('Unity', 'LoadBlockingData', JSON.stringify(this.state.dataToDisplay));
+                // console.log(JSON.stringify(this.state.dataToDisplay));
+                // console.log(this.state.dataToDisplay);
+                if (this.state.dataToDisplay.length > 0) {
+                    //console.log(JSON.stringify(this.state.dataToDisplay));
+                }
+                // console.log(JSON.stringify(this.state.dataToDisplay));
+                //SendMessage ('Unity', 'LoadBlockingData', JSON.stringify(this.state.dataToDisplay));
             });
         }
     }
@@ -86,21 +92,22 @@ class BlockingView extends Component {
             <div className="blocking-view">
                 <h2>Blocking</h2>
                 <Unity
-                    src='Build/blocking_demo.json'
+                    src='Build/blocking_uncompressed.json'
                     loader='Build/UnityLoader.js'
                 />
                 <ButtonToolbar>
                     <Button
                         bsStyle="primary"
                         onClick={() => {
-                            SendMessage('Unity', 'TriggerRecordUnityData', null);
+                            //SendMessage('Unity', 'TriggerRecordUnityData');
                         }}
                     >
                         Save
                     </Button>
                     <Button
                         onClick={() => {
-                            SendMessage ('Unity', 'LoadBlockingData', JSON.stringify(this.state.dataToDisplay));
+                            let d2d = JSON.stringify(this.state.dataToDisplay);
+                            SendMessage ("UnityReactAnchor", "LoadBlockingData", d2d);
                         }}
                     >
                         Cancel
