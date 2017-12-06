@@ -5,7 +5,7 @@ class FileRow extends Component {
     render() {
         return (
             <div>
-                <li>{this.props.file.name}</li>
+                <li>{this.props.file}</li>
             </div>
         );
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MainHeader from '../mainHeader/mainHeader.container';
 import FileRow from './components/fileRow.js';
+import { getAllFiles } from './filesPage.actions';
 
 class FilesPage extends Component {
     constructor() {
@@ -15,6 +16,10 @@ class FilesPage extends Component {
         }
     }
 
+    componentWillMount() {
+        this.props.getAllFiles();
+    }
+
     render() {
         return (
             <div>
@@ -22,8 +27,8 @@ class FilesPage extends Component {
 
                 <h1>Files Page</h1>
                 <ul>
-                    {this.state.filesArray.map(file => {
-                        return <FileRow file={file} />
+                    {this.props.getAllFilesStatus.map((file, index) => {
+                        return <FileRow key={index} file={file} />
                     })}
                 </ul>
 
@@ -36,13 +41,9 @@ class FilesPage extends Component {
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
-        // prop: reduxValue
+        location: state.router.pathname,
+        getAllFilesStatus: state.filesPageReducers.getAllFilesStatus.data,
     };
 }
 
-export default connect(
-    mapStateToProps,
-    {/* add imported action creators here so they can be dispatched using this.props.[action creator name] */
-        // Name of imported action.
-    }
-)(FilesPage);
+export default connect(mapStateToProps, { getAllFiles })(FilesPage);

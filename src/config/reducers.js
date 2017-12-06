@@ -6,11 +6,13 @@ import { requestState, successState, failureState } from '../constants/nextState
 import loginPageReducers from '../containers/loginPage/loginPage.reducers';
 //import mainHeaderReducers from '../containers/mainHeader/mainHeader.reducers';
 import scriptPageReducers from '../containers/scriptPage/scriptPage.reducers';
+import filesPageReducers from '../containers/filesPage/filesPage.reducers';
 
 // Root Reducer...
 const Reducers = combineReducers({
     loginPageReducers,
-    scriptPageReducers
+    scriptPageReducers,
+    filesPageReducers
 });
 
 export default Reducers;

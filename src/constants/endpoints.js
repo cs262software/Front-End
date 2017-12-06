@@ -12,7 +12,10 @@ var endpoints = {
     GET_SCENES: "/api/plays/", // append :PlayID/:ActNum/scenes in the saga",
     GET_LINES: "/api/plays/", // append :PlayID/:ActNum/:SceneNum/lines in the saga"
     GET_CHARACTERS_BY_SCENE: "/api/characters/", // append :PlayID/:ActNum/:SceneNum in the saga"
-    GET_BLOCKING_BY_LINE: "/api/blocking/" // append :LineID
+    GET_BLOCKING_BY_LINE: "/api/blocking/", // append :LineID
+
+    // FilesPage endpoints.
+    GET_ALL_FILES: "/api/files/all/"
 };
 
 export default endpoints;

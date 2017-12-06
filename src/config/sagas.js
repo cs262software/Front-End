@@ -9,11 +9,7 @@ import {
     loginFlow,
 } from '../containers/loginPage/loginPage.sagas';
 
-// mainHeader sagas...
-import {
-} from '../containers/mainHeader/mainHeader.sagas';
-
-// homePage sagas...
+// scriptPage sagas...
 import {
     getAllPlaysFlow,
     getActsFlow,
@@ -23,13 +19,16 @@ import {
     getBlockingByLineFlow
 } from '../containers/scriptPage/scriptPage.sagas';
 
+// filesPage sagas...
+import {
+    getAllFilesFlow
+} from '../containers/filesPage/filesPage.sagas';
+
 export default function* Sagas() {
     yield [
         // loginPage sagas...
         fork(postNewUserFlow),
         fork(loginFlow),
-
-        // mainHeader sagas...
 
         // scriptPage sagas...
         fork(getAllPlaysFlow),
@@ -37,6 +36,9 @@ export default function* Sagas() {
         fork(getScenesFlow),
         fork(getLinesFlow),
         fork(getCharactersBySceneFlow),
-        fork(getBlockingByLineFlow)
+        fork(getBlockingByLineFlow),
+
+        // filesPage sagas...
+        fork(getAllFilesFlow)
     ];
 }
