@@ -74,7 +74,7 @@ class SchedulePage extends Component {
 
               {/*Top Header */}
               <Col lg={12}>
-                  <h2 style={{float: 'center', textAlign: 'center'}} className ="header">SCRIPT</h2>
+                  <h2 style={{float: 'center', textAlign: 'center'}} className ="header">SCHEDULE</h2>
               </Col>
 
               <Col sm={3}>
