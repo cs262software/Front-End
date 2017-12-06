@@ -140,16 +140,18 @@ class ScriptPage extends Component {
 
                 <Col sm={6}>
                     <h4>Lines</h4>
-                    <ListGroup style={{marginTop: "30px"}}>
-                        {this.props.getLinesStatus
-                            ? this.props.getLinesStatus.map((line, index) => (
-                                <ListGroupItem onClick={() => this.updateBlocking(line.LineID)}>
-                                    <Col xs={4} sm={4} md={4}>{/*line.character*/}Character:</Col>
-                                    <Col xs={8} sm={8} md={8}>{line.Text}</Col>
-                                </ListGroupItem>))
-                            : null
-                        }
-                    </ListGroup>
+                    <div style={{height: "250px"}}>
+                      <ListGroup style={{marginTop: "30px", overflow: "auto", height: "249px"}}>
+                          {this.props.getLinesStatus
+                              ? this.props.getLinesStatus.map((line, index) => (
+                                  <ListGroupItem onClick={() => this.updateBlocking(line.LineID)}>
+                                      <Col xs={4} sm={4} md={4}>{/*line.character*/}Character:</Col>
+                                      <Col xs={8} sm={8} md={8}>{line.Text}</Col>
+                                  </ListGroupItem>))
+                              : null
+                          }
+                      </ListGroup>
+                  </div>
                 </Col>
 
                 <Col sm={3}>
