@@ -12,6 +12,7 @@ class Routes extends Component {
     render() {
         return (
             <div>
+                <p>{ this.props.location }</p>
                 { (this.props.loginStatus)
                     ?   <Switch>
                             <Route exact path='/' component={ScriptPage}/>
@@ -29,6 +30,7 @@ class Routes extends Component {
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
+        location: state.router.pathname,
         loginStatus: state.loginPageReducers.loginStatus.data
     };
 }

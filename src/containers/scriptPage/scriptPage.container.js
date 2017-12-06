@@ -171,6 +171,7 @@ class ScriptPage extends Component {
                                     <div className="blocking-view">
                                         <BlockingView
                                             selectedLineID={this.state.selectedLineID}
+                                            characters={this.props.getCharactersBySceneStatus}
                                             blockingData={this.props.getBlockingByLineStatus}
                                         />
                                     </div>

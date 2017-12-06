@@ -4,37 +4,61 @@ import { groupBy } from 'lodash';
 import Unity from 'react-unity-webgl';
 import { SendMessage, RegisterExternalListener } from 'react-unity-webgl';
 
-class BlockingView extends Component {
+export class BlockingView extends Component {
     constructor () {
         super();
-        RegisterExternalListener ('RecordUnityData', this.recordUnityData.bind (this));
+        RegisterExternalListener ('RecordUnityData', this.recordUnityData.bind(this));
 
         this.state = {
             dataToDisplay: []
         };
     }
 
+    recordUnityData (jsonData) {
+        console.log("_______________________");
+        console.log(jsonData);
+        console.log("_______________________");
+    }
+
     componentWillReceiveProps(nextProps) {
-        // If we have blocking data, and a list of characters, format the data to send to the unity display.
+        // If there are no characters to display, proceed no further.
+        if (!this.props.characters) {
+            this.setState({
+                dataToDisplay: []
+            });
+            return;
+        }
+
+        // If we have blocking data, format the data appropriately.
+        var groupedBlockingData = {};
         if (this.props.blockingData && this.props.blockingData.length > 0)
         {
             // Group blocking data by character id to easily find a specific character's blocking info.
-            var groupedBlockingData = groupBy(nextProps.blockingData, 'CharacterID');
-            // Create a variable to store formatted data.
-            var formattedData = [];
-            // Iterate through each key in the grouped blocking data object.
-            for (let characterIDKey in groupedBlockingData) {
-                // Retrieve the character's data set. It should be sorted by most recent to least.
-                let currCharDataSet = groupedBlockingData[characterIDKey];
-                // Find the character's name.
-                let characterName = currCharDataSet[0].Name;
-                // Find the character's starting and end position.
-                let originX = null;
-                let originY = null;
-                let originZ = null;
-                let destX = null;
-                let destY = null;
-                let destZ = null;
+            groupedBlockingData = groupBy(nextProps.blockingData, 'CharacterID');
+        }
+
+        // Create a variable to store the final, formatted data.
+        var formattedData = [];
+
+        // Loop through every character in the scene.
+        for (let i = 0; i < this.props.characters.length; i++) {
+            // Find the character's ID.
+            let characterID = this.props.characters[i].CharacterID;
+            // Find the character's name.
+            let characterName = this.props.characters[i].Name;
+            // Find the character's starting and end position.
+            // Initialize null values, as some characters might not have any blocking info.
+            let originX = null;
+            let originY = null;
+            let originZ = null;
+            let destX = null;
+            let destY = null;
+            let destZ = null;
+
+            // See if there is any blocking data associated with the character.
+            let currCharDataSet = groupedBlockingData[this.props.characters[i].CharacterID];
+            // ...if there is, use it to populate the position fields.
+            if (typeof currCharDataSet != 'undefined') {
                 // If previous blocking data exists, set the origin position.
                 if (currCharDataSet.length > 1) {
                     originX = currCharDataSet[1].OriginX;
@@ -47,59 +71,43 @@ class BlockingView extends Component {
                     destY = currCharDataSet[0].DestY;
                     destZ = currCharDataSet[0].DestZ;
                 }
-                // Push the results to the formatted data array.
-                formattedData.push({
-                    CharacterID: characterIDKey,
-                    CharacterName: characterName,
-                    OriginX: originX,
-                    OriginY: originY,
-                    OriginZ: originZ,
-                    DestX: destX,
-                    DestY: destY,
-                    DestZ: destZ
-                });
             }
-            // Store the results in the state so as to access them later.
-            this.setState({
-                dataToDisplay: formattedData
-            }, () => {
-                // console.log(JSON.stringify(this.state.dataToDisplay));
-                // console.log(this.state.dataToDisplay);
-                if (this.state.dataToDisplay.length > 0) {
-                    //console.log(JSON.stringify(this.state.dataToDisplay));
-                }
-                // console.log(JSON.stringify(this.state.dataToDisplay));
-                //SendMessage ('Unity', 'LoadBlockingData', JSON.stringify(this.state.dataToDisplay));
+
+            // Push the results to the formatted data array.
+            formattedData.push({
+                CharacterID: characterID,
+                CharacterName: characterName,
+                OriginX: originX,
+                OriginY: originY,
+                OriginZ: originZ,
+                DestX: destX,
+                DestY: destY,
+                DestZ: destZ
             });
         }
-    }
 
-    recordUnityData (jsonData) {
-        console.log(jsonData);
+        // Store the results in the state so as to access them later.
+        this.setState({
+            dataToDisplay: formattedData
+        }, () => {
+            let d2d = JSON.stringify(this.state.dataToDisplay);
+            SendMessage ("UnityReactAnchor", "LoadBlockingData", d2d);
+        });
     }
-
-    // render() {
-    //     return (
-    //         <Unity
-    //         src='Build/myGame.json'
-    //         loader='Build/UnityLoader.js'
-    //         /* pass in this.props.jsonData into Unity app *//>
-    //     );
-    // }
 
     render() {
         return (
             <div className="blocking-view">
                 <h2>Blocking</h2>
                 <Unity
-                    src='Build/blocking_uncompressed.json'
+                    src='Build/blocking2d.json'
                     loader='Build/UnityLoader.js'
                 />
                 <ButtonToolbar>
                     <Button
                         bsStyle="primary"
                         onClick={() => {
-                            //SendMessage('Unity', 'TriggerRecordUnityData');
+                            SendMessage("UnityReactAnchor", "TriggerRecordUnityData");
                         }}
                     >
                         Save
@@ -116,7 +124,6 @@ class BlockingView extends Component {
             </div>
         );
     }
-
 }
 
 export default BlockingView;
