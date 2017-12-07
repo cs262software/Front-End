@@ -13,7 +13,7 @@ import {
 import {
 } from '../containers/mainHeader/mainHeader.sagas';
 
-// homePage sagas...
+// scriptPage sagas...
 import {
     getAllPlaysFlow,
     getActsFlow,
@@ -22,6 +22,12 @@ import {
     getCharactersBySceneFlow,
     getBlockingByLineFlow
 } from '../containers/scriptPage/scriptPage.sagas';
+
+// actorPage sagas...
+import {
+    getCharactersByPlayFlow,
+    getLinesByPlayAndCharacterFlow
+} from '../containers/actorPage/actorPage.sagas';
 
 export default function* Sagas() {
     yield [
@@ -37,6 +43,10 @@ export default function* Sagas() {
         fork(getScenesFlow),
         fork(getLinesFlow),
         fork(getCharactersBySceneFlow),
-        fork(getBlockingByLineFlow)
+        fork(getBlockingByLineFlow),
+
+        // actorPage sagas...
+        fork(getCharactersByPlayFlow),
+        fork(getLinesByPlayAndCharacterFlow)
     ];
 }

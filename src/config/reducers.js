@@ -6,11 +6,13 @@ import { combineReducers } from 'redux';
 import loginPageReducers from '../containers/loginPage/loginPage.reducers';
 //import mainHeaderReducers from '../containers/mainHeader/mainHeader.reducers';
 import scriptPageReducers from '../containers/scriptPage/scriptPage.reducers';
+import actorPageReducers from '../containers/actorPage/actorPage.reducers';
 
 // Root Reducer...
 const Reducers = combineReducers({
     loginPageReducers,
-    scriptPageReducers
+    scriptPageReducers,
+    actorPageReducers
 });
 
 export default Reducers;

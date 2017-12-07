@@ -18,6 +18,24 @@ export class BlockingView extends Component {
         console.log("_______________________");
         console.log(jsonData);
         console.log("_______________________");
+
+        // // Pass LineID as url parameter.
+        // let data = {
+        //     blockingUpdateArray: [
+        //         {
+        //             CharacterID: 4,
+        //             DestX: 1.4545,
+        //             DestY: 1.111,
+        //             DestZ: 0
+        //         },
+        //         {
+        //             CharacterID: 5,
+        //             DestX: 5.6,
+        //             DestY: 0,
+        //             DestZ: 0,
+        //         },
+        //     ]
+        // }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -105,7 +123,6 @@ export class BlockingView extends Component {
                 />
                 <ButtonToolbar>
                     <Button
-                        bsStyle="primary"
                         onClick={() => {
                             SendMessage("UnityReactAnchor", "TriggerRecordUnityData");
                         }}

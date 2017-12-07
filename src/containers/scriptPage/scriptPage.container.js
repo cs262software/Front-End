@@ -98,7 +98,7 @@ class ScriptPage extends Component {
         return (
             <div id="script-page">
                 <MainHeader />
-                <h1 className ="main-page-header">Script</h1>
+                <h1 className ="main-page-header">Blocking Capture</h1>
                 { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
                     <div className="main-page-content">
                         <Row className="main-page-row">

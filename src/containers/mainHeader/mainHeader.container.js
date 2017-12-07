@@ -23,17 +23,17 @@ class MainHeader extends Component {
                 		</div>
                 		<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         	<ul className="nav navbar-nav navbar-right">
-                                <li><Link to='/'>Home</Link></li>
+                                <li><Link to='/'>Blocking Capture</Link></li>
+                                <li><Link to='/actor'>Actor View</Link></li>
                                 <li><Link to='/schedule'>Schedule</Link></li>
-                                <li><Link to='/messages'>Messages</Link></li>
                                 <li><Link to='/files'>Files</Link></li>
-                                <li className="dropdown">
+                                {/*<li className="dropdown">
                 					<a href="/" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Director<span className="caret"></span></a>
                 					<ul className="dropdown-menu">
                                         <li><Link to='/director/manage-files'>Manage Files</Link></li>
                                         <li><Link to='/director/manage-crew'>Manage Crew</Link></li>
                 					</ul>
-                				</li>
+                				</li>*/}
                                 <li><button className="navbar-btn btn btn-dark" onClick={this.handleLogout}>Logout</button></li>
                 			</ul>
                 		</div>
