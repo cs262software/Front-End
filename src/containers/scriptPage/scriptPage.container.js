@@ -4,6 +4,7 @@ import { push } from 'connected-react-router';
 import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import BlockingView from './components/blockingView';
+import CrewNotes from './components/crewNotes';
 import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
 import './index.css';
 
@@ -13,6 +14,7 @@ var defaultPlayDropdownOption = {
 };
 var defaultActDropdownOption = "Please Select an Act";
 var defaultSceneDropdownOption = "Please Select a Scene";
+var defaultcrewNotesDropdownOption = "Lights/Sounds/Props"; //crewNotes
 
 class ScriptPage extends Component {
 
@@ -23,6 +25,7 @@ class ScriptPage extends Component {
             playDropdownOption: defaultPlayDropdownOption,
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
+            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             showLines: false,
             selectedLineID: null,
             showLineDetails: false
@@ -32,6 +35,7 @@ class ScriptPage extends Component {
         this.actDropdownChange = this.actDropdownChange.bind(this);
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
+        this.crewNotesDropdownOptionChange = this.crewNotesDropdownOptionChange.bind(this)  
     }
 
     componentWillMount() {
@@ -48,6 +52,7 @@ class ScriptPage extends Component {
             playDropdownOption: value,
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
+            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             showLines: false,
             selectedLineID: null,
             showLineDetails: false
@@ -58,6 +63,7 @@ class ScriptPage extends Component {
         this.setState({
             actDropdownOption: value,
             sceneDropdownOption: defaultSceneDropdownOption,
+            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             showLines: false,
             selectedLineID: null,
             showLineDetails: false,
@@ -66,6 +72,7 @@ class ScriptPage extends Component {
 
     sceneDropdownChange(value) {
         this.setState({
+            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             sceneDropdownOption: value,
             showLines: !(value === defaultSceneDropdownOption), // Only show lines if the default is not selected.
             selectedLineID: null,
@@ -88,11 +95,19 @@ class ScriptPage extends Component {
 
     onClickLine(LineID) {
         this.setState({
+            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             selectedLineID: LineID,
             showLineDetails: true
         });
         this.props.getBlockingByLine(LineID);
     }
+
+    crewNotesDropdownOptionChange(value) {
+        this.setState({
+            crewNotesSelectedOption : value
+        })
+    }
+
 
     render() {
         return (
@@ -166,19 +181,37 @@ class ScriptPage extends Component {
                                 </Col> : null
                             }
                         </Row>
+                        <div>
+                            { this.state.showLines && this.state.showLineDetails ?
+                                <Row className="main-page-row">
+                                    <Col sm={6}>
+                                        <div className="blocking-view">
+                                            <BlockingView
+                                                selectedLineID={this.state.selectedLineID}
+                                                blockingData={this.props.getBlockingByLineStatus}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row> : null
+                            }
+                        </div>
 
-                        { this.state.showLines && this.state.showLineDetails ?
-                            <Row className="main-page-row">
-                                <Col sm={6}>
-                                    <div className="blocking-view">
-                                        <BlockingView
-                                            selectedLineID={this.state.selectedLineID}
-                                            blockingData={this.props.getBlockingByLineStatus}
-                                        />
-                                    </div>
-                                </Col>
-                            </Row> : null
-                        }
+                        <div>
+                            {this.state.showLines && this.state.showLineDetails ?
+                                <Row className="main-page-row">
+                                    <Col sm={6}>
+                                        <div className="crew-notes">
+                                            <CrewNotes
+                                                selectedLineID={this.state.selectedLineID}
+                                                dropdownOption={this.state.crewNotesDropDownOptions}
+                                                dropdownOptionChange={this.state.crewNotesDropdownOptionChange}
+                                                selectedOption={this.state.crewNotesSelectedOption}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row> : null
+                            }
+                            </div>
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }
             </div>
