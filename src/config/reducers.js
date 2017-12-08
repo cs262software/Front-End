@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 
 import loginPageReducers from '../containers/loginPage/loginPage.reducers';
 import scriptPageReducers from '../containers/scriptPage/scriptPage.reducers';
-import schedulePageReducers from '.../containers/schedulePage/schedulePage.reducers';
+import schedulePageReducers from '../containers/schedulePage/schedulePage.reducers';
 //import mainHeaderReducers from '../containers/mainHeader/mainHeader.reducers';
 //import homePageReducers from '../containers/homePage/homePage.reducers';
 

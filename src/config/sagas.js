@@ -25,9 +25,6 @@ import {
 } from '../containers/scriptPage/scriptPage.sagas';
 
 import {
-  getAllPlaysFlow,
-  getActsFlow,
-  getScenesFlow,
   getCharactersFlow
 } from '../containers/schedulePage/schedulePage.sagas';
 
@@ -45,9 +42,7 @@ export default function* Sagas() {
         fork(getScenesFlow),
         fork(getLinesFlow),
 
-        fork(getAllPlaysFlow),
-        fork(getActsFlow),
-        fork(getScenesFlow),
+        //schedulePage sagas...
         fork(getCharactersFlow)
 
     ];

@@ -77,7 +77,7 @@ export function getCharactersStatus(state = defaultState, action) {
 const schedulePageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,
-    getSceneStatus,
+    getScenesStatus,
     getCharactersStatus,
 });
 

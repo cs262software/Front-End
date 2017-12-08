@@ -46,7 +46,7 @@ export function* getScenes(action) {
 }
 
 export function* getCharactersFlow() {
-	yield takeLatest(reduxActions.GET_CHARACTERS_REQUEST, getSchedule);
+	yield takeLatest(reduxActions.GET_CHARACTERS_REQUEST, getCharacters);
 }
 
 export function* getCharacters(action) {
