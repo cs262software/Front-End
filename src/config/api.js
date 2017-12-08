@@ -7,7 +7,8 @@ export const ENDPOINTS = {
     plays: "/api/plays/all",
     acts: "/api/acts",
     scenes: "/api/scenes",
-    lines: "/api/plays/lines"
+    lines: "/api/plays/lines",
+    characters: "/api/schedule"
 };
 
 

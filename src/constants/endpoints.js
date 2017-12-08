@@ -15,7 +15,7 @@ var endpoints = {
     GET_ALL_PLAYS: "/api/schedule",
     GET_ACTS: "/api/schedule/", // append :PlayID/acts in the saga",
     GET_SCENES: "/api/schedule/", // append :PlayID/:ActNum/scenes in the saga",
-    GET_CHARACTERS: "/api/schedule/" // append :PlayID/:ActNum/:SceneNum/lines in the saga"
+    GET_CHARACTERS: "/api/schedule/" // append :PlayID/:ActNum/:SceneNum/characters in the saga"
 };
 
 export default endpoints;
