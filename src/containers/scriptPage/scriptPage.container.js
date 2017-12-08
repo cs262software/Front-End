@@ -108,7 +108,7 @@ class ScriptPage extends Component {
                         <Well>
                         <Row className="main-page-row">
                             <Col sm={4}>
-                                <h2>Play</h2>
+                                
                                 <Dropdown id="play-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.playDropdownOption.Name}
@@ -122,7 +122,7 @@ class ScriptPage extends Component {
                                 </Dropdown>
                             </Col>
                             <Col sm={4}>
-                                <h2>Act</h2>
+                                
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.actDropdownOption}
@@ -136,7 +136,6 @@ class ScriptPage extends Component {
                                 </Dropdown>
                             </Col>
                             <Col sm={4}>
-                                <h2>Scene</h2>
                                 <Dropdown id="scene-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.sceneDropdownOption}
