@@ -43,7 +43,7 @@ export default function* Sagas() {
         fork(getAllPlaysFlow),
         fork(getActsFlow),
         fork(getScenesFlow),
-        fork(getLinesFlow)
+        fork(getLinesFlow),
 
         fork(getAllPlaysFlow),
         fork(getActsFlow),
