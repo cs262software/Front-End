@@ -30,6 +30,10 @@ import {
     getLinesByPlayAndCharacterFlow
 } from '../containers/actorPage/actorPage.sagas';
 
+import {
+  getCharactersFlow
+} from '../containers/schedulePage/schedulePage.sagas';
+
 export default function* Sagas() {
     yield [
         // loginPage sagas...
@@ -43,6 +47,9 @@ export default function* Sagas() {
         fork(getActsFlow),
         fork(getScenesFlow),
         fork(getLinesFlow),
+
+        //schedulePage sagas...
+        fork(getCharactersFlow),
         fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
         fork(saveBlockingFlow),

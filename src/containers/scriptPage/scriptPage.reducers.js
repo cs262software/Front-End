@@ -158,11 +158,6 @@ export function getLinesByPlayAndCharacterStatus(state = arrayState, action) {
     }
 }
 
-
-
-
-
-
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,
