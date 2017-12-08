@@ -38,6 +38,9 @@ class ScriptPage extends Component {
             propsNote: "",
             editPropsNote: "",
             addPropsNote: "",
+            showNewLights: false,
+            showNewSounds: false,
+            showNewProps: false
         };
 
         this.playDropdownChange = this.playDropdownChange.bind(this);
@@ -45,9 +48,15 @@ class ScriptPage extends Component {
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
         this.handleFieldChange = this.handleFieldChange.bind(this);
+        //edit existing notes
         this.editLightsNotes = this.editLightsNotes.bind(this);
         this.editSoundsNotes = this.editSoundsNotes.bind(this);
         this.editPropsNotes = this.editPropsNotes.bind(this);
+        //creating new text boxes
+        this.onClickNewLights = this.onClickNewLights.bind(this);
+        this.onClickNewSounds = this.onClickNewSounds.bind(this);
+        this.onClickNewProps = this.onClickNewProps.bind(this);
+        //add new notes
         this.addLightsNotes = this.addLightsNotes.bind(this);
         this.addSoundsNotes = this.addSoundsNotes.bind(this);
         this.addPropsNotes = this.addPropsNotes.bind(this)
@@ -146,6 +155,26 @@ class ScriptPage extends Component {
         this.props.putPropsByLine(propsNotes)
     }
 
+    onClickNewLights() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
+        }
+        )
+    }
+
+    onClickNewSounds() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
+        }
+        )
+    }
+
+    onClickNewProps() {
+        this.setState({
+            showNewProps: !this.state.showNewProps
+        }
+        )
+    }
 
     addLightsNotes() {
         let lightsNotes = {
@@ -170,6 +199,8 @@ class ScriptPage extends Component {
         }
         this.props.postPropsByLine(propsNotes)
     }
+
+    
 
 
     render() {
@@ -263,29 +294,31 @@ class ScriptPage extends Component {
                         <div>
                             {this.state.showLines && this.state.showLineDetails ?
                                 <div>
-                                    <LightsNotes dropDownOption={this.state.firstNotesDropdownOption}
-                                        dropdownOptionChange={this.firstCrewNotesDropdownChange}
-                                        selectedOption={this.state.firstNotesSelectedOption}
+                                    <LightsNotes 
                                         crewNotesByLineStatus={this.props.getLightsByLineStatus}
                                         handleFieldChange={this.handleFieldChange}
-                                        editLightsNotes={this.state.editLightsNote}
+                                        editLightsNote={this.state.editLightsNote}
+                                        addLightsNote={this.state.addLightsNote}
+                                        showNewLights={this.state.showNewLights}
+                                        onClick={this.onClickNewLights}
 
                                     />
-                                    <SoundsNotes dropDownOption={this.state.firstNotesDropdownOption}
-                                        dropdownOptionChange={this.firstCrewNotesDropdownChange}
-                                        selectedOption={this.state.firstNotesSelectedOption}
+                                    <SoundsNotes 
                                         crewNotesByLineStatus={this.props.getSoundsByLineStatus}
                                         handleFieldChange={this.handleFieldChange}
+                                        editSoundsNote={this.state.editSoundsNote}
+                                        addSoundsNote={this.state.addSoundsNote}
+                                        showNewSounds={this.state.showNewSounds}
+                                        onClick={this.onClickNewSounds}
                                     />
-                                    {/*}
-                                <PropsNotes dropDownOption={this.state.firstNotesDropdownOption}
-                                    dropdownOptionChange={this.firstCrewNotesDropdownChange}
-                                    selectedOption={this.state.firstNotesSelectedOption}
+                                <PropsNotes 
                                     crewNotesByLineStatus={this.props.getPropsByLineStatus}
                                     handleFieldChange={this.handleFieldChange}
-                                />*/}
-
-
+                                    editPropsNote={this.state.editPropsNote}
+                                    addSoundsNote={this.state.addSoundsNote}
+                                    showNewProps={this.state.showNewProps}
+                                    onClick={this.onClickNewProps}
+                                />
 
                                 </div>
                                 : null

@@ -17,17 +17,24 @@ class PropsNotes extends Component {
                 <Col sm={12}>
                     <ButtonToolbar style={{ marginLeft: "800px" }}>               
                         <ListGroup>
+                            <h2>Props Notes</h2>
                             {this.props.crewNotesByLineStatus
                                 ? this.props.crewNotesByLineStatus.map((props, index) => 
+                                    <div>
+                                        <Col xs={12} sm={12} md={12}>
                                         <ListGroupItem key={"lights-list-group-item-" + index}>
-                                            <Col xs={12} sm={12} md={12}>
                                                 <textarea name="editPropsNotes" value={props.Name} onChange={e => { this.props.handleFieldChange(e) }}> </textarea>
-                                            </Col>
-                                        </ListGroupItem>)  
+                                        </ListGroupItem>
+                                        </Col>
+                                        </div>)  
                                     : null
                             }
                         </ListGroup>
-                        <Button bsStyle = "primary" bsSize="medium" >Add a Props Note</Button>
+                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick} > Add a Props Note</Button>
+                        {this.props.showNewProps ?
+                            <textarea name="addPropsNotes"></textarea>
+                            : null
+                        }
                       </ButtonToolbar>
                 </Col>
             </div>

@@ -23,7 +23,13 @@ import {
     getBlockingByLineFlow,
     getLightsByLineFlow,
     getSoundsByLineFlow,
-    getPropsByLineFlow
+    getPropsByLineFlow,
+    putLightsByLineFlow,
+    putSoundsByLineFlow,
+    putPropsByLineFlow,
+    postLightsByLineFlow,
+    postSoundsByLineFlow,
+    postPropsByLineFlow,
 } from '../containers/scriptPage/scriptPage.sagas';
 
 export default function* Sagas() {
@@ -43,6 +49,12 @@ export default function* Sagas() {
         fork(getBlockingByLineFlow),
         fork(getLightsByLineFlow),
         fork(getSoundsByLineFlow),
-        fork(getPropsByLineFlow)
+        fork(getPropsByLineFlow),
+        fork(putLightsByLineFlow),
+        fork(putSoundsByLineFlow),
+        fork(putPropsByLineFlow),
+        fork(postLightsByLineFlow),
+        fork(postSoundsByLineFlow),
+        fork(postPropsByLineFlow)
     ];
 }

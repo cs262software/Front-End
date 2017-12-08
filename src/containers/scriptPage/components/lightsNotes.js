@@ -12,29 +12,35 @@ class LightsNotes extends Component {
 
     }
 
-  
-
     render() {
         return (
             <div>
                 <Col sm={12}>
                     <ButtonToolbar style={{ marginLeft: "800px" }}>                  
                         <ListGroup>
+                            <h2>Lights Notes</h2>
                             {this.props.crewNotesByLineStatus
                                 ? this.props.crewNotesByLineStatus.map((light, index) => {
                                     //this.props.editLightsNotes = light.Name
                                     return (
-                                        <ListGroupItem key={"lights-list-group-item-" + index}>
-                                        <Col xs={12} sm={12} md={12}>
-                                                <textarea name="editLightsNotes" value={light.Name}onChange={e => { this.props.handleFieldChange(e) }}></textarea>
-                                        </Col>
-                                        </ListGroupItem>
+                                        <div>
+                                            <Col xs={12} sm={12} md={12}>
+                                            <ListGroupItem key={"lights-list-group-item-" + index}>
+                                                    <textarea name="editLightsNotes" value={light.Name}onChange={e => { this.props.handleFieldChange(e) }}></textarea>
+                                            </ListGroupItem>
+                                            </Col>
+                                        </div>
+
                                         )
                                 }) 
                                     : null
                             }
                         </ListGroup>
-                        <Button  bsStyle = "primary" bsSize="medium" >Add a Lights Note</Button>
+                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add a Lights Note</Button>
+                        {this.props.showNewLights ?
+                            <textarea name="addLightsNotes"></textarea>
+                            : null
+                        }
                       </ButtonToolbar>
                 </Col>
             </div>
