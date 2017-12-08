@@ -37,9 +37,27 @@ export function getFileStatus(state = arrayState, action) {
     }
 }
 
+export function postFileStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.POST_FILE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.POST_FILE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.POST_FILE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
 const filesPageReducers = combineReducers({
     getAllFilesStatus,
-    getFileStatus
+    getFileStatus,
+    postFileStatus
 });
 
 export default filesPageReducers;

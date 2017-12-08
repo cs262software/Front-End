@@ -16,7 +16,8 @@ var endpoints = {
 
     // FilesPage endpoints.
     GET_ALL_FILES: "/api/files/all/",
-    GET_FILE: "/api/files/" // append :FileName
+    GET_FILE: "/api/files?filePath=", // append :FileName
+    POST_FILE: "/api/files/upload"
 };
 
 export default endpoints;

@@ -4,13 +4,9 @@ class FileRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filePath: ""
+            fileUrl: ""
         }
     }
-
-    // componentWillMount() {
-    //     this.props.getFile(this.props.file)
-    // }
 
     render() {
         return (
@@ -19,7 +15,7 @@ class FileRow extends Component {
                     <div class="fileTile" id="s1" style={{backgroundColor:"white"}}>
                         <div class="titlePosition" id ="thing1">{this.props.file}</div>
                     </div>
-                    <button onClick={() => {this.props.getFile(this.props.file)}}>Download</button>
+                    <a href={() => {this.props.fileUrl()}} download>Download</a>
 
                 </div>
              </div>
