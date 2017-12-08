@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../loginPage/loginPage.actions';
+import './index.css';
 
 class MainHeader extends Component {
 

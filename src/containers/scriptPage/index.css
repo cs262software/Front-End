@@ -1,10 +1,18 @@
 h1.main-page-header {
-    text-align: center;
+    text-align: left;
+    padding-left: 10px;
     text-transform: uppercase;
+    font-size : 18px;
+    display: flex;
 }
 
 .main-page-row {
     padding: 10px 5%;
+    display: flex;
+
+}
+.col-sm-4 {
+    display: flex;
 }
 
 .no-content-text {
@@ -18,12 +26,36 @@ h1.main-page-header {
 .main-page-content .dropdown button {
     width: 100%;
     overflow: hidden;
+
 }
 
 .main-page-content .dropdown li {
     text-align: center;
+
 }
 
 .main-page-content .lines-list-group button:focus {
     z-index: 5;
 }
+
+.btn-group {
+    padding-right: 10px;
+}
+
+h2{
+    font-size: 10px;
+    padding-top: 30px;
+}
+.col-sm-8 {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button.list-group-item {
+    width: 156%;
+    text-align: left;
+}
+
+
+

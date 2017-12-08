@@ -98,12 +98,15 @@ class ScriptPage extends Component {
         return (
             <div id="script-page">
                 <MainHeader />
-                <h1 className ="main-page-header">Script</h1>
-                { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
+                                { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
                     <div className="main-page-content">
+                 
+                        
                         <Row className="main-page-row">
+                        <h1 className ="main-page-header">Script</h1>
+
                             <Col sm={4}>
-                                <h2>Play</h2>
+                                
                                 <Dropdown id="play-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.playDropdownOption.Name}
@@ -115,8 +118,9 @@ class ScriptPage extends Component {
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
+            
 
-                                <h2>Act</h2>
+                              
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.actDropdownOption}
@@ -129,7 +133,7 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
 
-                                <h2>Scene</h2>
+                               
                                 <Dropdown id="scene-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.sceneDropdownOption}
@@ -142,10 +146,10 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
-
+            
+                        
                             {this.props.getLinesStatus && this.state.showLines ?
                                 <Col sm={8} className="lines-list-group">
-                                    <h2>Lines</h2>
                                     <ListGroup>
                                         {this.props.getLinesStatus
                                             ? this.props.getLinesStatus.map((line, index) => (

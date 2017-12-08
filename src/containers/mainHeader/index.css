@@ -1,0 +1,14 @@
+.navbar-brand {
+	font-size: 18px;
+}
+.navbar-inverse .navbar-brand {
+	color: black;
+	text-transform: uppercase;
+	padding-right: 30px;
+	border-right: 1px solid gray;
+	font-weight: bold;
+}
+.navbar-inverse{
+	background-color: white;
+	border-color: gray;
+}
