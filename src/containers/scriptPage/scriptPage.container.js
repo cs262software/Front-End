@@ -5,7 +5,6 @@ import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bo
 import MainHeader from '../mainHeader/mainHeader.container';
 import BlockingView from './components/blockingView';
 import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
-import './index.css';
 
 var defaultPlayDropdownOption = {
     Name: "Please Select a Play",
@@ -97,16 +96,15 @@ class ScriptPage extends Component {
     render() {
         return (
             <div id="script-page">
+
                 <MainHeader />
-                                { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
+
+                    { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
                     <div className="main-page-content">
-                 
-                        
                         <Row className="main-page-row">
-                        <h1 className ="main-page-header">Script</h1>
+                            <h1 className ="main-page-header">Script</h1>
 
                             <Col sm={4}>
-                                
                                 <Dropdown id="play-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.playDropdownOption.Name}
@@ -118,9 +116,7 @@ class ScriptPage extends Component {
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
-            
 
-                              
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.actDropdownOption}
@@ -133,7 +129,6 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
 
-                               
                                 <Dropdown id="scene-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.sceneDropdownOption}
@@ -146,30 +141,31 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
-            
-                        
-                            {this.props.getLinesStatus && this.state.showLines ?
-                                <Col sm={8} className="lines-list-group">
-                                    <ListGroup>
-                                        {this.props.getLinesStatus
-                                            ? this.props.getLinesStatus.map((line, index) => (
-                                                <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
-                                                    <Col xs={4} sm={4} md={4}>
-                                                        {line.CharacterSpeaking
-                                                            ? line.CharacterSpeaking
-                                                            : ""
-                                                        }
-                                                    </Col>
-                                                    <Col xs={8} sm={8} md={8}>
-                                                        {line.Text}
-                                                    </Col>
-                                                </ListGroupItem>))
-                                            : null
-                                        }
-                                    </ListGroup>
-                                </Col> : null
-                            }
                         </Row>
+
+                        <div className="script-view-row">
+                        {this.props.getLinesStatus && this.state.showLines ?
+                            <Col sm={8} className="lines-list-group">
+                                <ListGroup>
+                                    {this.props.getLinesStatus
+                                        ? this.props.getLinesStatus.map((line, index) => (
+                                            <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
+                                                <Col xs={4} sm={4} md={4}>
+                                                    {line.CharacterSpeaking
+                                                        ? line.CharacterSpeaking
+                                                        : ""
+                                                    }
+                                                </Col>
+                                                <Col xs={8} sm={8} md={8}>
+                                                    {line.Text}
+                                                </Col>
+                                            </ListGroupItem>))
+                                        : null
+                                    }
+                                </ListGroup>
+                            </Col> : null
+                        }</div>
+
 
                         { this.state.showLines && this.state.showLineDetails ?
                             <Row className="main-page-row">

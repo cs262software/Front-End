@@ -46,16 +46,17 @@ h2{
     font-size: 10px;
     padding-top: 30px;
 }
+
 .col-sm-8 {
-    width: 80%;
     display: flex;
-    justify-content: flex-end;
+    justify-self: flex-end;
 }
 
 button.list-group-item {
-    width: 156%;
+    width: 100%;
     text-align: left;
 }
 
-
-
+.script-view-row {
+    display: flex;
+}

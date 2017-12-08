@@ -8,3 +8,7 @@
   padding: 0;
   font-family: sans-serif;
 }*/
+
+.row {
+    margin: 0 !important;
+}
