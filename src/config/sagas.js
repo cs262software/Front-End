@@ -20,7 +20,10 @@ import {
     getScenesFlow,
     getLinesFlow,
     getCharactersBySceneFlow,
-    getBlockingByLineFlow
+    getBlockingByLineFlow,
+    getLightsByLineFlow,
+    getSoundsByLineFlow,
+    getPropsByLineFlow
 } from '../containers/scriptPage/scriptPage.sagas';
 
 export default function* Sagas() {
@@ -37,6 +40,9 @@ export default function* Sagas() {
         fork(getScenesFlow),
         fork(getLinesFlow),
         fork(getCharactersBySceneFlow),
-        fork(getBlockingByLineFlow)
+        fork(getBlockingByLineFlow),
+        fork(getLightsByLineFlow),
+        fork(getSoundsByLineFlow),
+        fork(getPropsByLineFlow)
     ];
 }

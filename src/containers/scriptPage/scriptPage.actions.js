@@ -45,3 +45,72 @@ export function getBlockingByLine(lineID) {
         LineID: lineID
     };
 }
+
+export function getLightsByLine(lineID) {
+    return {
+        type: reduxActions.GET_LIGHTS_BY_LINE_REQUEST,
+        LineID: lineID
+    };
+}
+
+export function getSoundsByLine(lineID) {
+    return {
+        type: reduxActions.GET_SOUNDS_BY_LINE_REQUEST,
+        LineID: lineID
+    };
+}
+
+export function getPropsByLine(lineID) {
+    return {
+        type: reduxActions.GET_PROPS_BY_LINE_REQUEST,
+        LineID: lineID
+    };
+}
+
+export function putLightsByLine(lineID, editedLights) {
+    return {
+        type: reduxActions.PUT_LIGHTS_BY_LINE_REQUEST,
+        LineID: lineID,
+        EditedLights: editedLights
+    };
+}
+
+export function putSoundsByLine(lineID, editedSounds) {
+    return {
+        type: reduxActions.PUT_SOUNDS_BY_LINE_REQUEST,
+        LineID: lineID,
+        EditedSounds: editedSounds
+    };
+}
+
+export function putPropsByLine(lineID, editedProps) {
+    return {
+        type: reduxActions.PUT_PROPS_BY_LINE_REQUEST,
+        LineID: lineID,
+        EditedProps: editedProps
+    };
+}
+
+export function postLightsByLine(newLights) {
+    return {
+        type: reduxActions.POST_LIGHTS_BY_LINE_REQUEST,
+        LineID: newLights.lineID,
+        NewLights: newLights.Name
+    };
+}
+
+export function postSoundsByLine(newSounds) {
+    return {
+        type: reduxActions.POST_SOUNDS_BY_LINE_REQUEST,
+        LineID: newSounds.lineID,
+        NewSounds: newSounds.Name
+    };
+}
+
+export function postPropsByLine(lineID, newProps) {
+    return {
+        type: reduxActions.POST_PROPS_BY_LINE_REQUEST,
+        LineID: newProps.lineID,
+        NewProps: newProps.Name
+    };
+}

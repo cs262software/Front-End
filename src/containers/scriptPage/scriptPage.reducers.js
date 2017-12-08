@@ -108,13 +108,64 @@ export function getBlockingByLineStatus(state = arrayState, action) {
     }
 }
 
+export function getLightsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_LIGHTS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_LIGHTS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_LIGHTS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function getSoundsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_SOUNDS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_SOUNDS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_SOUNDS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function getPropsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_PROPS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_PROPS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_PROPS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,
     getScenesStatus,
     getLinesStatus,
     getCharactersBySceneStatus,
-    getBlockingByLineStatus
+    getBlockingByLineStatus,
+    getLightsByLineStatus,
+    getSoundsByLineStatus,
+    getPropsByLineStatus
 });
 
 export default scriptPageReducers;

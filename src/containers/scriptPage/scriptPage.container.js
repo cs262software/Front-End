@@ -4,8 +4,10 @@ import { push } from 'connected-react-router';
 import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import BlockingView from './components/blockingView';
-import CrewNotes from './components/crewNotes';
-import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
+import LightsNotes from './components/lightsNotes';
+import SoundsNotes from './components/soundsNotes';
+import PropsNotes from './components/propsNotes';
+import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getLightsByLine, getSoundsByLine, getPropsByLine, putLightsByLine, putSoundsByLine, putPropsByLine, postLightsByLine, postSoundsByLine, postPropsByLine } from './scriptPage.actions';
 import './index.css';
 
 var defaultPlayDropdownOption = {
@@ -14,7 +16,6 @@ var defaultPlayDropdownOption = {
 };
 var defaultActDropdownOption = "Please Select an Act";
 var defaultSceneDropdownOption = "Please Select a Scene";
-var defaultcrewNotesDropdownOption = "Lights/Sounds/Props"; //crewNotes
 
 class ScriptPage extends Component {
 
@@ -25,17 +26,31 @@ class ScriptPage extends Component {
             playDropdownOption: defaultPlayDropdownOption,
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
-            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             showLines: false,
             selectedLineID: null,
-            showLineDetails: false
+            showLineDetails: false,
+            lightsNote: "",
+            editLightsNote: "",
+            addLightsNote: "",
+            soundsNote: "",
+            editSoundsNote: "",
+            addSoundsNote: "",
+            propsNote: "",
+            editPropsNote: "",
+            addPropsNote: "",
         };
 
         this.playDropdownChange = this.playDropdownChange.bind(this);
         this.actDropdownChange = this.actDropdownChange.bind(this);
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
-        this.crewNotesDropdownOptionChange = this.crewNotesDropdownOptionChange.bind(this)  
+        this.handleFieldChange = this.handleFieldChange.bind(this);
+        this.editLightsNotes = this.editLightsNotes.bind(this);
+        this.editSoundsNotes = this.editSoundsNotes.bind(this);
+        this.editPropsNotes = this.editPropsNotes.bind(this);
+        this.addLightsNotes = this.addLightsNotes.bind(this);
+        this.addSoundsNotes = this.addSoundsNotes.bind(this);
+        this.addPropsNotes = this.addPropsNotes.bind(this)
     }
 
     componentWillMount() {
@@ -52,7 +67,6 @@ class ScriptPage extends Component {
             playDropdownOption: value,
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
-            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             showLines: false,
             selectedLineID: null,
             showLineDetails: false
@@ -63,7 +77,6 @@ class ScriptPage extends Component {
         this.setState({
             actDropdownOption: value,
             sceneDropdownOption: defaultSceneDropdownOption,
-            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             showLines: false,
             selectedLineID: null,
             showLineDetails: false,
@@ -72,7 +85,6 @@ class ScriptPage extends Component {
 
     sceneDropdownChange(value) {
         this.setState({
-            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             sceneDropdownOption: value,
             showLines: !(value === defaultSceneDropdownOption), // Only show lines if the default is not selected.
             selectedLineID: null,
@@ -95,17 +107,68 @@ class ScriptPage extends Component {
 
     onClickLine(LineID) {
         this.setState({
-            crewNotesDropdownOption: defaultcrewNotesDropdownOption,
             selectedLineID: LineID,
             showLineDetails: true
         });
         this.props.getBlockingByLine(LineID);
+        this.props.getLightsByLine(LineID);
+        this.props.getSoundsByLine(LineID);
+        this.props.getPropsByLine(LineID)
     }
 
-    crewNotesDropdownOptionChange(value) {
+    handleFieldChange(e) {
         this.setState({
-            crewNotesSelectedOption : value
-        })
+            [e.target.name]: e.target.value
+        });
+    }
+
+    editLightsNotes() {
+        let lightsNotes = {
+            lineID: this.state.selectedLineID,
+            Name: this.state.editlightsNote
+        }
+        this.props.putLightsByLine(lightsNotes)
+    }
+
+    editSoundsNotes() {
+        let soundsNotes = {
+            lineID: this.state.selectedLineID,
+            Name: this.state.editSoundsNote
+        }
+        this.props.putSoundsByLine(soundsNotes)
+    }
+
+    editPropsNotes() {
+        let propsNotes = {
+            lineID: this.state.selectedLineID,
+            Name: this.state.editPropsNote
+        }
+        this.props.putPropsByLine(propsNotes)
+    }
+
+
+    addLightsNotes() {
+        let lightsNotes = {
+            lineID: this.state.selectedLineID,
+            Name: this.state.addLightsNote
+        }
+        this.props.postLightsByLine(lightsNotes)
+    }
+
+    addSoundsNotes() {
+        let soundsNotes = {
+            lineID: this.state.selectedLineID,
+            Name: this.state.addSoundsNote
+        }
+        this.props.postSoundsByLine(soundsNotes)
+    }
+
+    addPropsNotes() {
+        let propsNotes = {
+            lineID: this.state.selectedLineID,
+            Name: this.state.addPropsNote
+        }
+        this.props.postPropsByLine(propsNotes)
     }
 
 
@@ -181,8 +244,9 @@ class ScriptPage extends Component {
                                 </Col> : null
                             }
                         </Row>
+
                         <div>
-                            { this.state.showLines && this.state.showLineDetails ?
+                           { this.state.showLines && this.state.showLineDetails ?
                                 <Row className="main-page-row">
                                     <Col sm={6}>
                                         <div className="blocking-view">
@@ -198,20 +262,38 @@ class ScriptPage extends Component {
 
                         <div>
                             {this.state.showLines && this.state.showLineDetails ?
-                                <Row className="main-page-row">
-                                    <Col sm={6}>
-                                        <div className="crew-notes">
-                                            <CrewNotes
-                                                selectedLineID={this.state.selectedLineID}
-                                                dropdownOption={this.state.crewNotesDropDownOptions}
-                                                dropdownOptionChange={this.state.crewNotesDropdownOptionChange}
-                                                selectedOption={this.state.crewNotesSelectedOption}
-                                            />
-                                        </div>
-                                    </Col>
-                                </Row> : null
+                                <div>
+                                    <LightsNotes dropDownOption={this.state.firstNotesDropdownOption}
+                                        dropdownOptionChange={this.firstCrewNotesDropdownChange}
+                                        selectedOption={this.state.firstNotesSelectedOption}
+                                        crewNotesByLineStatus={this.props.getLightsByLineStatus}
+                                        handleFieldChange={this.handleFieldChange}
+                                        editLightsNotes={this.state.editLightsNote}
+
+                                    />
+                                    <SoundsNotes dropDownOption={this.state.firstNotesDropdownOption}
+                                        dropdownOptionChange={this.firstCrewNotesDropdownChange}
+                                        selectedOption={this.state.firstNotesSelectedOption}
+                                        crewNotesByLineStatus={this.props.getSoundsByLineStatus}
+                                        handleFieldChange={this.handleFieldChange}
+                                    />
+                                    {/*}
+                                <PropsNotes dropDownOption={this.state.firstNotesDropdownOption}
+                                    dropdownOptionChange={this.firstCrewNotesDropdownChange}
+                                    selectedOption={this.state.firstNotesSelectedOption}
+                                    crewNotesByLineStatus={this.props.getPropsByLineStatus}
+                                    handleFieldChange={this.handleFieldChange}
+                                />*/}
+
+
+
+                                </div>
+                                : null
+
                             }
-                            </div>
+                        </div>
+
+
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }
             </div>
@@ -229,12 +311,15 @@ function mapStateToProps(state) {
         getScenesStatus: state.scriptPageReducers.getScenesStatus.data,
         getLinesStatus: state.scriptPageReducers.getLinesStatus.data,
         getCharactersBySceneStatus: state.scriptPageReducers.getCharactersBySceneStatus.data,
-        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data
+        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data,
+        getLightsByLineStatus: state.scriptPageReducers.getLightsByLineStatus.data,
+        getSoundsByLineStatus: state.scriptPageReducers.getSoundsByLineStatus.data,
+        getPropsByLineStatus: state.scriptPageReducers.getPropsByLineStatus.data
     };
 }
 
 export default connect(mapStateToProps,
     {
-        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, push
+        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getLightsByLine, getSoundsByLine, getPropsByLine, putLightsByLine, putSoundsByLine, putPropsByLine, postLightsByLine, postSoundsByLine, postPropsByLine, push
     }
 )(ScriptPage);
