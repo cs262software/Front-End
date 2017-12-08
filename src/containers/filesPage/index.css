@@ -4,6 +4,44 @@
 #center{margin: 0 auto;width: 100px;}
 */
 
+h1.pageName {
+   display: block;
+   text-align: center;
+   font-family: Impact;
+}
+
+label.fileUploadField input[type="file"] {
+   position: fixed;
+   top: -1000px;
+}
+
+.fileUploadField {
+   border: 2px solid #1155ccff;
+   border-radius: 4px;
+   padding: 10px 10px 10px 10px;
+   background: #cceaff;
+   display: block;
+   margin: auto;
+   width: 50%;
+   text-align: center;
+}
+.fileUploadField:hover {
+   background: #b3d9ff;
+}
+.fileUploadField:active {
+   background: #66b5ff;
+}
+.fileUploadField span {
+   font-size: 20px;
+   font-weight: bolder;
+   color: #1155ccff;
+}
+img.uploadIcon {
+   display: block;
+   margin: auto;
+}
+
+
 div.filesList {
    display: block;
    margin: auto;
@@ -11,6 +49,7 @@ div.filesList {
    width: 96%;
    height: 325px;
    border: 10px solid gray;
+   background-color: #F0F0F0;
    clear: both;
    overflow: auto;
 }
@@ -20,24 +59,23 @@ div.filesListItem {
    width: 99%;
    height: 50px;
    border: 1px solid black;
-   background-color: powderblue;
    clear: both;
 }
 
 div.fileTile {
    display: block;
-   width: 85%;
+   width: 100%;
    height: 100%;
    border: 3px solid purple;
+   background-color: white;
    float: left;
    clear: left;
 }
 
 button.downloadFileBtn {
 	display: block;
-	width: 15%;
-	height: 100%;
+	width: 40px;
+	height: 90%;
 	float: right;
 	clear: right;
-	text-align: center;
 }
