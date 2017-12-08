@@ -3,10 +3,10 @@
 
 import { combineReducers } from 'redux';
 import reduxActions from '../../constants/reduxActions';
-import { defaultState, objectState, arrayState } from '../../constants/initialStates';
+import { /*defaultState, objectState,*/ arrayState } from '../../constants/initialStates';
 import { requestState, successState, failureState } from '../../constants/nextStates';
 
-export function getAllPlaysStatus(state = defaultState, action) {
+export function getAllPlaysStatus(state = arrayState, action) {
     switch (action.type) {
 
         case reduxActions.GET_ALL_PLAYS_REQUEST:
@@ -23,14 +23,13 @@ export function getAllPlaysStatus(state = defaultState, action) {
     }
 }
 
-export function getActsStatus(state = defaultState, action) {
+export function getActsStatus(state = arrayState, action) {
     switch (action.type) {
 
         case reduxActions.GET_ACTS_REQUEST:
             return requestState(state);
 
         case reduxActions.GET_ACTS_SUCCESS:
-            console.log(action);
             return successState(state, action);
 
         case reduxActions.GET_ACTS_FAILURE:
@@ -41,7 +40,7 @@ export function getActsStatus(state = defaultState, action) {
     }
 }
 
-export function getScenesStatus(state = defaultState, action) {
+export function getScenesStatus(state = arrayState, action) {
     switch (action.type) {
 
         case reduxActions.GET_SCENES_REQUEST:
@@ -58,7 +57,7 @@ export function getScenesStatus(state = defaultState, action) {
     }
 }
 
-export function getLinesStatus(state = defaultState, action) {
+export function getLinesStatus(state = arrayState, action) {
     switch (action.type) {
 
         case reduxActions.GET_LINES_REQUEST:
@@ -74,11 +73,99 @@ export function getLinesStatus(state = defaultState, action) {
             return state;
     }
 }
+
+export function getCharactersBySceneStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_CHARACTERS_BY_SCENE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_CHARACTERS_BY_SCENE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_CHARACTERS_BY_SCENE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function getBlockingByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_BLOCKING_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_BLOCKING_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_BLOCKING_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function saveBlockingStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.SAVE_BLOCKING_REQUEST:
+            return requestState(state);
+
+        case reduxActions.SAVE_BLOCKING_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.SAVE_BLOCKING_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+
+
+
+
+
+// NEEDED?
+
+export function getCharactersByPlayStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST:
+            return requestState(state);
+        case reduxActions.GET_CHARACTERS_BY_PLAY_SUCCESS:
+            return successState(state, action);
+        case reduxActions.GET_CHARACTERS_BY_PLAY_FAILURE:
+            return failureState(state, action);
+        default:
+            return state;
+    }
+}
+
+export function getLinesByPlayAndCharacterStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST:
+            return requestState(state);
+        case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_SUCCESS:
+            return successState(state, action);
+        case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_FAILURE:
+            return failureState(state, action);
+        default:
+            return state;
+    }
+}
+
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,
     getScenesStatus,
-    getLinesStatus
+    getLinesStatus,
+    getCharactersBySceneStatus,
+    getBlockingByLineStatus,
+    saveBlockingStatus
 });
 
 export default scriptPageReducers;

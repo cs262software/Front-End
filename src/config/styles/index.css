@@ -1,9 +1,16 @@
 /* Add any global CSS here. */
 
 @import url("../../containers/loginPage/index.css");
+@import url("../../containers/scriptPage/index.css");
 
-/*body {
-  margin: 0;
+body {
+  /*margin: 0;
   padding: 0;
-  font-family: sans-serif;
-}*/
+  font-family: sans-serif;*/
+  min-width: 300px;
+}
+
+.panel {
+    max-height: 400px;
+    overflow-y: scroll;
+}

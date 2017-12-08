@@ -10,7 +10,7 @@ class NewAccountBox extends Component {
                 <input className="form-control" type="text" name="username" placeholder="Enter a username" onChange={e => {this.props.handleFieldChange(e)}} />
                 <input className="form-control" type="password" name="password" placeholder="Enter a password" onChange={e => {this.props.handleFieldChange(e)}} />
                 <input className="form-control" type="password" name="passwordv" placeholder="Re-enter your password" onChange={e => {this.props.handleFieldChange(e)}} />
-                { (this.props.password == this.props.passwordv) ?
+                { (this.props.password === this.props.passwordv) ?
                     <p>Passwords match</p>
                     :
                     <p>Passwords don't match</p>
