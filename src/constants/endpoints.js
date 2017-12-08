@@ -9,7 +9,7 @@ var endpoints = {
     GET_ALL_PLAYS: "/api/plays",
     GET_ACTS: "/api/plays/", // append :PlayID/acts in the saga",
     GET_SCENES: "/api/plays/", // append :PlayID/:ActNum/scenes in the saga",
-    GET_LINES: "/api/plays/" // append :PlayID/:ActNum/:SceneNum/lines in the saga"
+    GET_LINES: "/api/plays/", // append :PlayID/:ActNum/:SceneNum/lines in the saga"
 
     //SchedulePage endpoints.
     GET_ALL_PLAYS: "/api/schedule",
