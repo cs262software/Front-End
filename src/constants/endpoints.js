@@ -15,7 +15,8 @@ var endpoints = {
     GET_BLOCKING_BY_LINE: "/api/blocking/", // append :LineID
 
     // FilesPage endpoints.
-    GET_ALL_FILES: "/api/files/all/"
+    GET_ALL_FILES: "/api/files/all/",
+    GET_FILE: "/api/files/" // append :FileName
 };
 
 export default endpoints;

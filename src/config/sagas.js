@@ -21,7 +21,8 @@ import {
 
 // filesPage sagas...
 import {
-    getAllFilesFlow
+    getAllFilesFlow,
+    getFileFlow
 } from '../containers/filesPage/filesPage.sagas';
 
 export default function* Sagas() {
@@ -39,6 +40,7 @@ export default function* Sagas() {
         fork(getBlockingByLineFlow),
 
         // filesPage sagas...
-        fork(getAllFilesFlow)
+        fork(getAllFilesFlow),
+        fork(getFileFlow)
     ];
 }

@@ -20,9 +20,26 @@ export function getAllFilesStatus(state = arrayState, action) {
     }
 }
 
+export function getFileStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_FILE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_FILE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_FILE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
 
 const filesPageReducers = combineReducers({
-    getAllFilesStatus
+    getAllFilesStatus,
+    getFileStatus
 });
 
 export default filesPageReducers;

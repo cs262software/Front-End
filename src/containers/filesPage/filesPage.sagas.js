@@ -16,3 +16,17 @@ export function* getAllFiles(action) {
 		yield put({ type: reduxActions.GET_ALL_FILES_FAILURE, error: err.json });
 	}
 }
+
+export function* getFileFlow() {
+	yield takeLatest(reduxActions.GET_FILE_REQUEST, getFile);
+}
+
+export function* getFile(action) {
+	const {res, err} = yield call(Get, endpoints.GET_FILE + action.fileName, {body: undefined});
+	if (res) {
+		yield put({ type: reduxActions.GET_FILE_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.GET_FILE_FAILURE, error: err.json });
+	}
+}
