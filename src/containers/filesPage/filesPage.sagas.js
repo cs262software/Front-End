@@ -24,6 +24,7 @@ export function* getFileFlow() {
 export function* getFile(action) {
 	const {res, err} = yield call(Get, endpoints.GET_FILE + action.fileName, {body: undefined});
 	if (res) {
+		console.log(res.json);
 		yield put({ type: reduxActions.GET_FILE_SUCCESS, data: res.json });
 	}
 	else if (err) {

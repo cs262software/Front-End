@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux';
 import reduxActions from '../../constants/reduxActions';
-import { /*defaultState, objectState,*/ arrayState } from '../../constants/initialStates';
+import { defaultState, objectState, arrayState } from '../../constants/initialStates';
 import { requestState, successState, failureState } from '../../constants/nextStates';
+var fileDownload = require('js-file-download');
+
+function download(file) {
+    var file = new Blob([file], { type: "text/xml;charset=utf-8;" });
+    fileDownload(file, "test.xml");
+
+}
 
 export function getAllFilesStatus(state = arrayState, action) {
     switch (action.type) {
@@ -27,6 +34,8 @@ export function getFileStatus(state = arrayState, action) {
             return requestState(state);
 
         case reduxActions.GET_FILE_SUCCESS:
+            action.data = action.data.content;
+            download(action.data);
             return successState(state, action);
 
         case reduxActions.GET_FILE_FAILURE:
