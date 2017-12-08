@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../loginPage/loginPage.actions';
+import './index.css';
 
 class MainHeader extends Component {
 
@@ -19,12 +20,12 @@ class MainHeader extends Component {
                 <nav className="navbar navbar-inverse navbar-static-top">
                 	<div className="container">
                 		<div className="navbar-header">
+                            <img className="site-logo" src="img/theatre-masks-small.png" alt="Logo" height="42" width="42"/>
                 			<a className="navbar-brand" href="/">Theatre Software Suite</a>
                 		</div>
                 		<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         	<ul className="nav navbar-nav navbar-right">
-                                <li><Link to='/'>Blocking Capture</Link></li>
-                                <li><Link to='/actor'>Actor View</Link></li>
+                                <li><Link to='/'>Script Viewer</Link></li>
                                 <li><Link to='/schedule'>Schedule</Link></li>
                                 <li><Link to='/files'>Files</Link></li>
                                 {/*<li className="dropdown">

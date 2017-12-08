@@ -108,13 +108,69 @@ export function getBlockingByLineStatus(state = arrayState, action) {
     }
 }
 
+export function saveBlockingStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.SAVE_BLOCKING_REQUEST:
+            return requestState(state);
+
+        case reduxActions.SAVE_BLOCKING_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.SAVE_BLOCKING_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+
+
+
+
+
+// NEEDED?
+
+export function getCharactersByPlayStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST:
+            return requestState(state);
+        case reduxActions.GET_CHARACTERS_BY_PLAY_SUCCESS:
+            return successState(state, action);
+        case reduxActions.GET_CHARACTERS_BY_PLAY_FAILURE:
+            return failureState(state, action);
+        default:
+            return state;
+    }
+}
+
+export function getLinesByPlayAndCharacterStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST:
+            return requestState(state);
+        case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_SUCCESS:
+            return successState(state, action);
+        case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_FAILURE:
+            return failureState(state, action);
+        default:
+            return state;
+    }
+}
+
+
+
+
+
+
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,
     getScenesStatus,
     getLinesStatus,
     getCharactersBySceneStatus,
-    getBlockingByLineStatus
+    getBlockingByLineStatus,
+    saveBlockingStatus
 });
 
 export default scriptPageReducers;

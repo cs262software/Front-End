@@ -1,5 +1,5 @@
 h1.main-page-header {
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
 }
 
@@ -28,7 +28,7 @@ h1.main-page-header {
     z-index: 5;
 }
 
-.actor-page-lines-list {
-    max-height: 200px;
+#actor-page-lines-list {
+    max-height: 400px;
     overflow-y: scroll;
 }

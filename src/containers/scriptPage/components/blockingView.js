@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import { groupBy } from 'lodash';
 import Unity from 'react-unity-webgl';
 import { SendMessage, RegisterExternalListener } from 'react-unity-webgl';
+import { saveBlocking } from '../scriptPage.actions';
 
 export class BlockingView extends Component {
     constructor () {
@@ -15,27 +17,8 @@ export class BlockingView extends Component {
     }
 
     recordUnityData (jsonData) {
-        console.log("_______________________");
-        console.log(jsonData);
-        console.log("_______________________");
-
-        // // Pass LineID as url parameter.
-        // let data = {
-        //     blockingUpdateArray: [
-        //         {
-        //             CharacterID: 4,
-        //             DestX: 1.4545,
-        //             DestY: 1.111,
-        //             DestZ: 0
-        //         },
-        //         {
-        //             CharacterID: 5,
-        //             DestX: 5.6,
-        //             DestY: 0,
-        //             DestZ: 0,
-        //         },
-        //     ]
-        // }
+        let data = JSON.parse(jsonData);
+        this.props.saveBlocking(this.props.selectedLineID, data.Items);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -74,20 +57,31 @@ export class BlockingView extends Component {
             let destZ = null;
 
             // See if there is any blocking data associated with the character.
-            let currCharDataSet = groupedBlockingData[this.props.characters[i].CharacterID];
+            let currCharDataSet = groupedBlockingData[characterID];
             // ...if there is, use it to populate the position fields.
-            if (typeof currCharDataSet != 'undefined') {
-                // If previous blocking data exists, set the origin position.
-                if (currCharDataSet.length > 1) {
-                    originX = currCharDataSet[1].OriginX;
-                    originY = currCharDataSet[1].OriginY;
-                    originZ = currCharDataSet[1].OriginZ;
-                }
+            if (typeof currCharDataSet !== 'undefined') {
                 // If blocking data exists for the current line, set the dest position.
                 if (currCharDataSet[0].LineID === this.props.selectedLineID) {
                     destX = currCharDataSet[0].DestX;
                     destY = currCharDataSet[0].DestY;
                     destZ = currCharDataSet[0].DestZ;
+
+                    // console.log(destX);
+                    // console.log(destY);
+                    // console.log(destZ);
+
+                    // If previous blocking data exists, set the origin position.
+                    if (currCharDataSet.length > 1) {
+                        originX = currCharDataSet[1].DestX;
+                        originY = currCharDataSet[1].DestY;
+                        originZ = currCharDataSet[1].DestZ;
+                    }
+                }
+                // If the most recent data is not the current line, set it as the origin position.
+                else {
+                    originX = currCharDataSet[0].DestX;
+                    originY = currCharDataSet[0].DestY;
+                    originZ = currCharDataSet[0].DestZ;
                 }
             }
 
@@ -109,6 +103,7 @@ export class BlockingView extends Component {
             dataToDisplay: formattedData
         }, () => {
             let d2d = JSON.stringify(this.state.dataToDisplay);
+            console.log(d2d);
             SendMessage ("UnityReactAnchor", "LoadBlockingData", d2d);
         });
     }
@@ -116,12 +111,11 @@ export class BlockingView extends Component {
     render() {
         return (
             <div className="blocking-view">
-                <h2>Blocking</h2>
                 <Unity
                     src='Build/blocking2d.json'
                     loader='Build/UnityLoader.js'
                 />
-                <ButtonToolbar>
+                <ButtonToolbar className="blocking-view-buttons">
                     <Button
                         onClick={() => {
                             SendMessage("UnityReactAnchor", "TriggerRecordUnityData");
@@ -143,4 +137,15 @@ export class BlockingView extends Component {
     }
 }
 
-export default BlockingView;
+function mapStateToProps(state) {
+    // retrieve values from the Redux state here
+    return {
+        saveBlockingStatus: state.scriptPageReducers.saveBlockingStatus.data
+    };
+}
+
+export default connect(mapStateToProps,
+    {
+        saveBlocking
+    }
+)(BlockingView);

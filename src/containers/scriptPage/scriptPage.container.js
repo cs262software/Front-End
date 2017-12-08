@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { Button, Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import BlockingView from './components/blockingView';
 import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
@@ -25,7 +25,8 @@ class ScriptPage extends Component {
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
             selectedLineID: null,
-            showLineDetails: false
+            showLineDetails: false,
+            showBlocking: false
         };
 
         this.playDropdownChange = this.playDropdownChange.bind(this);
@@ -98,9 +99,13 @@ class ScriptPage extends Component {
         return (
             <div id="script-page">
                 <MainHeader />
-                <h1 className ="main-page-header">Blocking Capture</h1>
+                <Row className="main-page-row">
+                    <h1 className ="main-page-header">Script</h1>
+                </Row>
+                <hr />
                 { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
                     <div className="main-page-content">
+                        <Well>
                         <Row className="main-page-row">
                             <Col sm={4}>
                                 <h2>Play</h2>
@@ -115,7 +120,8 @@ class ScriptPage extends Component {
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
-
+                            </Col>
+                            <Col sm={4}>
                                 <h2>Act</h2>
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
@@ -128,7 +134,8 @@ class ScriptPage extends Component {
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
-
+                            </Col>
+                            <Col sm={4}>
                                 <h2>Scene</h2>
                                 <Dropdown id="scene-dropdown">
                                     <Dropdown.Toggle>
@@ -142,11 +149,21 @@ class ScriptPage extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
+                        </Row>
+                        </Well>
 
+                        <Well>
+                        <Row className="main-page-row">
+                            <Col sm={4}>
+                                <h2>Character</h2>
+                                <Panel>
+                                </Panel>
+                            </Col>
                             <Col sm={8} className="lines-list-group">
                                 <h2>Lines</h2>
+                                <Panel>
                                 <ListGroup>
-                                    {this.props.getLinesStatus
+                                    {this.props.getLinesStatus && this.props.getLinesStatus.length > 0
                                         ? this.props.getLinesStatus.map((line, index) => (
                                             <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
                                                 <Col xs={4} sm={4} md={4}>
@@ -159,24 +176,62 @@ class ScriptPage extends Component {
                                                     {line.Text}
                                                 </Col>
                                             </ListGroupItem>))
-                                        : null
+                                        : <p className="no-content-text">Select a scene to view lines</p>
                                     }
                                 </ListGroup>
+                                </Panel>
                             </Col>
                         </Row>
+                        </Well>
 
                         <Well>
-                            <Row className="main-page-row">
-                                <Col sm={12}>
-                                    <div className="blocking-view">
-                                        <BlockingView
-                                            selectedLineID={this.state.selectedLineID}
-                                            characters={this.props.getCharactersBySceneStatus}
-                                            blockingData={this.props.getBlockingByLineStatus}
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
+                        <Row className="main-page-row">
+                            <Col sm={8}>
+                                <div className="blocking-view">
+                                    <h2>Blocking</h2>
+                                    <Panel>
+                                    { this.state.showBlocking
+                                        ?   <BlockingView
+                                                selectedLineID={this.state.selectedLineID}
+                                                characters={this.props.getCharactersBySceneStatus}
+                                                blockingData={this.props.getBlockingByLineStatus}
+                                            />
+                                        :  <Button
+                                                onClick={() => {
+                                                    this.setState({
+                                                        showBlocking: true
+                                                    });
+                                                }}
+                                            >
+                                                Load Blocking View
+                                            </Button>
+                                    }
+                                    </Panel>
+                                </div>
+                            </Col>
+                            <Col sm={4} className="lines-list-group">
+                                <h2>Notes</h2>
+                                <Panel>
+                                <ListGroup>
+                                    {this.props.getLinesStatus && this.props.getLinesStatus.length > 0
+                                        ? this.props.getLinesStatus.map((line, index) => (
+                                            <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
+                                                <Col xs={4} sm={4} md={4}>
+                                                    {line.CharacterSpeaking
+                                                        ? line.CharacterSpeaking
+                                                        : ""
+                                                    }
+                                                </Col>
+                                                <Col xs={8} sm={8} md={8}>
+                                                    {line.Text}
+                                                </Col>
+                                            </ListGroupItem>))
+                                        : <p className="no-content-text">No notes to display</p>
+                                    }
+                                </ListGroup>
+                                </Panel>
+                            </Col>
+                        </Row>
                         </Well>
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }

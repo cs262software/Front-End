@@ -1,4 +1,4 @@
-import { Get /*, Post, Put, Delete*/ } from '../../config/api';
+import { Get, Post /*, Put, Delete*/ } from '../../config/api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import reduxActions from '../../constants/reduxActions';
 import endpoints from '../../constants/endpoints';
@@ -88,5 +88,19 @@ export function* getBlockingByLine(action) {
 	}
 	else if (err) {
 		yield put({ type: reduxActions.GET_BLOCKING_BY_LINE_FAILURE, error: err.json });
+	}
+}
+
+export function* saveBlockingFlow() {
+	yield takeLatest(reduxActions.SAVE_BLOCKING_REQUEST, saveBlocking);
+}
+
+export function* saveBlocking(action) {
+	const {res, err} = yield call(Post, endpoints.SAVE_BLOCKING + action.LineID, { blockingUpdateArray: action.BlockingUpdateArray });
+	if (res) {
+		yield put({ type: reduxActions.SAVE_BLOCKING_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.SAVE_BLOCKING_FAILURE, error: err.json });
 	}
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col, FormGroup, Checkbox, Radio } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import { getAllPlays } from '../scriptPage/scriptPage.actions';
 import { getCharactersByPlay, getLinesByPlayAndCharacter } from './actorPage.actions';
@@ -30,6 +29,8 @@ class ActorPage extends Component {
 
         this.playDropdownChange = this.playDropdownChange.bind(this);
         this.characterDropdownChange = this.characterDropdownChange.bind(this);
+        this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
+        this.onChangeRadio = this.onChangeRadio.bind(this);
     }
 
     componentWillMount() {
@@ -41,7 +42,9 @@ class ActorPage extends Component {
         this.setState({
             playDropdownOption: value,
             characterDropdownOption: defaultCharacterDropdownOption,
-            showLines: false
+            showLines: false,
+            coverMyLines: false,
+            selectedRadioButton: 1
         }, () => this.props.getCharactersByPlay(value.PlayID)); // When a play is selected, get a list of acts.
     }
 
@@ -57,11 +60,28 @@ class ActorPage extends Component {
         });
     }
 
+    onChangeCheckbox(event) {
+        //console.log(event.target);
+        this.setState({
+            coverMyLines: event.target.checked
+        });
+    }
+
+    onChangeRadio(event) {
+        //console.log(event.target.value);
+        this.setState({
+            selectedRadioButton: event.target.value
+        });
+    }
+
     render() {
         return (
             <div id="actor-page">
                 <MainHeader />
-                <h1 className ="main-page-header">Actor View</h1>
+                <Row className="main-page-row">
+                    <h1 className ="main-page-header">Actor View</h1>
+                </Row>
+                <hr />
                 { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
                     <div className="main-page-content">
                         <Row className="main-page-row">
@@ -96,27 +116,55 @@ class ActorPage extends Component {
                             </Col>
                         </Row>
 
+                        <Row className="main-page-row">
+                            <Col sm={12}>
+                                <form>
+                                    <FormGroup>
+                                        <Checkbox inline onChange={this.onChangeCheckbox}>
+                                            Cover my lines
+                                        </Checkbox>
+                                        {' '}
+                                        <Radio name="radioGroup" inline defaultChecked value={1} onClick={this.onChangeRadio}>
+                                            All Lines
+                                        </Radio>
+                                        {' '}
+                                        <Radio name="radioGroup" inline value={2} onClick={this.onChangeRadio}>
+                                            Prompt Lines
+                                        </Radio>
+                                        {' '}
+                                        <Radio name="radioGroup" inline value={3} onClick={this.onChangeRadio}>
+                                            My Lines Only
+                                        </Radio>
+                                    </FormGroup>
+                                </form>
+                            </Col>
+                        </Row>
+
                         <Well>
                             <Row className="main-page-row">
                                 <Col sm={12}>
                                     <h2>Lines</h2>
-                                    <ListGroup id="actor-page-lines-list">
-                                        {this.props.getLinesStatus && this.state.showLines
-                                            ? this.props.getLinesStatus.map((line, index) => (
-                                                <ListGroupItem key={"line-list-group-item-" + index} onClick={() => null}>
-                                                    <Col xs={4} sm={4} md={4}>
-                                                        {line.CharacterSpeaking
-                                                            ? line.CharacterSpeaking
-                                                            : ""
-                                                        }
-                                                    </Col>
-                                                    <Col xs={8} sm={8} md={8}>
-                                                        {line.Text}
-                                                    </Col>
-                                                </ListGroupItem>))
-                                            : null
-                                        }
-                                    </ListGroup>
+
+                                    { this.state.selectedRadioButton == 3 ?
+                                        <ListGroup id="actor-page-lines-list">
+                                            {this.props.getMyLinesStatus && this.state.showLines
+                                                ? this.props.getMyLinesStatus.map((line, index) => (
+                                                    <ListGroupItem key={"line-list-group-item-" + index} onClick={() => null}>
+                                                        <Col xs={4} sm={4} md={4}>
+                                                            {line.CharacterSpeaking
+                                                                ? line.CharacterSpeaking
+                                                                : ""
+                                                            }
+                                                        </Col>
+                                                        <Col xs={8} sm={8} md={8}>
+                                                            {line.Text}
+                                                        </Col>
+                                                    </ListGroupItem>))
+                                                : null
+                                            }
+                                        </ListGroup> : null
+                                    }
+
                                 </Col>
                             </Row>
                         </Well>
@@ -134,12 +182,12 @@ function mapStateToProps(state) {
         location: state.router.pathname,
         getAllPlaysStatus: state.scriptPageReducers.getAllPlaysStatus.data,
         getCharactersByPlayStatus: state.actorPageReducers.getCharactersByPlayStatus.data,
-        getLinesStatus: state.actorPageReducers.getLinesByPlayAndCharacterStatus.data
+        getMyLinesStatus: state.actorPageReducers.getLinesByPlayAndCharacterStatus.data
     };
 }
 
 export default connect(mapStateToProps,
     {
-        getAllPlays, getCharactersByPlay, getLinesByPlayAndCharacter, push
+        getAllPlays, getCharactersByPlay, getLinesByPlayAndCharacter
     }
 )(ActorPage);
