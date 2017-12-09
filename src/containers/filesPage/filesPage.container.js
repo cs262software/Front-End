@@ -9,12 +9,8 @@ import { getAllFiles, getFile, postFile } from './filesPage.actions';
 class FilesPage extends Component {
     constructor() {
         super();
-        this.state = {
-            downloadIsValid: false
-        }
         this.getFile = this.getFile.bind(this);
-        // this.postFile = this.postFile.bind(this);
-        // this.download = this.download.bind(this);
+        this.postFile = this.postFile.bind(this);
     }
 
     componentWillMount() {
@@ -25,9 +21,12 @@ class FilesPage extends Component {
         this.props.getFile(file);
     }
 
-    // postFile(file) {
-    //     this.props.postFile(file);
-    // }
+    postFile(file) {
+        let data = new FormData();
+        data.append('file', file);
+        console.log(data);
+        this.props.postFile(data);
+    }
 
     render() {
         return (
@@ -38,7 +37,7 @@ class FilesPage extends Component {
                     <div className="main-container">
                         <h1>Files</h1>
 
-                        {/* <FileUpload postFile={this.postFile} /> */}
+                        <FileUpload postFile={this.postFile} />
 
                             {this.props.getAllFilesStatus.map((file, index) => {
                                 return <FileRow key={index} file={file} getFile={this.getFile} />

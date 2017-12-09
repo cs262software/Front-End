@@ -13,9 +13,9 @@ export function getFile(fileName) {
     };
 }
 
-export function postFile(fileName) {
+export function postFile(file) {
     return {
         type: reduxActions.GET_FILE_REQUEST,
-        data: fileName
+        data: file
     };
 }

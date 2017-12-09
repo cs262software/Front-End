@@ -5,8 +5,14 @@ class FileUpload extends Component {
     render() {
         return (
             <div>
-                <input id="upload-input" type="file" name="uploads[]" onChange={this.props.handleFile} />
-                <button class="btn btn-lg upload-btn" type="button" ibCkucj->Upload File</button>
+                <form ref='uploadForm'
+                    id='uploadForm'
+                    action={this.props.postFile}
+                    method="post"
+                    encType="multipart/form-data">
+                    <input type="file" name="sampleFile" />
+                    <input type='submit' value='Upload' />
+                </form>
             </div>
         );
     }

@@ -22,7 +22,8 @@ import {
 // filesPage sagas...
 import {
     getAllFilesFlow,
-    getFileFlow
+    getFileFlow,
+    postFileFlow
 } from '../containers/filesPage/filesPage.sagas';
 
 export default function* Sagas() {
@@ -41,6 +42,7 @@ export default function* Sagas() {
 
         // filesPage sagas...
         fork(getAllFilesFlow),
-        fork(getFileFlow)
+        fork(getFileFlow),
+        fork(postFileFlow)
     ];
 }

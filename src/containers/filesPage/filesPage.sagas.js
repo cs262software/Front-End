@@ -37,7 +37,7 @@ export function* postFileFlow() {
 }
 
 export function* postFile(action) {
-	const {res, err} = yield call(Post, endpoints.POST_FILE, action.data);
+	const {res, err} = yield call(Post, endpoints.POST_FILE, {file: action.data});
 	if (res) {
 		yield put({ type: reduxActions.POST_FILE_SUCCESS, data: res.json });
 	}
