@@ -54,7 +54,11 @@ export function* getLinesFlow() {
 }
 
 export function* getLines(action) {
-	const {res, err} = yield call(Get, endpoints.GET_LINES + action.PlayID + "/" + action.ActNum + "/" + action.SceneNum + "/lines", {body: undefined});
+	let endpoint = endpoints.GET_LINES + action.PlayID + "/" + action.ActNum + "/" + action.SceneNum + "/lines";
+	if (action.CharacterID != null) {
+		endpoint = endpoint + "?CharacterID=" + action.CharacterID
+	}
+	const {res, err} = yield call(Get, endpoint, {body: undefined});
 	if (res) {
 		yield put({ type: reduxActions.GET_LINES_SUCCESS, data: res.json });
 	}
@@ -133,3 +137,29 @@ export function* saveDirectorsNote(action) {
 		yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_FAILURE, error: err.json });
 	}
 }
+
+export function* getCharactersByPlayFlow() {
+    yield takeLatest(reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST, getCharactersByPlay);
+}
+export function* getCharactersByPlay(action) {
+    const {res, err} = yield call(Get, endpoints.GET_CHARACTERS_BY_PLAY + action.PlayID, {body: undefined});
+    if (res) {
+        yield put({ type: reduxActions.GET_CHARACTERS_BY_PLAY_SUCCESS, data: res.json });
+    }
+    else if (err) {
+        yield put({ type: reduxActions.GET_CHARACTERS_BY_PLAY_FAILURE, error: err.json });
+    }
+}
+
+// export function* getLinesByPlayAndCharacterFlow() {
+//     yield takeLatest(reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST, getLinesByPlayAndCharacter);
+// }
+// export function* getLinesByPlayAndCharacter(action) {
+//     const {res, err} = yield call(Get, endpoints.GET_LINES_BY_PLAY_AND_CHARACTER + action.PlayID + "/" + action.CharacterID, {body: undefined});
+//     if (res) {
+//         yield put({ type: reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_SUCCESS, data: res.json });
+//     }
+//     else if (err) {
+//         yield put({ type: reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_FAILURE, error: err.json });
+//     }
+// }

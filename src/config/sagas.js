@@ -23,14 +23,9 @@ import {
     getBlockingByLineFlow,
     saveBlockingFlow,
     getDirectorsNoteByLineFlow,
-    saveDirectorsNoteFlow
+    saveDirectorsNoteFlow,
+    getCharactersByPlayFlow
 } from '../containers/scriptPage/scriptPage.sagas';
-
-// actorPage sagas...
-import {
-    getCharactersByPlayFlow,
-    getLinesByPlayAndCharacterFlow
-} from '../containers/actorPage/actorPage.sagas';
 
 import {
   getCharactersFlow
@@ -42,24 +37,19 @@ export default function* Sagas() {
         fork(postNewUserFlow),
         fork(loginFlow),
 
-        // mainHeader sagas...
-
         // scriptPage sagas...
         fork(getAllPlaysFlow),
         fork(getActsFlow),
         fork(getScenesFlow),
         fork(getLinesFlow),
-
-        //schedulePage sagas...
-        fork(getCharactersFlow),
-        fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
         fork(saveBlockingFlow),
         fork(getDirectorsNoteByLineFlow),
         fork(saveDirectorsNoteFlow),
-
-        // actorPage sagas...
         fork(getCharactersByPlayFlow),
-        fork(getLinesByPlayAndCharacterFlow)
+
+        //schedulePage sagas...
+        fork(getCharactersFlow),
+        fork(getCharactersBySceneFlow)
     ];
 }
