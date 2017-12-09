@@ -13,6 +13,19 @@ var endpoints = {
     GET_LINES: "/api/plays/", // append :PlayID/:ActNum/:SceneNum/lines in the saga"
     GET_CHARACTERS_BY_SCENE: "/api/characters/", // append :PlayID/:ActNum/:SceneNum in the saga"
     GET_BLOCKING_BY_LINE: "/api/blocking/", // append :LineID
+
+    GET_LIGHTS_BY_LINE: "/api/lights/?LineID=", //append: LineID
+    GET_SOUNDS_BY_LINE: "/api/sounds/?LineID=", //append: LineID
+    GET_PROPS_BY_LINE: "/api/props/", //append: LineID
+
+    PUT_LIGHTS_BY_LINE: "/api/lights/update/", //append: LineID
+    PUT_SOUNDS_BY_LINE: "/api/sounds/update/", //append: LineID
+    PUT_PROPS_BY_LINE: "/api/props/update/", //append: LineID
+
+    SAVE_LIGHTS_BY_LINE: "/api/lights/?LineID=", //append: LineID
+    SAVE_SOUNDS_BY_LINE: "/api/sounds/add/", //append: LineID
+    SAVE_PROPS_BY_LINE: "/api/props/add/", //append: LineID
+
     SAVE_BLOCKING: "/api/blocking/", // append :LineID
     GET_DIRECTORS_NOTE_BY_LINE: "/api/plays/directorsnote/", // append :lineID
     SAVE_DIRECTORS_NOTE: "/api/plays/directorsnote/", // append :lineID

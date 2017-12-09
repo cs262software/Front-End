@@ -108,6 +108,7 @@ export function getBlockingByLineStatus(state = arrayState, action) {
     }
 }
 
+
 export function saveBlockingStatus(state = arrayState, action) {
     switch (action.type) {
 
@@ -124,7 +125,6 @@ export function saveBlockingStatus(state = arrayState, action) {
             return state;
     }
 }
-
 
 export function getDirectorsNoteByLineStatus(state = arrayState, action) {
     switch (action.type) {
@@ -149,6 +149,7 @@ export function getDirectorsNoteByLineStatus(state = arrayState, action) {
             return state;
     }
 }
+
 
 export function saveDirectorsNoteStatus(state = arrayState, action) {
     switch (action.type) {
@@ -180,18 +181,106 @@ export function getCharactersByPlayStatus(state = arrayState, action) {
     }
 }
 
-// export function getLinesByPlayAndCharacterStatus(state = arrayState, action) {
-//     switch (action.type) {
-//         case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST:
-//             return requestState(state);
-//         case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_SUCCESS:
-//             return successState(state, action);
-//         case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_FAILURE:
-//             return failureState(state, action);
-//         default:
-//             return state;
-//     }
-// }
+export function getLightsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_LIGHTS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_LIGHTS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_LIGHTS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+
+    }
+}
+
+
+export function getSoundsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_SOUNDS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_SOUNDS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_SOUNDS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+
+export function getPropsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_PROPS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_PROPS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.GET_PROPS_BY_LINE_FAILURE:
+            return failureState(state, action);
+        default:
+            return state;
+    }
+}
+
+export function saveLightsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.SAVE_LIGHTS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.SAVE_LIGHTS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.SAVE_LIGHTS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function saveSoundsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.SAVE_SOUNDS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.SAVE_SOUNDS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.SAVE_SOUNDS_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function savePropsByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.SAVE_PROPS_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.SAVE_PROPS_BY_LINE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.SAVE_PROPS_BY_LINE_FAILURE:
+            return failureState(state, action);
+        
+        default:
+          return state;
+    }
+}
 
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
@@ -203,7 +292,13 @@ const scriptPageReducers = combineReducers({
     saveBlockingStatus,
     getDirectorsNoteByLineStatus,
     saveDirectorsNoteStatus,
-    getCharactersByPlayStatus
+    getCharactersByPlayStatus,
+    getLightsByLineStatus,
+    getSoundsByLineStatus,
+    getPropsByLineStatus,
+    saveLightsByLineStatus,
+    saveSoundsByLineStatus,
+    savePropsByLineStatus
 });
 
 export default scriptPageReducers;

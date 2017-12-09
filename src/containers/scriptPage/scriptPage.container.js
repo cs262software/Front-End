@@ -4,7 +4,27 @@ import { ButtonToolbar, Button, FormGroup, FormControl, Panel, Well, Dropdown, M
 import MainHeader from '../mainHeader/mainHeader.container';
 import ActorView from './components/actorView';
 import BlockingView from './components/blockingView';
-import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getDirectorsNoteByLine, saveDirectorsNote, getCharactersByPlay } from './scriptPage.actions';
+import LightsNotes from './components/lightsNotes';
+import SoundsNotes from './components/soundsNotes';
+import PropsNotes from './components/propsNotes';
+import { 
+  getAllPlays,
+  getActs,
+  getScenes,
+  getLines,
+  getCharactersByScene,
+  getBlockingByLine,
+  getDirectorsNoteByLine,
+  saveDirectorsNote,
+  getCharactersByPlay,
+  getLightsByLine,
+  getSoundsByLine,
+  getPropsByLine,
+  /*putLightsByLine, putSoundsByLine, putPropsByLine,*/ 
+  saveLightsByLine,
+  saveSoundsByLine,
+  savePropsByLine
+} from './scriptPage.actions';
 import './index.css';
 
 var defaultPlayDropdownOption = {
@@ -29,6 +49,18 @@ class ScriptPage extends Component {
             characterCheckboxValue: false,
             characterRadioValue: 1,
             showLineDetails: false,
+            lightsNote: "",
+            editLightsNote: "",
+            addLightsNote: "",
+            soundsNote: "",
+            editSoundsNote: "",
+            addSoundsNote: "",
+            propsNote: "",
+            editPropsNote: "",
+            addPropsNote: "",
+            showNewLights: false,
+            showNewSounds: false,
+            showNewProps: false,
             showBlocking: false
         };
 
@@ -41,6 +73,22 @@ class ScriptPage extends Component {
         this.characterRadioChange = this.characterRadioChange.bind(this);
         this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
         this.loadDirectorsNote = this.loadDirectorsNote.bind(this);
+      
+        this.handleFieldChange = this.handleFieldChange.bind(this);
+
+        //creating new text boxes for notes
+        this.onClickNewLights = this.onClickNewLights.bind(this);
+        this.onClickNewSounds = this.onClickNewSounds.bind(this);
+        this.onClickNewProps = this.onClickNewProps.bind(this);
+        //add new notes
+        this.saveLightsByLine = this.saveLightsByLine.bind(this);
+        this.saveSoundsByLine = this.saveSoundsByLine.bind(this);
+        this.savePropsByLine = this.savePropsByLine.bind(this);
+        this.cancelNewLightsByLine = this.cancelNewLightsByLine.bind(this);
+        this.cancelNewSoundsByLine = this.cancelNewSoundsByLine.bind(this);
+        this.cancelNewPropsByLine = this.cancelNewPropsByLine.bind(this);
+        
+
     }
 
     componentWillMount() {
@@ -102,7 +150,10 @@ class ScriptPage extends Component {
             showLineDetails: true
         });
         this.props.getBlockingByLine(LineID);
-        this.props.getDirectorsNoteByLine(LineID);
+        this.props.getLightsByLine(LineID);
+        this.props.getSoundsByLine(LineID);
+        this.props.getPropsByLine(LineID);
+        this.props.getDirectorsNoteByLine(LineID)
     }
 
     characterDropdownChange(value) {
@@ -140,6 +191,88 @@ class ScriptPage extends Component {
     loadDirectorsNote() {
         this.props.getDirectorsNoteByLine(this.state.selectedLineID);
     }
+
+
+
+    handleFieldChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    onClickNewLights() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
+        }
+        )
+    }
+
+    onClickNewSounds() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
+        }
+        )
+
+    }
+
+    onClickNewProps() {
+        this.setState({
+            showNewProps: !this.state.showNewProps
+        }
+        )
+    }
+
+    saveLightsByLine() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
+        }
+            )
+        this.props.saveLightsByLine(
+            this.state.selectedLineID,
+            document.getElementById("lights-note-text-area").value
+        )
+    }
+
+    cancelNewLightsByLine() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
+        })
+    }
+
+    saveSoundsByLine() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
+        }
+        )
+        this.props.saveSoundsByLine(
+            this.state.selectedLineID,
+            document.getElementById("sounds-note-text-area").value
+        )
+    }
+
+    cancelNewSoundsByLine() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
+        })
+    }
+
+    savePropsByLine() {
+        this.setState({
+            showNewProps: !this.state.showNewProps
+        }
+        )
+        this.props.savePropsByLine(
+            this.state.selectedLineID,
+            document.getElementById("props-note-text-area").value
+        )
+    }
+
+    cancelNewPropsByLine() {
+        this.setState({
+            showNewProps: !this.state.showNewProps
+        })
+    }
+
 
     render() {
         return (
@@ -253,6 +386,23 @@ class ScriptPage extends Component {
                         </Row>
                         </Well>
 
+                        <div>
+                           { this.state.showLines && this.state.showLineDetails ?
+                                <Row className="main-page-row">
+                                    <Col sm={6}>
+                                        <div className="blocking-view">
+                                            <BlockingView
+                                                selectedLineID={this.state.selectedLineID}
+                                                blockingData={this.props.getBlockingByLineStatus}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row> : null
+                            }
+                        </div>
+
+                        
+
                         <Well>
                         <Row className="main-page-row">
                             <Col sm={8}>
@@ -302,6 +452,50 @@ class ScriptPage extends Component {
                             </Col>
                         </Row>
                         </Well>
+
+                        <Panel>
+                            <div>
+                                {this.state.showLines && this.state.showLineDetails ?
+                                    <Row className="main-page-row">
+                                        <div className="stage-crew-notes-view">
+                                            <LightsNotes
+                                                crewNotesByLineStatus={this.props.getLightsByLineStatus}
+                                                handleFieldChange={this.handleFieldChange}
+                                                editLightsNote={this.state.editLightsNote}
+                                                addLightsNote={this.state.addLightsNote}
+                                                showNewLights={this.state.showNewLights}
+                                                onClick={this.onClickNewLights}
+                                                saveLightsByLine={this.saveLightsByLine}
+                                                cancelNewLights={this.cancelNewLightsByLine}
+
+                                            />
+                                            <SoundsNotes
+                                                crewNotesByLineStatus={this.props.getSoundsByLineStatus}
+                                                handleFieldChange={this.handleFieldChange}
+                                                editSoundsNote={this.state.editSoundsNote}
+                                                addSoundsNote={this.state.addSoundsNote}
+                                                showNewSounds={this.state.showNewSounds}
+                                                onClick={this.onClickNewSounds}
+                                                saveSoundsByLine={this.saveSoundsByLine}
+                                                cancelNewSounds = {this.cancelNewSoundsByLine}
+                                            />
+                                            <PropsNotes
+                                                crewNotesByLineStatus={this.props.getPropsByLineStatus}
+                                                handleFieldChange={this.handleFieldChange}
+                                                editPropsNote={this.state.editPropsNote}
+                                                addSoundsNote={this.state.addSoundsNote}
+                                                showNewProps={this.state.showNewProps}
+                                                onClick={this.onClickNewProps}
+                                                savePropsByLine={this.savePropsByLine}
+                                                cancelNewProps={this.cancelNewPropsByLine}
+                                            />
+
+                                        </div>
+                                    </Row> : null
+                                }
+                            </div>
+                        </Panel>
+
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }
             </div>
@@ -320,6 +514,9 @@ function mapStateToProps(state) {
         getLinesStatus: state.scriptPageReducers.getLinesStatus.data,
         getCharactersBySceneStatus: state.scriptPageReducers.getCharactersBySceneStatus.data,
         getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data,
+        getLightsByLineStatus: state.scriptPageReducers.getLightsByLineStatus.data,
+        getSoundsByLineStatus: state.scriptPageReducers.getSoundsByLineStatus.data,
+        getPropsByLineStatus: state.scriptPageReducers.getPropsByLineStatus.data,
         getDirectorsNoteByLineStatus: state.scriptPageReducers.getDirectorsNoteByLineStatus.data,
         saveDirectorsNoteStatus: state.scriptPageReducers.saveDirectorsNoteStatus.data,
         getCharactersByPlayStatus: state.scriptPageReducers.getCharactersByPlayStatus.data
@@ -336,6 +533,9 @@ export default connect(mapStateToProps,
         getBlockingByLine,
         getDirectorsNoteByLine,
         saveDirectorsNote,
-        getCharactersByPlay
+        getCharactersByPlay,
+        getLightsByLine, getSoundsByLine, getPropsByLine,
+        /*putLightsByLine, putSoundsByLine, putPropsByLine,*/
+        saveLightsByLine, saveSoundsByLine, savePropsByLine
     }
 )(ScriptPage);

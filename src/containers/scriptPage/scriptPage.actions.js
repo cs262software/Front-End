@@ -77,10 +77,47 @@ export function getCharactersByPlay(playID) {
     };
 }
 
-// export function getLinesByPlayAndCharacter(playID, characterID) {
-//     return {
-//         type: reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST,
-//         PlayID: playID,
-//         CharacterID: characterID
-//     };
-// }
+export function getLightsByLine(lineID) {
+    return {
+        type: reduxActions.GET_LIGHTS_BY_LINE_REQUEST,
+        LineID: lineID
+    };
+}
+
+export function getSoundsByLine(lineID) {
+    return {
+        type: reduxActions.GET_SOUNDS_BY_LINE_REQUEST,
+        LineID: lineID
+    };
+}
+
+export function getPropsByLine(lineID) {
+    return {
+        type: reduxActions.GET_PROPS_BY_LINE_REQUEST,
+        LineID: lineID
+    };
+}
+
+export function saveLightsByLine(lineID, newLights) {
+    return {
+        type: reduxActions.SAVE_LIGHTS_BY_LINE_REQUEST,
+        LightID: lineID,
+        Name: newLights
+    };
+}
+
+export function saveSoundsByLine(lineID, newSounds) {
+    return {
+        type: reduxActions.SAVE_SOUNDS_BY_LINE_REQUEST,
+        SoundID: lineID,
+        Name: newSounds
+    };
+}
+
+export function savePropsByLine(lineID, newProps) {
+    return {
+        type: reduxActions.SAVE_PROPS_BY_LINE_REQUEST,
+        PropID: lineID,
+        Name: newProps
+    };
+}
