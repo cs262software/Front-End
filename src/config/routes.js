@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router';
 import LoginPage from '../containers/loginPage/loginPage.container';
 import SchedulePage from '../containers/schedulePage/schedulePage.container';
+import FilesPage from '../containers/filesPage/filesPage.container';
 import ScriptPage from '../containers/scriptPage/scriptPage.container';
-import ManageFilesPage from '../containers/manageFilesPage/manageFiles.container';
 import FourOhFourPage from '../containers/FourOhFourPage';
 
 // Define the main component switch.
@@ -12,12 +12,11 @@ class Routes extends Component {
     render() {
         return (
             <div>
-                <p>{ this.props.location }</p>
                 { (this.props.loginStatus)
                     ?   <Switch>
                             <Route exact path='/' component={ScriptPage}/>
                             <Route exact path='/schedule' component={SchedulePage}/>
-                            <Route exact path='/director/manage-files' component={ManageFilesPage}/>
+                            <Route exact path='/files' component={FilesPage}/>
                             <Route component={FourOhFourPage}/>
                         </Switch>
                     :   <Route component={LoginPage}/>
