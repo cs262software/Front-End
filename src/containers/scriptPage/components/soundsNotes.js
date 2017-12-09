@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col, Button } from 'react-bootstrap';
+import { Panel, FormControl, FormGroup, Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col, Button } from 'react-bootstrap';
 
 //import {} from './homePage.actions';
 
@@ -13,32 +13,44 @@ class SoundsNotes extends Component {
 
     render() {
         return (
-            <div>
-                <Col sm={12}>
-                    <ButtonToolbar style={{ "margin-top": "25px", border: "1px solid #000000", width: "500px"}}>
-                        <ListGroup>
-                            <h2>Sounds Notes</h2>
-                            {this.props.crewNotesByLineStatus
-                                ? this.props.crewNotesByLineStatus.map((sounds, index) => {
-                                    return (
-                                        <div>
-                                            <Col xs={12} sm={12} md={12}>
-                                        <ListGroupItem key={"sounds-list-group-item-" + index}>
-                                                <input name="editSoundsNotes" value={sounds.Name} onChange={e => { this.props.handleFieldChange(e) }}></input>
-                                        </ListGroupItem>
-                                            </Col>
-                                        </div>
-                                )
+            <div className="sounds-note-view">
+                <Col sm={4} className="lines-list-group">
+                    <h2>Sounds Notes</h2>
+                    <Panel>
+                        <form>
+                            <FormGroup>
+                                {this.props.crewNotesByLineStatus
+                                    ? this.props.crewNotesByLineStatus.map((light, index) => {
+                                        return (
+                                            <div>
+                                                <Col xs={12} sm={12} md={12}>
+                                                    <FormControl id={"sounds-note-text-area-" + index} ComponentClass="textarea" value={light.Name}>
+                                                    </FormControl>
+                                                </Col>
+                                            </div>
+
+                                        )
                                     })
                                     : null
-                            }
-                        </ListGroup>
-                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add to current Sounds Notes</Button>
-                        {this.props.showNewSounds ?
-                            <input name="addSoundsNotes"></input>
-                            : null
-                        }
-                      </ButtonToolbar>
+                                }
+
+                                <Button bsStyle="primary" bsSize="small" onClick={this.props.onClick}>Add to current Sounds Notes</Button>
+                                {this.props.showNewSounds ?
+                                    <div>
+                                        <Col xs={12} sm={12} md={12}>
+                                            <FormGroup>
+                                                <FormControl id={"sounds-note-text-area"} ComponentClass="textarea" placeholder="Add a new sounds note for the current line" name="addLightsNotes"></FormControl>
+                                            </FormGroup>
+                                        </Col>
+                                        <Button onClick={this.props.saveSoundsByLine}>Save</Button>
+                                        <Button>Cancel</Button>
+                                    </div>
+                                    : null
+                                }
+                            </FormGroup>
+                        </form>
+                    </Panel>
+
                 </Col>
             </div>
         );

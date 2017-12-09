@@ -1,7 +1,7 @@
-import { Get , Put, Post /*, Delete*/} from './api';
+//import { Get , Put, Post /*, Delete*/} from './api';
 import { fork /*, call, put, takeLatest*/ } from 'redux-saga/effects';
-// import reduxActions from '../constants/reduxActions';
-// import endpoints from '../constants/endpoints';
+ import reduxActions from '../constants/reduxActions';
+ import endpoints from '../constants/endpoints';
 // loginPage sagas...
 import {
     postNewUserFlow,
@@ -23,12 +23,9 @@ import {
     getLightsByLineFlow,
     getSoundsByLineFlow,
     getPropsByLineFlow,
-    putLightsByLineFlow,
-    putSoundsByLineFlow,
-    putPropsByLineFlow,
-    postLightsByLineFlow,
-    postSoundsByLineFlow,
-    postPropsByLineFlow,
+    saveLightsByLineFlow,
+    saveSoundsByLineFlow,
+    savePropsByLineFlow,
     saveBlockingFlow,
     getDirectorsNoteByLineFlow,
     saveDirectorsNoteFlow
@@ -62,18 +59,15 @@ export default function* Sagas() {
         fork(getCharactersFlow),
         fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
-        fork(getLightsByLineFlow),
-        fork(getSoundsByLineFlow),
-        fork(getPropsByLineFlow),
-        fork(putLightsByLineFlow),
-        fork(putSoundsByLineFlow),
-        fork(putPropsByLineFlow),
-        fork(postLightsByLineFlow),
-        fork(postSoundsByLineFlow),
-        fork(postPropsByLineFlow),
         fork(saveBlockingFlow),
         fork(getDirectorsNoteByLineFlow),
         fork(saveDirectorsNoteFlow),
+        fork(getLightsByLineFlow),
+        fork(getSoundsByLineFlow),
+        fork(getPropsByLineFlow),
+        fork(saveLightsByLineFlow),
+        fork(saveSoundsByLineFlow),
+        fork(savePropsByLineFlow),
 
         // actorPage sagas...
         fork(getCharactersByPlayFlow),

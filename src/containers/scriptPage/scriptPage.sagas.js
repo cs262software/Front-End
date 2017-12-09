@@ -91,6 +91,49 @@ export function* getBlockingByLine(action) {
 	}
 }
 
+export function* saveBlockingFlow() {
+    yield takeLatest(reduxActions.SAVE_BLOCKING_REQUEST, saveBlocking);
+}
+
+export function* saveBlocking(action) {
+    const { res, err } = yield call(Post, endpoints.SAVE_BLOCKING + action.LineID, { blockingUpdateArray: action.BlockingUpdateArray });
+    if (res) {
+        yield put({ type: reduxActions.SAVE_BLOCKING_SUCCESS, data: res.json });
+    }
+    else if (err) {
+        yield put({ type: reduxActions.SAVE_BLOCKING_FAILURE, error: err.json });
+    }
+}
+
+export function* getDirectorsNoteByLineFlow() {
+    yield takeLatest(reduxActions.GET_DIRECTORS_NOTE_BY_LINE_REQUEST, getDirectorsNoteByLine);
+}
+
+export function* getDirectorsNoteByLine(action) {
+    const { res, err } = yield call(Get, endpoints.GET_DIRECTORS_NOTE_BY_LINE + action.LineID, { body: undefined });
+    if (res) {
+        yield put({ type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_SUCCESS, data: res.json });
+    }
+    else if (err) {
+        yield put({ type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_FAILURE, error: err.json });
+    }
+}
+
+export function* saveDirectorsNoteFlow() {
+    yield takeLatest(reduxActions.SAVE_DIRECTORS_NOTE_REQUEST, saveDirectorsNote);
+}
+
+export function* saveDirectorsNote(action) {
+    const { res, err } = yield call(Post, endpoints.SAVE_DIRECTORS_NOTE + action.LineID, { directorsNote: action.DirectorsNote });
+    if (res) {
+        // console.log(res.json);
+        yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_SUCCESS, data: res.json });
+    }
+    else if (err) {
+        yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_FAILURE, error: err.json });
+    }
+}
+
 
 export function* getLightsByLineFlow() {
     yield takeLatest(reduxActions.GET_LIGHTS_BY_LINE_REQUEST, getLightsByLine);
@@ -134,6 +177,7 @@ export function* getPropsByLine(action) {
     }
 }
 
+{/*
 export function* putLightsByLineFlow() {
     yield takeLatest(reduxActions.PUT_LIGHTS_BY_LINE_REQUEST, putLightsByLine);
 }
@@ -175,90 +219,49 @@ export function* putPropsByLine(action) {
         yield put({ type: reduxActions.PUT_PROPS_BY_LINE_FAILURE, error: err.json });
     }
 }
+    */}
 
-
-export function* postLightsByLineFlow() {
-    yield takeLatest(reduxActions.POST_LIGHTS_BY_LINE_REQUEST, postLightsByLine);
+export function* saveLightsByLineFlow() {
+    yield takeLatest(reduxActions.SAVE_LIGHTS_BY_LINE_REQUEST, saveLightsByLine);
 }
 
-export function* postLightsByLine(action) {
-    const { res, err } = yield call(Post, endpoints.POST_LIGHTS_BY_LINE + action.NewLights);
+export function* saveLightsByLine(action) {
+    const { res, err } = yield call(Post, endpoints.SAVE_LIGHTS_BY_LINE + action.LightID, { Name: action.Name });
     if (res) {
-        yield put({ type: reduxActions.POST_LIGHTS_BY_LINE_SUCCESS, data: res.json });
+        yield put({ type: reduxActions.SAVE_LIGHTS_BY_LINE_SUCCESS, data: res.json });
     }
     else if (err) {
-        yield put({ type: reduxActions.POST_LIGHTS_BY_LINE_FAILURE, error: err.json });
+        yield put({ type: reduxActions.SAVE_LIGHTS_BY_LINE_FAILURE, error: err.json });
     }
 }
 
-export function* postSoundsByLineFlow() {
-    yield takeLatest(reduxActions.POST_SOUNDS_BY_LINE_REQUEST, postSoundsByLine);
+
+export function* saveSoundsByLineFlow() {
+    yield takeLatest(reduxActions.SAVE_SOUNDS_BY_LINE_REQUEST, saveSoundsByLine);
 }
 
-export function* postSoundsByLine(action) {
-    const { res, err } = yield call(Post, endpoints.POST_SOUNDS_BY_LINE + action.NewSounds);
+export function* saveSoundsByLine(action) {
+    const { res, err } = yield call(Post, endpoints.SAVE_SOUNDS_BY_LINE + action.SoundID, {Name: action.Name });
     if (res) {
-        yield put({ type: reduxActions.POST_SOUNDS_BY_LINE_SUCCESS, data: res.json });
+        yield put({ type: reduxActions.SAVE_SOUNDS_BY_LINE_SUCCESS, data: res.json });
     }
     else if (err) {
-        yield put({ type: reduxActions.POST_SOUNDS_BY_LINE_FAILURE, error: err.json });
+        yield put({ type: reduxActions.SAVE_SOUNDS_BY_LINE_FAILURE, error: err.json });
     }
 }
 
-export function* postPropsByLineFlow() {
-    yield takeLatest(reduxActions.POST_PROPS_BY_LINE_REQUEST, getPropsByLine);
+export function* savePropsByLineFlow() {
+    yield takeLatest(reduxActions.SAVE_PROPS_BY_LINE_REQUEST, savePropsByLine);
 }
 
-export function* postPropsByLine(action) {
-    const { res, err } = yield call(Post, endpoints.GET_PROPS_BY_LINE + action.NewProps);
+export function* savePropsByLine(action) {
+    const { res, err } = yield call(Post, endpoints.SAVE_PROPS_BY_LINE + action.PropID, { Name: action.Name });
     if (res) {
-        yield put({ type: reduxActions.POST_PROPS_BY_LINE_SUCCESS, data: res.json });
+        yield put({ type: reduxActions.SAVE_PROPS_BY_LINE_SUCCESS, data: res.json });
     }
     else if (err) {
-        yield put({ type: reduxActions.POST_PROPS_BY_LINE_FAILURE, error: err.json });
+        yield put({ type: reduxActions.SAVE_PROPS_BY_LINE_FAILURE, error: err.json });
     }
 }
 
-export function* saveBlockingFlow() {
-	yield takeLatest(reduxActions.SAVE_BLOCKING_REQUEST, saveBlocking);
-}
-
-export function* saveBlocking(action) {
-	const {res, err} = yield call(Post, endpoints.SAVE_BLOCKING + action.LineID, { blockingUpdateArray: action.BlockingUpdateArray });
-	if (res) {
-		yield put({ type: reduxActions.SAVE_BLOCKING_SUCCESS, data: res.json });
-	}
-	else if (err) {
-		yield put({ type: reduxActions.SAVE_BLOCKING_FAILURE, error: err.json });
-	}
-}
-
-export function* getDirectorsNoteByLineFlow() {
-	yield takeLatest(reduxActions.GET_DIRECTORS_NOTE_BY_LINE_REQUEST, getDirectorsNoteByLine);
-}
-
-export function* getDirectorsNoteByLine(action) {
-	const {res, err} = yield call(Get, endpoints.GET_DIRECTORS_NOTE_BY_LINE + action.LineID, { body: undefined });
-	if (res) {
-		yield put({ type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_SUCCESS, data: res.json });
-	}
-	else if (err) {
-		yield put({ type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_FAILURE, error: err.json });
-	}
-}
-
-export function* saveDirectorsNoteFlow() {
-	yield takeLatest(reduxActions.SAVE_DIRECTORS_NOTE_REQUEST, saveDirectorsNote);
-}
-
-export function* saveDirectorsNote(action) {
-	const {res, err} = yield call(Post, endpoints.SAVE_DIRECTORS_NOTE + action.LineID, { directorsNote: action.DirectorsNote });
-	if (res) {
-		// console.log(res.json);
-		yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_SUCCESS, data: res.json });
-	}
-	else if (err) {
-		yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_FAILURE, error: err.json });
-	}
-}
 

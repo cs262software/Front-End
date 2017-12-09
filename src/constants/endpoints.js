@@ -22,9 +22,9 @@ var endpoints = {
     PUT_SOUNDS_BY_LINE: "/api/sounds/update/", //append: LineID
     PUT_PROPS_BY_LINE: "/api/props/update/", //append: LineID
 
-    POST_LIGHTS_BY_LINE: "/api/lights/update/", //append: LineID
-    POST_SOUNDS_BY_LINE: "/api/sounds/update/", //append: LineID
-    POST_PROPS_BY_LINE: "/api/props/update/", //append: LineID
+    SAVE_LIGHTS_BY_LINE: "/api/lights/?LineID=", //append: LineID
+    SAVE_SOUNDS_BY_LINE: "/api/sounds/add/", //append: LineID
+    SAVE_PROPS_BY_LINE: "/api/props/add/", //append: LineID
 
     SAVE_BLOCKING: "/api/blocking/", // append :LineID
     GET_DIRECTORS_NOTE_BY_LINE: "/api/plays/directorsnote/", // append :lineID

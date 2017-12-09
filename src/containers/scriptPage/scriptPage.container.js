@@ -6,7 +6,7 @@ import BlockingView from './components/blockingView';
 import LightsNotes from './components/lightsNotes';
 import SoundsNotes from './components/soundsNotes';
 import PropsNotes from './components/propsNotes';
-import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getDirectorsNoteByLine, saveDirectorsNote, getLightsByLine, getSoundsByLine, getPropsByLine, putLightsByLine, putSoundsByLine, putPropsByLine, postLightsByLine, postSoundsByLine, postPropsByLine } from './scriptPage.actions';
+import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getDirectorsNoteByLine, saveDirectorsNote, getLightsByLine, getSoundsByLine, getPropsByLine, /*putLightsByLine, putSoundsByLine, putPropsByLine,*/ saveLightsByLine, saveSoundsByLine, savePropsByLine } from './scriptPage.actions';
 import './index.css';
 
 var defaultPlayDropdownOption = {
@@ -48,20 +48,20 @@ class ScriptPage extends Component {
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
         this.handleFieldChange = this.handleFieldChange.bind(this);
-        //edit existing notes
-        this.editLightsNotes = this.editLightsNotes.bind(this);
-        this.editSoundsNotes = this.editSoundsNotes.bind(this);
-        this.editPropsNotes = this.editPropsNotes.bind(this);
-        //creating new text boxes
+
+        this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
+        this.loadDirectorsNote = this.loadDirectorsNote.bind(this);
+
+        //creating new text boxes for notes
         this.onClickNewLights = this.onClickNewLights.bind(this);
         this.onClickNewSounds = this.onClickNewSounds.bind(this);
         this.onClickNewProps = this.onClickNewProps.bind(this);
         //add new notes
-        this.addLightsNotes = this.addLightsNotes.bind(this);
-        this.addSoundsNotes = this.addSoundsNotes.bind(this);
-        this.addPropsNotes = this.addPropsNotes.bind(this)
-        this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
-        this.loadDirectorsNote = this.loadDirectorsNote.bind(this)
+        this.saveLightsByLine = this.saveLightsByLine.bind(this);
+        this.saveSoundsByLine = this.saveSoundsByLine.bind(this);
+        this.savePropsByLine = this.savePropsByLine.bind(this);
+        
+
     }
 
     componentWillMount() {
@@ -124,51 +124,6 @@ class ScriptPage extends Component {
         this.props.getDirectorsNoteByLine(LineID)
     }
 
-    handleFieldChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
-
-    editLightsNotes() {
-        let lightsNotes = {
-            lineID: this.state.selectedLineID,
-            Name: this.state.editlightsNote
-        }
-        this.props.putLightsByLine(lightsNotes)
-    }
-
-    editSoundsNotes() {
-        let soundsNotes = {
-            lineID: this.state.selectedLineID,
-            Name: this.state.editSoundsNote
-        }
-        this.props.putSoundsByLine(soundsNotes)
-    }
-
-    editPropsNotes() {
-        let propsNotes = {
-            lineID: this.state.selectedLineID,
-            Name: this.state.editPropsNote
-        }
-        this.props.putPropsByLine(propsNotes)
-    }
-
-    onClickNewLights() {
-        this.setState({
-            showNewLights: !this.state.showNewLights
-        }
-        )
-    }
-
-    onClickNewSounds() {
-        this.setState({
-            showNewSounds: !this.state.showNewSounds
-        }
-        )
-
-    }
-
     saveDirectorsNote() {
         this.props.saveDirectorsNote(
             this.state.selectedLineID,
@@ -187,6 +142,29 @@ class ScriptPage extends Component {
         // }
     }
 
+
+
+    handleFieldChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    onClickNewLights() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
+        }
+        )
+    }
+
+    onClickNewSounds() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
+        }
+        )
+
+    }
+
     onClickNewProps() {
         this.setState({
             showNewProps: !this.state.showNewProps
@@ -194,28 +172,40 @@ class ScriptPage extends Component {
         )
     }
 
-    addLightsNotes() {
-        let lightsNotes = {
-            lineID: this.state.selectedLineID,
-            Name: this.state.addLightsNote
+    saveLightsByLine() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
         }
-        this.props.postLightsByLine(lightsNotes)
+            )
+        this.props.saveLightsByLine(
+            this.state.selectedLineID,
+            document.getElementById("lights-note-text-area").value
+        )
     }
 
-    addSoundsNotes() {
-        let soundsNotes = {
-            lineID: this.state.selectedLineID,
-            Name: this.state.addSoundsNote
-        }
-        this.props.postSoundsByLine(soundsNotes)
+    loadLightsByLine() {
+        this.setState({
+            showNewLights: !this.state.showNewLights
+        })
+        this.props.getLightsByLine(this.state.selectedLineID)
     }
 
-    addPropsNotes() {
-        let propsNotes = {
-            lineID: this.state.selectedLineID,
-            Name: this.state.addPropsNote
+    saveSoundsByLine() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
         }
-        this.props.postPropsByLine(propsNotes)
+        )
+        this.props.saveSoundsByLine(
+            this.state.selectedLineID,
+            document.getElementById("sounds-note-text-area").value
+        )
+    }
+
+    savePropsByLine() {
+        this.props.savePropsByLine(
+            this.state.selectedLineID,
+            document.getElementById("props-note-text-area").value
+        )
     }
 
 
@@ -322,40 +312,7 @@ class ScriptPage extends Component {
                             }
                         </div>
 
-                        <div>
-                            {this.state.showLines && this.state.showLineDetails ?
-                                <Row className="main-page-row">
-                                    <div className="stage-crew-notes-view">
-                                    <LightsNotes 
-                                        crewNotesByLineStatus={this.props.getLightsByLineStatus}
-                                        handleFieldChange={this.handleFieldChange}
-                                        editLightsNote={this.state.editLightsNote}
-                                        addLightsNote={this.state.addLightsNote}
-                                        showNewLights={this.state.showNewLights}
-                                        onClick={this.onClickNewLights}
-
-                                    />
-                                    <SoundsNotes 
-                                        crewNotesByLineStatus={this.props.getSoundsByLineStatus}
-                                        handleFieldChange={this.handleFieldChange}
-                                        editSoundsNote={this.state.editSoundsNote}
-                                        addSoundsNote={this.state.addSoundsNote}
-                                        showNewSounds={this.state.showNewSounds}
-                                        onClick={this.onClickNewSounds}
-                                    />
-                                <PropsNotes 
-                                    crewNotesByLineStatus={this.props.getPropsByLineStatus}
-                                    handleFieldChange={this.handleFieldChange}
-                                    editPropsNote={this.state.editPropsNote}
-                                    addSoundsNote={this.state.addSoundsNote}
-                                    showNewProps={this.state.showNewProps}
-                                    onClick={this.onClickNewProps}
-                                />
-
-                                    </div>
-                               </Row>     : null
-                            }
-                        </div>
+                        
 
                         <Well>
                         <Row className="main-page-row">
@@ -406,6 +363,47 @@ class ScriptPage extends Component {
                             </Col>
                         </Row>
                         </Well>
+
+                        <Panel>
+                            <div>
+                                {this.state.showLines && this.state.showLineDetails ?
+                                    <Row className="main-page-row">
+                                        <div className="stage-crew-notes-view">
+                                            <LightsNotes
+                                                crewNotesByLineStatus={this.props.getLightsByLineStatus}
+                                                handleFieldChange={this.handleFieldChange}
+                                                editLightsNote={this.state.editLightsNote}
+                                                addLightsNote={this.state.addLightsNote}
+                                                showNewLights={this.state.showNewLights}
+                                                onClick={this.onClickNewLights}
+                                                saveLightsByLine={this.saveLightsByLine}
+
+                                            />
+                                            <SoundsNotes
+                                                crewNotesByLineStatus={this.props.getSoundsByLineStatus}
+                                                handleFieldChange={this.handleFieldChange}
+                                                editSoundsNote={this.state.editSoundsNote}
+                                                addSoundsNote={this.state.addSoundsNote}
+                                                showNewSounds={this.state.showNewSounds}
+                                                onClick={this.onClickNewSounds}
+                                                saveSoundsByLine={this.saveSoundsByLine}
+                                            />
+                                            <PropsNotes
+                                                crewNotesByLineStatus={this.props.getPropsByLineStatus}
+                                                handleFieldChange={this.handleFieldChange}
+                                                editPropsNote={this.state.editPropsNote}
+                                                addSoundsNote={this.state.addSoundsNote}
+                                                showNewProps={this.state.showNewProps}
+                                                onClick={this.onClickNewProps}
+                                                savePropsByLine={this.savePropsByLine}
+                                            />
+
+                                        </div>
+                                    </Row> : null
+                                }
+                            </div>
+                        </Panel>
+
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }
             </div>
@@ -434,7 +432,7 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps,
     {
-        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getLightsByLine, getSoundsByLine, getPropsByLine, putLightsByLine, putSoundsByLine, putPropsByLine, postLightsByLine, postSoundsByLine, postPropsByLine, getDirectorsNoteByLine,
+        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getLightsByLine, getSoundsByLine, getPropsByLine, /*putLightsByLine, putSoundsByLine, putPropsByLine, */ saveLightsByLine, saveSoundsByLine, savePropsByLine, getDirectorsNoteByLine,
         saveDirectorsNote
     }
 )(ScriptPage);

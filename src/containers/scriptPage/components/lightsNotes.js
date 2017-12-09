@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col, Button } from 'react-bootstrap';
+import { Panel, Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col, Button, FormGroup, FormControl } from 'react-bootstrap';
 
 //import {} from './homePage.actions';
 
@@ -14,20 +14,19 @@ class LightsNotes extends Component {
 
     render() {
         return (
-            <div>
-                <Col sm={12}>
-                    <ButtonToolbar style={{ border: "1px solid #000000", width: "500px"}}>                  
-                        <ListGroup>
-                            <h2>Lights Notes</h2>
+            <div className = "lights-note-view">
+                <Col sm={4} className="lines-list-group">    
+                    <h2>Lights Notes</h2>
+                    <Panel>
+                    <form>
+                            <FormGroup>
                             {this.props.crewNotesByLineStatus
                                 ? this.props.crewNotesByLineStatus.map((light, index) => {
-                                    //this.props.editLightsNotes = light.Name
                                     return (
                                         <div>
                                             <Col xs={12} sm={12} md={12}>
-                                            <ListGroupItem key={"lights-list-group-item-" + index}>
-                                                    <input name="editLightsNotes" value={light.Name} onChange={e => { this.props.handleFieldChange(e) }}></input>
-                                            </ListGroupItem>
+                                                <FormControl id={"lights-note-text-area-" + index} ComponentClass="textarea" value={light.Name}>
+                                                </FormControl>
                                             </Col>
                                         </div>
 
@@ -35,13 +34,24 @@ class LightsNotes extends Component {
                                 }) 
                                     : null
                             }
-                        </ListGroup>
-                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add to current Lights Notes</Button>
+
+                        <Button bsStyle="primary" bsSize="small" onClick={this.props.onClick}>Add to current Lights Notes</Button>
                         {this.props.showNewLights ?
-                            <input name="addLightsNotes"></input>
+                            <div>
+                                <Col xs={12} sm={12} md={12}>
+                                    <FormGroup>
+                                        <FormControl id={"lights-note-text-area"} ComponentClass="textarea" placeholder="Add a new lights note for the current line" name="addLightsNotes"></FormControl>
+                                    </FormGroup>
+                                </Col>
+                                <Button onClick={this.props.saveLightsByLine}>Save</Button>
+                                <Button>Cancel</Button>
+                             </div>
                             : null
                         }
-                      </ButtonToolbar>
+                            </FormGroup>
+                    </form>
+                    </Panel>
+
                 </Col>
             </div>
         );

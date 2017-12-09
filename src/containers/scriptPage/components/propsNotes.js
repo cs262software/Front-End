@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col, Button } from 'react-bootstrap';
+import { Panel, FormGroup, FormControl, Dropdown, ButtonToolbar, MenuItem, ListGroup, ListGroupItem, Col, Button } from 'react-bootstrap';
 
 //import {} from './homePage.actions';
 
@@ -13,29 +13,44 @@ class PropsNotes extends Component {
 
     render() {
         return (
-            <div>
-                <Col sm={12}>
-                    <ButtonToolbar style={{ "margin-top": "25px", border: "1px solid #000000", width : "500px" }}>               
-                        <ListGroup>
-                            <h2>Props Notes</h2>
-                            {this.props.crewNotesByLineStatus
-                                ? this.props.crewNotesByLineStatus.map((prop, index) => 
+            <div className="lights-note-view">
+                <Col sm={4} className="lines-list-group">
+                    <h2>Property Notes</h2>
+                    <Panel>
+                        <form>
+                            <FormGroup>
+                                {this.props.crewNotesByLineStatus
+                                    ? this.props.crewNotesByLineStatus.map((prop, index) => {
+                                        return (
+                                            <div>
+                                                <Col xs={12} sm={12} md={12}>
+                                                    <FormControl id={"props-note-text-area-" + index} ComponentClass="textarea" value={prop.Name + " " + prop.MovementDescription}>
+                                                    </FormControl>
+                                                </Col>
+                                            </div>
+
+                                        )
+                                    })
+                                    : null
+                                }
+
+                                <Button bsStyle="primary" bsSize="small" onClick={this.props.onClick}>Add to current Property Notes</Button>
+                                {this.props.showNewProps ?
                                     <div>
                                         <Col xs={12} sm={12} md={12}>
-                                        <ListGroupItem key={"props-list-group-item-" + index}>
-                                                <input name="editPropsNotes" value={prop.Name} onChange={e => { this.props.handleFieldChange(e) }}></input>
-                                        </ListGroupItem>
+                                            <FormGroup>
+                                                <FormControl id={"props-note-text-area"} ComponentClass="textarea" placeholder="Add a new property note for the current line" name="addPropsNotes"></FormControl>
+                                            </FormGroup>
                                         </Col>
-                                        </div>)  
+                                        <Button onClick={this.props.savePropsByLine}>Save</Button>
+                                        <Button>Cancel</Button>
+                                    </div>
                                     : null
-                            }
-                        </ListGroup>
-                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick} >Add to current Props Notes</Button>
-                        {this.props.showNewProps ?
-                            <input name="addPropsNotes"></input>
-                            : null
-                        }
-                      </ButtonToolbar>
+                                }
+                            </FormGroup>
+                        </form>
+                    </Panel>
+
                 </Col>
             </div>
         );
