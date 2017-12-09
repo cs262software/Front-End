@@ -60,6 +60,9 @@ class ScriptPage extends Component {
         this.saveLightsByLine = this.saveLightsByLine.bind(this);
         this.saveSoundsByLine = this.saveSoundsByLine.bind(this);
         this.savePropsByLine = this.savePropsByLine.bind(this);
+        this.cancelNewLightsByLine = this.cancelNewLightsByLine.bind(this);
+        this.cancelNewSoundsByLine = this.cancelNewSoundsByLine.bind(this);
+        this.cancelNewPropsByLine = this.cancelNewPropsByLine.bind(this);
         
 
     }
@@ -183,11 +186,10 @@ class ScriptPage extends Component {
         )
     }
 
-    loadLightsByLine() {
+    cancelNewLightsByLine() {
         this.setState({
             showNewLights: !this.state.showNewLights
         })
-        this.props.getLightsByLine(this.state.selectedLineID)
     }
 
     saveSoundsByLine() {
@@ -201,11 +203,27 @@ class ScriptPage extends Component {
         )
     }
 
+    cancelNewSoundsByLine() {
+        this.setState({
+            showNewSounds: !this.state.showNewSounds
+        })
+    }
+
     savePropsByLine() {
+        this.setState({
+            showNewProps: !this.state.showNewProps
+        }
+        )
         this.props.savePropsByLine(
             this.state.selectedLineID,
             document.getElementById("props-note-text-area").value
         )
+    }
+
+    cancelNewPropsByLine() {
+        this.setState({
+            showNewProps: !this.state.showNewProps
+        })
     }
 
 
@@ -377,6 +395,7 @@ class ScriptPage extends Component {
                                                 showNewLights={this.state.showNewLights}
                                                 onClick={this.onClickNewLights}
                                                 saveLightsByLine={this.saveLightsByLine}
+                                                cancelNewLights={this.cancelNewLightsByLine}
 
                                             />
                                             <SoundsNotes
@@ -387,6 +406,7 @@ class ScriptPage extends Component {
                                                 showNewSounds={this.state.showNewSounds}
                                                 onClick={this.onClickNewSounds}
                                                 saveSoundsByLine={this.saveSoundsByLine}
+                                                cancelNewSounds = {this.cancelNewSoundsByLine}
                                             />
                                             <PropsNotes
                                                 crewNotesByLineStatus={this.props.getPropsByLineStatus}
@@ -396,6 +416,7 @@ class ScriptPage extends Component {
                                                 showNewProps={this.state.showNewProps}
                                                 onClick={this.onClickNewProps}
                                                 savePropsByLine={this.savePropsByLine}
+                                                cancelNewProps={this.cancelNewPropsByLine}
                                             />
 
                                         </div>

@@ -43,7 +43,7 @@ class PropsNotes extends Component {
                                             </FormGroup>
                                         </Col>
                                         <Button onClick={this.props.savePropsByLine}>Save</Button>
-                                        <Button>Cancel</Button>
+                                        <Button onClick={this.props.cancelNewProps}> Cancel</Button>
                                     </div>
                                     : null
                                 }

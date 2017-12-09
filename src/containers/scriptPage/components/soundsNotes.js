@@ -43,7 +43,7 @@ class SoundsNotes extends Component {
                                             </FormGroup>
                                         </Col>
                                         <Button onClick={this.props.saveSoundsByLine}>Save</Button>
-                                        <Button>Cancel</Button>
+                                        <Button onClick={this.props.cancelNewSounds}>Cancel</Button>
                                     </div>
                                     : null
                                 }

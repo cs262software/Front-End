@@ -44,7 +44,7 @@ class LightsNotes extends Component {
                                     </FormGroup>
                                 </Col>
                                 <Button onClick={this.props.saveLightsByLine}>Save</Button>
-                                <Button>Cancel</Button>
+                                <Button onClick={this.props.cancelNewLights}>Cancel</Button>
                              </div>
                             : null
                         }
