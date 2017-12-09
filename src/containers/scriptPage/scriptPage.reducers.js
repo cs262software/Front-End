@@ -167,8 +167,6 @@ export function saveDirectorsNoteStatus(state = arrayState, action) {
     }
 }
 
-
-
 // export function getCharactersByPlayStatus(state = arrayState, action) {
 //     switch (action.type) {
 //         case reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST:
@@ -194,8 +192,6 @@ export function saveDirectorsNoteStatus(state = arrayState, action) {
 //             return state;
 //     }
 // }
-
-
 
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,

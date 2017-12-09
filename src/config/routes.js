@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router';
 import LoginPage from '../containers/loginPage/loginPage.container';
-import ScriptPage from '../containers/scriptPage/scriptPage.container';
 import SchedulePage from '../containers/schedulePage/schedulePage.container';
+import ScriptPage from '../containers/scriptPage/scriptPage.container';
 import ManageFilesPage from '../containers/manageFilesPage/manageFiles.container';
 import FourOhFourPage from '../containers/FourOhFourPage';
 
