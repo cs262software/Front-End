@@ -5,11 +5,11 @@ import FileRow from './components/fileRow';
 import FileUpload from './components/fileUpload';
 import { getAllFiles, getFile, postFile } from './filesPage.actions';
 
-
 class FilesPage extends Component {
     constructor() {
         super();
         this.getFile = this.getFile.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
         this.postFile = this.postFile.bind(this);
     }
 
@@ -21,11 +21,25 @@ class FilesPage extends Component {
         this.props.getFile(file);
     }
 
-    postFile(file) {
-        let data = new FormData();
-        data.append('file', file);
-        console.log(data);
-        this.props.postFile(data);
+    handleFileUpload(e) {
+        var reader = new FileReader();
+        const file = e.target.files[0];
+        var fileName = file.name;
+
+        reader.onload = e => {
+            var contents = e.target.result;
+            this.postFile(contents, fileName);
+        };
+
+        reader.onerror = function(e) {
+            console.error("File could not be read! Code " + e.target.error.code);
+        };
+
+        reader.readAsText(e.target.files[0]);
+    }
+
+    postFile(contents, fileName) {
+        this.props.postFile(contents, fileName);
     }
 
     render() {
@@ -37,7 +51,7 @@ class FilesPage extends Component {
                     <div className="main-container">
                         <h1>Files</h1>
 
-                        <FileUpload postFile={this.postFile} />
+                        <FileUpload handleFileUpload={this.handleFileUpload} />
 
                             {this.props.getAllFilesStatus.map((file, index) => {
                                 return <FileRow key={index} file={file} getFile={this.getFile} />
@@ -56,7 +70,8 @@ function mapStateToProps(state) {
     return {
         location: state.router.pathname,
         getAllFilesStatus: state.filesPageReducers.getAllFilesStatus.data,
-        getFileStatus: state.filesPageReducers.getFileStatus
+        getFileStatus: state.filesPageReducers.getFileStatus,
+        postFileStatus: state.filesPageReducers.postFileStatus.data
     };
 }
 
