@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { ButtonToolbar, Button, FormGroup, FormControl, Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
-import StageView from './components/stageView';
-import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
+import ActorView from './components/actorView';
+import BlockingView from './components/blockingView';
+import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getDirectorsNoteByLine, saveDirectorsNote, getCharactersByPlay } from './scriptPage.actions';
 import './index.css';
 
 var defaultPlayDropdownOption = {
@@ -24,20 +24,26 @@ class ScriptPage extends Component {
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
+            selectedLineID: null,
+            selectedCharacterID: null,
+            characterCheckboxValue: false,
+            characterRadioValue: 1,
             showLineDetails: false,
+            showBlocking: false
         };
 
         this.playDropdownChange = this.playDropdownChange.bind(this);
         this.actDropdownChange = this.actDropdownChange.bind(this);
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
+        this.characterDropdownChange = this.characterDropdownChange.bind(this);
+        this.characterCheckboxChange = this.characterCheckboxChange.bind(this);
+        this.characterRadioChange = this.characterRadioChange.bind(this);
+        this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
+        this.loadDirectorsNote = this.loadDirectorsNote.bind(this);
     }
 
     componentWillMount() {
-        // We should already be at the "/" route when we display this component.
-        // No need to change the path.
-        //this.props.push('/')
-
         // When this component is mounted, get a list of all available plays.
         this.props.getAllPlays();
     }
@@ -48,8 +54,13 @@ class ScriptPage extends Component {
             actDropdownOption: defaultActDropdownOption,
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
+            selectedLineID: null,
+            selectedCharacterID: null,
             showLineDetails: false
-        }, () => this.props.getActs(value.PlayID)); // When a play is selected, get a list of acts.
+        }, () => {
+            this.props.getActs(value.PlayID);
+            this.props.getCharactersByPlay(value.PlayID);
+        });
     }
 
     actDropdownChange(value) {
@@ -57,6 +68,7 @@ class ScriptPage extends Component {
             actDropdownOption: value,
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
+            selectedLineID: null,
             showLineDetails: false,
         }, () => this.props.getScenes(this.state.playDropdownOption.PlayID, value)); // When an act is selected, get a list of scenes.
     }
@@ -65,13 +77,15 @@ class ScriptPage extends Component {
         this.setState({
             sceneDropdownOption: value,
             showLines: !(value === defaultSceneDropdownOption), // Only show lines if the default is not selected.
+            selectedLineID: null,
             showLineDetails: false
         }, () => {
             // When a scene is selected, get a list of lines.
             this.props.getLines(
                 this.state.playDropdownOption.PlayID,
                 this.state.actDropdownOption,
-                value
+                value,
+                this.state.selectedCharacterID
             );
             // When a scene is selected, get a list of characters.
             this.props.getCharactersByScene(
@@ -84,96 +98,210 @@ class ScriptPage extends Component {
 
     onClickLine(LineID) {
         this.setState({
+            selectedLineID: LineID,
             showLineDetails: true
         });
         this.props.getBlockingByLine(LineID);
+        this.props.getDirectorsNoteByLine(LineID);
+    }
+
+    characterDropdownChange(value) {
+        this.setState({
+            actDropdownOption: defaultActDropdownOption,
+            sceneDropdownOption: defaultSceneDropdownOption,
+            showLines: false,
+            selectedLineID: null,
+            selectedCharacterID: value,
+            showLineDetails: false
+        });
+    }
+
+    characterCheckboxChange(value) {
+        console.log(value);
+        this.setState({
+            characterCheckboxValue: value
+        });
+    }
+
+    characterRadioChange(value) {
+        console.log(value);
+        this.setState({
+            characterRadioValue: value
+        });
+    }
+
+    saveDirectorsNote() {
+        this.props.saveDirectorsNote(
+            this.state.selectedLineID,
+            document.getElementById("directors-note-text-area").value
+        );
+    }
+
+    loadDirectorsNote() {
+        this.props.getDirectorsNoteByLine(this.state.selectedLineID);
     }
 
     render() {
         return (
             <div id="script-page">
                 <MainHeader />
-                <h1 className ="main-page-header">Script</h1>
+                <Row className="main-page-row">
+                    <h1 className ="main-page-header">Script</h1>
+                </Row>
+                <hr />
                 { this.props.getAllPlaysStatus && this.props.getAllPlaysStatus.length > 0 ?
                     <div className="main-page-content">
+                        <Well>
                         <Row className="main-page-row">
                             <Col sm={4}>
-                                <h2>Play</h2>
                                 <Dropdown id="play-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.playDropdownOption.Name}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu onSelect={this.playDropdownChange}>
                                         {this.props.getAllPlaysStatus
-                                            ? this.props.getAllPlaysStatus.map((play, index) => (<MenuItem eventKey={play}>{play.Name}</MenuItem>))
+                                            ? this.props.getAllPlaysStatus.map((play, index) => (<MenuItem key={"play-select-menu-item-" + index} eventKey={play}>{play.Name}</MenuItem>))
                                             : null
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
+                            </Col>
+                            <Col sm={4}>
 
-                                <h2>Act</h2>
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.actDropdownOption}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu onSelect={this.actDropdownChange}>
                                         {this.props.getActsStatus
-                                            ? this.props.getActsStatus.map((act, index) => (<MenuItem eventKey={act.ActNum}>{act.ActNum}</MenuItem>))
+                                            ? this.props.getActsStatus.map((act, index) => (<MenuItem key={"act-select-menu-item-" + index} eventKey={act.ActNum}>{act.ActNum}</MenuItem>))
                                             : null
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
-
-                                <h2>Scene</h2>
+                            </Col>
+                            <Col sm={4}>
                                 <Dropdown id="scene-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.sceneDropdownOption}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu onSelect={this.sceneDropdownChange}>
                                         {this.props.getScenesStatus
-                                            ? this.props.getScenesStatus.map((scene, index) => (<MenuItem eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))
+                                            ? this.props.getScenesStatus.map((scene, index) => (<MenuItem key={"scene-select-menu-item-" + index} eventKey={scene.SceneNum}>{scene.SceneNum}</MenuItem>))
                                             : null
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
-
-                            {this.props.getLinesStatus && this.state.showLines ?
-                                <Col sm={8} className="lines-list-group">
-                                    <h2>Lines</h2>
-                                    <ListGroup>
-                                        {this.props.getLinesStatus
-                                            ? this.props.getLinesStatus.map((line, index) => (
-                                                <ListGroupItem onClick={() => this.onClickLine(line.LineID)}>
-                                                    <Col xs={4} sm={4} md={4}>
-                                                        {line.CharacterSpeaking
-                                                            ? line.CharacterSpeaking
-                                                            : ""
-                                                        }
-                                                    </Col>
-                                                    <Col xs={8} sm={8} md={8}>
-                                                        {line.Text}
-                                                    </Col>
-                                                </ListGroupItem>))
-                                            : null
-                                        }
-                                    </ListGroup>
-                                </Col> : null
-                            }
                         </Row>
+                        </Well>
 
-                        { this.state.showLines && this.state.showLineDetails ?
-                            <Row className="main-page-row">
-                                <Col sm={3}>
-                                    <div className="blocking-view">
-                                        <StageView
-                                            blockingData={this.props.getBlockingByLineStatus}
-                                            characters={this.props.getCharactersBySceneStatus}
-                                        />
-                                    </div>
-                                </Col>
-                            </Row> : null
-                        }
+                        <Well>
+                        <Row className="main-page-row">
+                            <Col sm={4}>
+                                <h2>Character</h2>
+                                <Panel>
+                                    {this.props.getCharactersByPlayStatus && this.props.getCharactersByPlayStatus.length > 0
+                                        ?   <ActorView
+                                                characters={this.props.getCharactersByPlayStatus}
+                                                selectedCharacterID={this.props.selectedCharacterID}
+                                                onCharacterDropdownChange={this.characterDropdownChange}
+                                                onCheckboxChange={this.characterCheckboxChange}
+                                                onRadioChange={this.characterRadioChange}
+                                            />
+                                        :   <p className="no-content-text">Select a play</p>
+                                    }
+                                </Panel>
+                            </Col>
+                            <Col sm={8} className="lines-list-group">
+                                <h2>Lines</h2>
+                                <Panel>
+                                <ListGroup>
+                                    {this.props.getLinesStatus && this.props.getLinesStatus.length > 0 && this.state.showLines
+                                        ? this.props.getLinesStatus.filter((line) => {
+                                            let radioValue = this.state.characterRadioValue;
+                                            if (radioValue === '3') {
+                                                return (line.CharacterLine == true);
+                                            }
+                                            else if (radioValue === '2') {
+                                                return (line.CharacterLine == true || line.PromptLine == true);
+                                            }
+                                            else {
+                                                return true;
+                                            }
+                                        }).map((line, index) => (
+                                            <ListGroupItem
+                                                key={"line-list-group-item-" + index}
+                                                onClick={() => this.onClickLine(line.LineID)}
+                                                className={this.state.characterCheckboxValue && line.CharacterLine ? 'hide-character-line' : null}
+                                            >
+                                                <Col xs={4} sm={4} md={4}>
+                                                    {line.CharacterSpeaking
+                                                        ? line.CharacterSpeaking
+                                                        : ""
+                                                    }
+                                                </Col>
+                                                <Col xs={8} sm={8} md={8}>
+                                                    {line.Text}
+                                                </Col>
+                                            </ListGroupItem>))
+                                        : <p className="no-content-text">Select a scene</p>
+                                    }
+                                </ListGroup>
+                                </Panel>
+                            </Col>
+                        </Row>
+                        </Well>
+
+                        <Well>
+                        <Row className="main-page-row">
+                            <Col sm={8}>
+                                <div className="blocking-view">
+                                    <h2>Blocking</h2>
+                                    <Panel>
+                                    { this.state.showBlocking
+                                        ?   <BlockingView
+                                                selectedLineID={this.state.selectedLineID}
+                                                characters={this.props.getCharactersBySceneStatus}
+                                                blockingData={this.props.getBlockingByLineStatus}
+                                            />
+                                        :  <Button
+                                                onClick={() => {
+                                                    this.setState({
+                                                        showBlocking: true
+                                                    });
+                                                }}
+                                            >
+                                                Load Blocking View
+                                            </Button>
+                                    }
+                                    </Panel>
+                                </div>
+                            </Col>
+                            <Col sm={4} className="lines-list-group">
+                                <h2>Director Notes</h2>
+                                <Panel>
+                                { this.props.getLinesStatus && this.props.getLinesStatus.length > 0 && this.state.selectedLineID != null ?
+                                    <div className="directors-note-view">
+                                        <form>
+                                            <FormGroup bsSize="large">
+                                                <FormControl id="directors-note-text-area" componentClass="textarea" placeholder=""/>
+                                            </FormGroup>
+                                        </form>
+                                        <ButtonToolbar className="directors-note-view-buttons">
+                                            <Button onClick={this.saveDirectorsNote}>
+                                                Save
+                                            </Button>
+                                            <Button onClick={this.loadDirectorsNote}>
+                                                Cancel
+                                            </Button>
+                                        </ButtonToolbar>
+                                    </div> : <p className="no-content-text">Select a line</p>
+                                }
+                                </Panel>
+                            </Col>
+                        </Row>
+                        </Well>
                     </div> : <p className="no-content-text">No Scripts Found</p>
                 }
             </div>
@@ -191,12 +319,23 @@ function mapStateToProps(state) {
         getScenesStatus: state.scriptPageReducers.getScenesStatus.data,
         getLinesStatus: state.scriptPageReducers.getLinesStatus.data,
         getCharactersBySceneStatus: state.scriptPageReducers.getCharactersBySceneStatus.data,
-        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data
+        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data,
+        getDirectorsNoteByLineStatus: state.scriptPageReducers.getDirectorsNoteByLineStatus.data,
+        saveDirectorsNoteStatus: state.scriptPageReducers.saveDirectorsNoteStatus.data,
+        getCharactersByPlayStatus: state.scriptPageReducers.getCharactersByPlayStatus.data
     };
 }
 
 export default connect(mapStateToProps,
     {
-        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, push
+        getAllPlays,
+        getActs,
+        getScenes,
+        getLines,
+        getCharactersByScene,
+        getBlockingByLine,
+        getDirectorsNoteByLine,
+        saveDirectorsNote,
+        getCharactersByPlay
     }
 )(ScriptPage);

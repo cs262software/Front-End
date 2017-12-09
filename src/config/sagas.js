@@ -1,7 +1,4 @@
-import { Get /*, Put, Post, Delete*/} from './api';
-import { fork, call, put, takeLatest } from 'redux-saga/effects';
-import reduxActions from '../constants/reduxActions';
-import endpoints from '../constants/endpoints';
+import { fork } from 'redux-saga/effects';
 
 // loginPage sagas...
 import {
@@ -16,7 +13,11 @@ import {
     getScenesFlow,
     getLinesFlow,
     getCharactersBySceneFlow,
-    getBlockingByLineFlow
+    getBlockingByLineFlow,
+    saveBlockingFlow,
+    getDirectorsNoteByLineFlow,
+    saveDirectorsNoteFlow,
+    getCharactersByPlayFlow
 } from '../containers/scriptPage/scriptPage.sagas';
 
 // filesPage sagas...
@@ -25,6 +26,10 @@ import {
     getFileFlow,
     postFileFlow
 } from '../containers/filesPage/filesPage.sagas';
+
+import {
+  getCharactersFlow
+} from '../containers/schedulePage/schedulePage.sagas';
 
 export default function* Sagas() {
     yield [
@@ -37,9 +42,16 @@ export default function* Sagas() {
         fork(getActsFlow),
         fork(getScenesFlow),
         fork(getLinesFlow),
-        fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
+        fork(saveBlockingFlow),
+        fork(getDirectorsNoteByLineFlow),
+        fork(saveDirectorsNoteFlow),
+        fork(getCharactersByPlayFlow),
 
+        //schedulePage sagas...
+        fork(getCharactersFlow),
+        fork(getCharactersBySceneFlow),
+      
         // filesPage sagas...
         fork(getAllFilesFlow),
         fork(getFileFlow),

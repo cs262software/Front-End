@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router';
 import LoginPage from '../containers/loginPage/loginPage.container';
-import ScriptPage from '../containers/scriptPage/scriptPage.container';
 import SchedulePage from '../containers/schedulePage/schedulePage.container';
 import FilesPage from '../containers/filesPage/filesPage.container';
+import ScriptPage from '../containers/scriptPage/scriptPage.container';
 import FourOhFourPage from '../containers/FourOhFourPage';
 
 // Define the main component switch.
@@ -29,6 +29,7 @@ class Routes extends Component {
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
     return {
+        location: state.router.pathname,
         loginStatus: state.loginPageReducers.loginStatus.data
     };
 }

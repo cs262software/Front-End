@@ -1,6 +1,8 @@
 h1.main-page-header {
     text-align: center;
     text-transform: uppercase;
+    font-weight: bold;
+
 }
 
 .main-page-row {
@@ -28,6 +30,18 @@ h1.main-page-header {
     z-index: 5;
 }
 
-#play-dropdown {
-    width: 100%;
+.blocking-view-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 10px;
+}
+
+.hide-character-line {
+    color: #DDD;
+    background-color: #DDD;
+}
+
+.hide-character-line div {
+    color: #DDD;
 }

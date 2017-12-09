@@ -5,6 +5,11 @@ import FileRow from './components/fileRow';
 import FileUpload from './components/fileUpload';
 import { getAllFiles, getFile, postFile } from './filesPage.actions';
 
+/*import { DropdownButton, MenuItem, ListGroup, ListGroupItem} from 'react-bootstrap';
+import styled, { keyframes, css } from 'styled-components';
+import '../scriptPage/scriptPage.container.css'
+//import { MenuItem } from 'react-bootstrap';*/
+
 class FilesPage extends Component {
     constructor() {
         super();
@@ -62,8 +67,11 @@ class FilesPage extends Component {
             </div>
         );
     }
-
 }
+
+//TODO: add in Act/Scene selector
+//TODO: add in line display (scrollable textview?), blocking(textbox), personal notes (textbox)
+//TODO: add "state" to the class, selectedScript, selectedScene, selectedLine, associatedBlocking, associatedNotes, user? etc.
 
 function mapStateToProps(state) {
     // retrieve values from the Redux state here
