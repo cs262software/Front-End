@@ -54,23 +54,32 @@ export function saveBlocking(lineID, blockingUpdateArray) {
     };
 }
 
-
-
-
-
-// NEEDED?
-
-export function getCharactersByPlay(playID) {
+export function getDirectorsNoteByLine(lineID) {
     return {
-        type: reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST,
-        PlayID: playID
-    };
+        type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_REQUEST,
+        LineID: lineID
+    }
 }
 
-export function getLinesByPlayAndCharacter(playID, characterID) {
+export function saveDirectorsNote(lineID, directorsNote) {
     return {
-        type: reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST,
-        PlayID: playID,
-        CharacterID: characterID
-    };
+        type: reduxActions.SAVE_DIRECTORS_NOTE_REQUEST,
+        LineID: lineID,
+        DirectorsNote: directorsNote
+    }
 }
+
+// export function getCharactersByPlay(playID) {
+//     return {
+//         type: reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST,
+//         PlayID: playID
+//     };
+// }
+//
+// export function getLinesByPlayAndCharacter(playID, characterID) {
+//     return {
+//         type: reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST,
+//         PlayID: playID,
+//         CharacterID: characterID
+//     };
+// }

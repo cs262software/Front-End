@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { Button, Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { ButtonToolbar, Button, FormGroup, FormControl, Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
 import BlockingView from './components/blockingView';
-import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine } from './scriptPage.actions';
+import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getDirectorsNoteByLine, saveDirectorsNote } from './scriptPage.actions';
 import './index.css';
 
 var defaultPlayDropdownOption = {
@@ -33,13 +32,11 @@ class ScriptPage extends Component {
         this.actDropdownChange = this.actDropdownChange.bind(this);
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
+        this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
+        this.loadDirectorsNote = this.loadDirectorsNote.bind(this);
     }
 
     componentWillMount() {
-        // We should already be at the "/" route when we display this component.
-        // No need to change the path.
-        //this.props.push('/')
-
         // When this component is mounted, get a list of all available plays.
         this.props.getAllPlays();
     }
@@ -93,6 +90,25 @@ class ScriptPage extends Component {
             showLineDetails: true
         });
         this.props.getBlockingByLine(LineID);
+        this.props.getDirectorsNoteByLine(LineID);
+    }
+
+    saveDirectorsNote() {
+        this.props.saveDirectorsNote(
+            this.state.selectedLineID,
+            document.getElementById("directors-note-text-area").value
+        );
+    }
+
+    loadDirectorsNote() {
+        this.props.getDirectorsNoteByLine(this.state.selectedLineID);
+        // if (this.props.getDirectorsNoteByLineStatus && this.props.getDirectorsNoteByLineStatus.length > 0) {
+        //     let dn = this.props.getDirectorsNoteByLineStatus[0].DirectorNote;
+        //     document.getElementById("directors-note-text-area").value = dn;
+        // }
+        // else {
+        //     document.getElementById("directors-note-text-area").value = "";
+        // }
     }
 
     render() {
@@ -210,25 +226,25 @@ class ScriptPage extends Component {
                                 </div>
                             </Col>
                             <Col sm={4} className="lines-list-group">
-                                <h2>Notes</h2>
+                                <h2>Director's Note</h2>
                                 <Panel>
-                                <ListGroup>
-                                    {this.props.getLinesStatus && this.props.getLinesStatus.length > 0
-                                        ? this.props.getLinesStatus.map((line, index) => (
-                                            <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
-                                                <Col xs={4} sm={4} md={4}>
-                                                    {line.CharacterSpeaking
-                                                        ? line.CharacterSpeaking
-                                                        : ""
-                                                    }
-                                                </Col>
-                                                <Col xs={8} sm={8} md={8}>
-                                                    {line.Text}
-                                                </Col>
-                                            </ListGroupItem>))
-                                        : <p className="no-content-text">No notes to display</p>
-                                    }
-                                </ListGroup>
+                                { this.props.getLinesStatus && this.props.getLinesStatus.length > 0 && this.state.selectedLineID != null ?
+                                    <div className="directors-note-view">
+                                        <form>
+                                            <FormGroup bsSize="large">
+                                                <FormControl id="directors-note-text-area" componentClass="textarea" placeholder=""/>
+                                            </FormGroup>
+                                        </form>
+                                        <ButtonToolbar className="directors-note-view-buttons">
+                                            <Button onClick={this.saveDirectorsNote}>
+                                                Save
+                                            </Button>
+                                            <Button onClick={this.loadDirectorsNote}>
+                                                Cancel
+                                            </Button>
+                                        </ButtonToolbar>
+                                    </div> : <p className="no-content-text">Select a line</p>
+                                }
                                 </Panel>
                             </Col>
                         </Row>
@@ -250,12 +266,21 @@ function mapStateToProps(state) {
         getScenesStatus: state.scriptPageReducers.getScenesStatus.data,
         getLinesStatus: state.scriptPageReducers.getLinesStatus.data,
         getCharactersBySceneStatus: state.scriptPageReducers.getCharactersBySceneStatus.data,
-        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data
+        getBlockingByLineStatus: state.scriptPageReducers.getBlockingByLineStatus.data,
+        getDirectorsNoteByLineStatus: state.scriptPageReducers.getDirectorsNoteByLineStatus.data,
+        saveDirectorsNoteStatus: state.scriptPageReducers.saveDirectorsNoteStatus.data
     };
 }
 
 export default connect(mapStateToProps,
     {
-        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, push
+        getAllPlays,
+        getActs,
+        getScenes,
+        getLines,
+        getCharactersByScene,
+        getBlockingByLine,
+        getDirectorsNoteByLine,
+        saveDirectorsNote
     }
 )(ScriptPage);

@@ -14,6 +14,8 @@ var endpoints = {
     GET_CHARACTERS_BY_SCENE: "/api/characters/", // append :PlayID/:ActNum/:SceneNum in the saga"
     GET_BLOCKING_BY_LINE: "/api/blocking/", // append :LineID
     SAVE_BLOCKING: "/api/blocking/", // append :LineID
+    GET_DIRECTORS_NOTE_BY_LINE: "/api/plays/directorsnote/", // append :lineID
+    SAVE_DIRECTORS_NOTE: "/api/plays/directorsnote/", // append :lineID
 
     // ActorPage endpoints.
     GET_CHARACTERS_BY_PLAY: "/api/characters/", // append :PlayID

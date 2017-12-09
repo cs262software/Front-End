@@ -21,7 +21,9 @@ import {
     getLinesFlow,
     getCharactersBySceneFlow,
     getBlockingByLineFlow,
-    saveBlockingFlow
+    saveBlockingFlow,
+    getDirectorsNoteByLineFlow,
+    saveDirectorsNoteFlow
 } from '../containers/scriptPage/scriptPage.sagas';
 
 // actorPage sagas...
@@ -46,6 +48,8 @@ export default function* Sagas() {
         fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
         fork(saveBlockingFlow),
+        fork(getDirectorsNoteByLineFlow),
+        fork(saveDirectorsNoteFlow),
 
         // actorPage sagas...
         fork(getCharactersByPlayFlow),
