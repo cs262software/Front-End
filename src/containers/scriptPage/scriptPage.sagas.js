@@ -218,3 +218,47 @@ export function* postPropsByLine(action) {
         yield put({ type: reduxActions.POST_PROPS_BY_LINE_FAILURE, error: err.json });
     }
 }
+
+export function* saveBlockingFlow() {
+	yield takeLatest(reduxActions.SAVE_BLOCKING_REQUEST, saveBlocking);
+}
+
+export function* saveBlocking(action) {
+	const {res, err} = yield call(Post, endpoints.SAVE_BLOCKING + action.LineID, { blockingUpdateArray: action.BlockingUpdateArray });
+	if (res) {
+		yield put({ type: reduxActions.SAVE_BLOCKING_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.SAVE_BLOCKING_FAILURE, error: err.json });
+	}
+}
+
+export function* getDirectorsNoteByLineFlow() {
+	yield takeLatest(reduxActions.GET_DIRECTORS_NOTE_BY_LINE_REQUEST, getDirectorsNoteByLine);
+}
+
+export function* getDirectorsNoteByLine(action) {
+	const {res, err} = yield call(Get, endpoints.GET_DIRECTORS_NOTE_BY_LINE + action.LineID, { body: undefined });
+	if (res) {
+		yield put({ type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.GET_DIRECTORS_NOTE_BY_LINE_FAILURE, error: err.json });
+	}
+}
+
+export function* saveDirectorsNoteFlow() {
+	yield takeLatest(reduxActions.SAVE_DIRECTORS_NOTE_REQUEST, saveDirectorsNote);
+}
+
+export function* saveDirectorsNote(action) {
+	const {res, err} = yield call(Post, endpoints.SAVE_DIRECTORS_NOTE + action.LineID, { directorsNote: action.DirectorsNote });
+	if (res) {
+		// console.log(res.json);
+		yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_SUCCESS, data: res.json });
+	}
+	else if (err) {
+		yield put({ type: reduxActions.SAVE_DIRECTORS_NOTE_FAILURE, error: err.json });
+	}
+}
+

@@ -24,9 +24,15 @@ var endpoints = {
 
     POST_LIGHTS_BY_LINE: "/api/lights/update/", //append: LineID
     POST_SOUNDS_BY_LINE: "/api/sounds/update/", //append: LineID
-    POST_PROPS_BY_LINE: "/api/props/update/" //append: LineID
+    POST_PROPS_BY_LINE: "/api/props/update/", //append: LineID
 
+    SAVE_BLOCKING: "/api/blocking/", // append :LineID
+    GET_DIRECTORS_NOTE_BY_LINE: "/api/plays/directorsnote/", // append :lineID
+    SAVE_DIRECTORS_NOTE: "/api/plays/directorsnote/", // append :lineID
 
+    // ActorPage endpoints.
+    GET_CHARACTERS_BY_PLAY: "/api/characters/", // append :PlayID
+    GET_LINES_BY_PLAY_AND_CHARACTER: "/api/plays/actors/" // append :PlayID/:CharacterID
 };
 
 export default endpoints;

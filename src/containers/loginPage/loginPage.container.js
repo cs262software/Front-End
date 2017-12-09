@@ -29,7 +29,7 @@ class LoginPage extends Component {
 
         // Pick a random image to use as the background.
         let fileBase = "img/background-";
-        let fileNumber = this.getRandomInt(1, 9); // Change second argument as needed.
+        let fileNumber = this.getRandomInt(1, 1); // Change second argument as needed.
         let fileExt = ".jpg";
         let filePath = fileBase + fileNumber + fileExt;
         this.setState({

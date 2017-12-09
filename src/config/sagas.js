@@ -1,8 +1,7 @@
-import { Get /*, Put, Post, Delete*/} from './api';
-import { fork, call, put, takeLatest } from 'redux-saga/effects';
-import reduxActions from '../constants/reduxActions';
-import endpoints from '../constants/endpoints';
-
+import { Get , Put, Post /*, Delete*/} from './api';
+import { fork /*, call, put, takeLatest*/ } from 'redux-saga/effects';
+// import reduxActions from '../constants/reduxActions';
+// import endpoints from '../constants/endpoints';
 // loginPage sagas...
 import {
     postNewUserFlow,
@@ -13,7 +12,7 @@ import {
 import {
 } from '../containers/mainHeader/mainHeader.sagas';
 
-// homePage sagas...
+// scriptPage sagas...
 import {
     getAllPlaysFlow,
     getActsFlow,
@@ -29,8 +28,21 @@ import {
     putPropsByLineFlow,
     postLightsByLineFlow,
     postSoundsByLineFlow,
-    postPropsByLineFlow
+    postPropsByLineFlow,
+    saveBlockingFlow,
+    getDirectorsNoteByLineFlow,
+    saveDirectorsNoteFlow
 } from '../containers/scriptPage/scriptPage.sagas';
+
+// actorPage sagas...
+import {
+    getCharactersByPlayFlow,
+    getLinesByPlayAndCharacterFlow
+} from '../containers/actorPage/actorPage.sagas';
+
+import {
+  getCharactersFlow
+} from '../containers/schedulePage/schedulePage.sagas';
 
 export default function* Sagas() {
     yield [
@@ -45,6 +57,9 @@ export default function* Sagas() {
         fork(getActsFlow),
         fork(getScenesFlow),
         fork(getLinesFlow),
+
+        //schedulePage sagas...
+        fork(getCharactersFlow),
         fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
         fork(getLightsByLineFlow),
@@ -55,6 +70,13 @@ export default function* Sagas() {
         fork(putPropsByLineFlow),
         fork(postLightsByLineFlow),
         fork(postSoundsByLineFlow),
-        fork(postPropsByLineFlow)
+        fork(postPropsByLineFlow),
+        fork(saveBlockingFlow),
+        fork(getDirectorsNoteByLineFlow),
+        fork(saveDirectorsNoteFlow),
+
+        // actorPage sagas...
+        fork(getCharactersByPlayFlow),
+        fork(getLinesByPlayAndCharacterFlow)
     ];
 }
