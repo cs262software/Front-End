@@ -29,7 +29,7 @@ import {
     putPropsByLineFlow,
     postLightsByLineFlow,
     postSoundsByLineFlow,
-    postPropsByLineFlow,
+    postPropsByLineFlow
 } from '../containers/scriptPage/scriptPage.sagas';
 
 export default function* Sagas() {

@@ -293,7 +293,8 @@ class ScriptPage extends Component {
 
                         <div>
                             {this.state.showLines && this.state.showLineDetails ?
-                                <div>
+                                <Row className="main-page-row">
+                                    <div className="stage-crew-notes-view">
                                     <LightsNotes 
                                         crewNotesByLineStatus={this.props.getLightsByLineStatus}
                                         handleFieldChange={this.handleFieldChange}
@@ -320,9 +321,8 @@ class ScriptPage extends Component {
                                     onClick={this.onClickNewProps}
                                 />
 
-                                </div>
-                                : null
-
+                                    </div>
+                               </Row>     : null
                             }
                         </div>
 

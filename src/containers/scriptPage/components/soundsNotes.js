@@ -15,7 +15,7 @@ class SoundsNotes extends Component {
         return (
             <div>
                 <Col sm={12}>
-                    <ButtonToolbar style={{ marginLeft: "800px" }}>
+                    <ButtonToolbar style={{ "margin-top": "25px", border: "1px solid #000000", width: "500px"}}>
                         <ListGroup>
                             <h2>Sounds Notes</h2>
                             {this.props.crewNotesByLineStatus
@@ -24,7 +24,7 @@ class SoundsNotes extends Component {
                                         <div>
                                             <Col xs={12} sm={12} md={12}>
                                         <ListGroupItem key={"sounds-list-group-item-" + index}>
-                                                <textarea name="editSoundsNotes" value={sounds.Name} onChange={e => { this.props.handleFieldChange(e) }}> </textarea>
+                                                <input name="editSoundsNotes" value={sounds.Name} onChange={e => { this.props.handleFieldChange(e) }}></input>
                                         </ListGroupItem>
                                             </Col>
                                         </div>
@@ -33,9 +33,9 @@ class SoundsNotes extends Component {
                                     : null
                             }
                         </ListGroup>
-                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add a Sounds Note</Button>
+                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add to current Sounds Notes</Button>
                         {this.props.showNewSounds ?
-                            <textarea name="addSoundsNotes"></textarea>
+                            <input name="addSoundsNotes"></input>
                             : null
                         }
                       </ButtonToolbar>

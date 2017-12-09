@@ -156,6 +156,31 @@ export function getPropsByLineStatus(state = arrayState, action) {
     }
 }
 
+export function putLightsByLineStatus(state = arrayState, action) {
+
+}
+
+export function putSoundsByLineStatus(state = arrayState, action) {
+
+}
+
+export function putPropsByLineStatus(state = arrayState, action) {
+
+}
+
+
+export function postLightsByLineStatus(state = arrayState, action) {
+
+}
+
+export function postSoundsByLineStatus(state = arrayState, action) {
+
+}
+
+export function postPropsByLineStatus(state = arrayState, action) {
+
+}
+
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
     getActsStatus,

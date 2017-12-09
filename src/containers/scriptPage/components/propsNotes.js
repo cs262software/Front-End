@@ -15,24 +15,24 @@ class PropsNotes extends Component {
         return (
             <div>
                 <Col sm={12}>
-                    <ButtonToolbar style={{ marginLeft: "800px" }}>               
+                    <ButtonToolbar style={{ "margin-top": "25px", border: "1px solid #000000", width : "500px" }}>               
                         <ListGroup>
                             <h2>Props Notes</h2>
                             {this.props.crewNotesByLineStatus
-                                ? this.props.crewNotesByLineStatus.map((props, index) => 
+                                ? this.props.crewNotesByLineStatus.map((prop, index) => 
                                     <div>
                                         <Col xs={12} sm={12} md={12}>
-                                        <ListGroupItem key={"lights-list-group-item-" + index}>
-                                                <textarea name="editPropsNotes" value={props.Name} onChange={e => { this.props.handleFieldChange(e) }}> </textarea>
+                                        <ListGroupItem key={"props-list-group-item-" + index}>
+                                                <input name="editPropsNotes" value={prop.Name} onChange={e => { this.props.handleFieldChange(e) }}></input>
                                         </ListGroupItem>
                                         </Col>
                                         </div>)  
                                     : null
                             }
                         </ListGroup>
-                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick} > Add a Props Note</Button>
+                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick} >Add to current Props Notes</Button>
                         {this.props.showNewProps ?
-                            <textarea name="addPropsNotes"></textarea>
+                            <input name="addPropsNotes"></input>
                             : null
                         }
                       </ButtonToolbar>

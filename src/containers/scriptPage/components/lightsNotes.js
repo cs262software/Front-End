@@ -16,7 +16,7 @@ class LightsNotes extends Component {
         return (
             <div>
                 <Col sm={12}>
-                    <ButtonToolbar style={{ marginLeft: "800px" }}>                  
+                    <ButtonToolbar style={{ border: "1px solid #000000", width: "500px"}}>                  
                         <ListGroup>
                             <h2>Lights Notes</h2>
                             {this.props.crewNotesByLineStatus
@@ -26,7 +26,7 @@ class LightsNotes extends Component {
                                         <div>
                                             <Col xs={12} sm={12} md={12}>
                                             <ListGroupItem key={"lights-list-group-item-" + index}>
-                                                    <textarea name="editLightsNotes" value={light.Name}onChange={e => { this.props.handleFieldChange(e) }}></textarea>
+                                                    <input name="editLightsNotes" value={light.Name} onChange={e => { this.props.handleFieldChange(e) }}></input>
                                             </ListGroupItem>
                                             </Col>
                                         </div>
@@ -36,9 +36,9 @@ class LightsNotes extends Component {
                                     : null
                             }
                         </ListGroup>
-                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add a Lights Note</Button>
+                        <Button bsStyle="primary" bsSize="medium" onClick={this.props.onClick}>Add to current Lights Notes</Button>
                         {this.props.showNewLights ?
-                            <textarea name="addLightsNotes"></textarea>
+                            <input name="addLightsNotes"></input>
                             : null
                         }
                       </ButtonToolbar>

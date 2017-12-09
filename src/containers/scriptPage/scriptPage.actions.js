@@ -67,27 +67,27 @@ export function getPropsByLine(lineID) {
     };
 }
 
-export function putLightsByLine(lineID, editedLights) {
+export function putLightsByLine(editedLights) {
     return {
         type: reduxActions.PUT_LIGHTS_BY_LINE_REQUEST,
-        LineID: lineID,
-        EditedLights: editedLights
+        LineID: editedLights.lineID,
+        EditedLights: editedLights.Name
     };
 }
 
-export function putSoundsByLine(lineID, editedSounds) {
+export function putSoundsByLine(editedSounds) {
     return {
         type: reduxActions.PUT_SOUNDS_BY_LINE_REQUEST,
-        LineID: lineID,
-        EditedSounds: editedSounds
+        LineID: editedSounds.lineID,
+        EditedSounds: editedSounds.Name
     };
 }
 
-export function putPropsByLine(lineID, editedProps) {
+export function putPropsByLine(editedProps) {
     return {
         type: reduxActions.PUT_PROPS_BY_LINE_REQUEST,
-        LineID: lineID,
-        EditedProps: editedProps
+        LineID: editedProps.lineID,
+        EditedProps: editedProps.Name
     };
 }
 
