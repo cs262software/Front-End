@@ -2,11 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ButtonToolbar, Button, FormGroup, FormControl, Panel, Well, Dropdown, MenuItem, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import MainHeader from '../mainHeader/mainHeader.container';
+import ActorView from './components/actorView';
 import BlockingView from './components/blockingView';
 import LightsNotes from './components/lightsNotes';
 import SoundsNotes from './components/soundsNotes';
 import PropsNotes from './components/propsNotes';
-import { getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getDirectorsNoteByLine, saveDirectorsNote, getLightsByLine, getSoundsByLine, getPropsByLine, /*putLightsByLine, putSoundsByLine, putPropsByLine,*/ saveLightsByLine, saveSoundsByLine, savePropsByLine } from './scriptPage.actions';
+import { 
+  getAllPlays,
+  getActs,
+  getScenes,
+  getLines,
+  getCharactersByScene,
+  getBlockingByLine,
+  getDirectorsNoteByLine,
+  saveDirectorsNote,
+  getCharactersByPlay,
+  getLightsByLine,
+  getSoundsByLine,
+  getPropsByLine,
+  /*putLightsByLine, putSoundsByLine, putPropsByLine,*/ 
+  saveLightsByLine,
+  saveSoundsByLine,
+  savePropsByLine
+} from './scriptPage.actions';
 import './index.css';
 
 var defaultPlayDropdownOption = {
@@ -27,6 +45,9 @@ class ScriptPage extends Component {
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
             selectedLineID: null,
+            selectedCharacterID: null,
+            characterCheckboxValue: false,
+            characterRadioValue: 1,
             showLineDetails: false,
             lightsNote: "",
             editLightsNote: "",
@@ -47,10 +68,13 @@ class ScriptPage extends Component {
         this.actDropdownChange = this.actDropdownChange.bind(this);
         this.sceneDropdownChange = this.sceneDropdownChange.bind(this);
         this.onClickLine = this.onClickLine.bind(this);
-        this.handleFieldChange = this.handleFieldChange.bind(this);
-
+        this.characterDropdownChange = this.characterDropdownChange.bind(this);
+        this.characterCheckboxChange = this.characterCheckboxChange.bind(this);
+        this.characterRadioChange = this.characterRadioChange.bind(this);
         this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
         this.loadDirectorsNote = this.loadDirectorsNote.bind(this);
+      
+        this.handleFieldChange = this.handleFieldChange.bind(this);
 
         //creating new text boxes for notes
         this.onClickNewLights = this.onClickNewLights.bind(this);
@@ -79,8 +103,12 @@ class ScriptPage extends Component {
             sceneDropdownOption: defaultSceneDropdownOption,
             showLines: false,
             selectedLineID: null,
+            selectedCharacterID: null,
             showLineDetails: false
-        }, () => this.props.getActs(value.PlayID)); // When a play is selected, get a list of acts.
+        }, () => {
+            this.props.getActs(value.PlayID);
+            this.props.getCharactersByPlay(value.PlayID);
+        });
     }
 
     actDropdownChange(value) {
@@ -104,7 +132,8 @@ class ScriptPage extends Component {
             this.props.getLines(
                 this.state.playDropdownOption.PlayID,
                 this.state.actDropdownOption,
-                value
+                value,
+                this.state.selectedCharacterID
             );
             // When a scene is selected, get a list of characters.
             this.props.getCharactersByScene(
@@ -127,6 +156,31 @@ class ScriptPage extends Component {
         this.props.getDirectorsNoteByLine(LineID)
     }
 
+    characterDropdownChange(value) {
+        this.setState({
+            actDropdownOption: defaultActDropdownOption,
+            sceneDropdownOption: defaultSceneDropdownOption,
+            showLines: false,
+            selectedLineID: null,
+            selectedCharacterID: value,
+            showLineDetails: false
+        });
+    }
+
+    characterCheckboxChange(value) {
+        console.log(value);
+        this.setState({
+            characterCheckboxValue: value
+        });
+    }
+
+    characterRadioChange(value) {
+        console.log(value);
+        this.setState({
+            characterRadioValue: value
+        });
+    }
+
     saveDirectorsNote() {
         this.props.saveDirectorsNote(
             this.state.selectedLineID,
@@ -136,13 +190,6 @@ class ScriptPage extends Component {
 
     loadDirectorsNote() {
         this.props.getDirectorsNoteByLine(this.state.selectedLineID);
-        // if (this.props.getDirectorsNoteByLineStatus && this.props.getDirectorsNoteByLineStatus.length > 0) {
-        //     let dn = this.props.getDirectorsNoteByLineStatus[0].DirectorNote;
-        //     document.getElementById("directors-note-text-area").value = dn;
-        // }
-        // else {
-        //     document.getElementById("directors-note-text-area").value = "";
-        // }
     }
 
 
@@ -240,7 +287,6 @@ class ScriptPage extends Component {
                         <Well>
                         <Row className="main-page-row">
                             <Col sm={4}>
-                                
                                 <Dropdown id="play-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.playDropdownOption.Name}
@@ -254,7 +300,7 @@ class ScriptPage extends Component {
                                 </Dropdown>
                             </Col>
                             <Col sm={4}>
-                                
+
                                 <Dropdown id="act-dropdown">
                                     <Dropdown.Toggle>
                                         {this.state.actDropdownOption}
@@ -288,15 +334,40 @@ class ScriptPage extends Component {
                             <Col sm={4}>
                                 <h2>Character</h2>
                                 <Panel>
+                                    {this.props.getCharactersByPlayStatus && this.props.getCharactersByPlayStatus.length > 0
+                                        ?   <ActorView
+                                                characters={this.props.getCharactersByPlayStatus}
+                                                selectedCharacterID={this.props.selectedCharacterID}
+                                                onCharacterDropdownChange={this.characterDropdownChange}
+                                                onCheckboxChange={this.characterCheckboxChange}
+                                                onRadioChange={this.characterRadioChange}
+                                            />
+                                        :   <p className="no-content-text">Select a play</p>
+                                    }
                                 </Panel>
                             </Col>
                             <Col sm={8} className="lines-list-group">
                                 <h2>Lines</h2>
                                 <Panel>
                                 <ListGroup>
-                                    {this.props.getLinesStatus && this.props.getLinesStatus.length > 0
-                                        ? this.props.getLinesStatus.map((line, index) => (
-                                            <ListGroupItem key={"line-list-group-item-" + index} onClick={() => this.onClickLine(line.LineID)}>
+                                    {this.props.getLinesStatus && this.props.getLinesStatus.length > 0 && this.state.showLines
+                                        ? this.props.getLinesStatus.filter((line) => {
+                                            let radioValue = this.state.characterRadioValue;
+                                            if (radioValue === '3') {
+                                                return (line.CharacterLine == true);
+                                            }
+                                            else if (radioValue === '2') {
+                                                return (line.CharacterLine == true || line.PromptLine == true);
+                                            }
+                                            else {
+                                                return true;
+                                            }
+                                        }).map((line, index) => (
+                                            <ListGroupItem
+                                                key={"line-list-group-item-" + index}
+                                                onClick={() => this.onClickLine(line.LineID)}
+                                                className={this.state.characterCheckboxValue && line.CharacterLine ? 'hide-character-line' : null}
+                                            >
                                                 <Col xs={4} sm={4} md={4}>
                                                     {line.CharacterSpeaking
                                                         ? line.CharacterSpeaking
@@ -307,7 +378,7 @@ class ScriptPage extends Component {
                                                     {line.Text}
                                                 </Col>
                                             </ListGroupItem>))
-                                        : <p className="no-content-text">Select a scene to view lines</p>
+                                        : <p className="no-content-text">Select a scene</p>
                                     }
                                 </ListGroup>
                                 </Panel>
@@ -358,7 +429,7 @@ class ScriptPage extends Component {
                                 </div>
                             </Col>
                             <Col sm={4} className="lines-list-group">
-                                <h2>Director's Note</h2>
+                                <h2>Director Notes</h2>
                                 <Panel>
                                 { this.props.getLinesStatus && this.props.getLinesStatus.length > 0 && this.state.selectedLineID != null ?
                                     <div className="directors-note-view">
@@ -447,13 +518,24 @@ function mapStateToProps(state) {
         getSoundsByLineStatus: state.scriptPageReducers.getSoundsByLineStatus.data,
         getPropsByLineStatus: state.scriptPageReducers.getPropsByLineStatus.data,
         getDirectorsNoteByLineStatus: state.scriptPageReducers.getDirectorsNoteByLineStatus.data,
-        saveDirectorsNoteStatus: state.scriptPageReducers.saveDirectorsNoteStatus.data
+        saveDirectorsNoteStatus: state.scriptPageReducers.saveDirectorsNoteStatus.data,
+        getCharactersByPlayStatus: state.scriptPageReducers.getCharactersByPlayStatus.data
     };
 }
 
 export default connect(mapStateToProps,
     {
-        getAllPlays, getActs, getScenes, getLines, getCharactersByScene, getBlockingByLine, getLightsByLine, getSoundsByLine, getPropsByLine, /*putLightsByLine, putSoundsByLine, putPropsByLine, */ saveLightsByLine, saveSoundsByLine, savePropsByLine, getDirectorsNoteByLine,
-        saveDirectorsNote
+        getAllPlays,
+        getActs,
+        getScenes,
+        getLines,
+        getCharactersByScene,
+        getBlockingByLine,
+        getDirectorsNoteByLine,
+        saveDirectorsNote,
+        getCharactersByPlay,
+        getLightsByLine, getSoundsByLine, getPropsByLine,
+        /*putLightsByLine, putSoundsByLine, putPropsByLine,*/
+        saveLightsByLine, saveSoundsByLine, savePropsByLine
     }
 )(ScriptPage);

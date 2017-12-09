@@ -29,10 +29,13 @@ var endpoints = {
     SAVE_BLOCKING: "/api/blocking/", // append :LineID
     GET_DIRECTORS_NOTE_BY_LINE: "/api/plays/directorsnote/", // append :lineID
     SAVE_DIRECTORS_NOTE: "/api/plays/directorsnote/", // append :lineID
-
-    // ActorPage endpoints.
     GET_CHARACTERS_BY_PLAY: "/api/characters/", // append :PlayID
-    GET_LINES_BY_PLAY_AND_CHARACTER: "/api/plays/actors/" // append :PlayID/:CharacterID
+    GET_LINE_IDS_BY_CHARACTER: "/api/plays/lidsbycharacter/", // append :PlayID/:ActNum/:SceneNum/:CharacterID
+
+    // FilesPage endpoints.
+    GET_ALL_FILES: "/api/files/all/",
+    GET_FILE: "/api/files?filePath=", // append :FileName
+    POST_FILE: "/api/files/upload"
 };
 
 export default endpoints;

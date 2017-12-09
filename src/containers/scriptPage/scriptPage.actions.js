@@ -21,12 +21,13 @@ export function getScenes(playID, actNum) {
     };
 }
 
-export function getLines(playID, actNum, sceneNum) {
+export function getLines(playID, actNum, sceneNum, characterID) {
     return {
         type: reduxActions.GET_LINES_REQUEST,
         PlayID: playID,
         ActNum: actNum,
-        SceneNum: sceneNum
+        SceneNum: sceneNum,
+        CharacterID: characterID
     };
 }
 
@@ -67,6 +68,13 @@ export function saveDirectorsNote(lineID, directorsNote) {
         LineID: lineID,
         DirectorsNote: directorsNote
     }
+}
+
+export function getCharactersByPlay(playID) {
+    return {
+        type: reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST,
+        PlayID: playID
+    };
 }
 
 export function getLightsByLine(lineID) {
@@ -113,19 +121,3 @@ export function savePropsByLine(lineID, newProps) {
         Name: newProps
     };
 }
-
-// export function getCharactersByPlay(playID) {
-//     return {
-//         type: reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST,
-//         PlayID: playID
-//     };
-// }
-//
-// export function getLinesByPlayAndCharacter(playID, characterID) {
-//     return {
-//         type: reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST,
-//         PlayID: playID,
-//         CharacterID: characterID
-//     };
-// }
-

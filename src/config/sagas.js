@@ -1,16 +1,10 @@
-//import { Get , Put, Post /*, Delete*/} from './api';
-import { fork /*, call, put, takeLatest*/ } from 'redux-saga/effects';
- import reduxActions from '../constants/reduxActions';
- import endpoints from '../constants/endpoints';
+import { fork } from 'redux-saga/effects';
+
 // loginPage sagas...
 import {
     postNewUserFlow,
     loginFlow,
 } from '../containers/loginPage/loginPage.sagas';
-
-// mainHeader sagas...
-import {
-} from '../containers/mainHeader/mainHeader.sagas';
 
 // scriptPage sagas...
 import {
@@ -28,14 +22,16 @@ import {
     savePropsByLineFlow,
     saveBlockingFlow,
     getDirectorsNoteByLineFlow,
-    saveDirectorsNoteFlow
+    saveDirectorsNoteFlow,
+    getCharactersByPlayFlow
 } from '../containers/scriptPage/scriptPage.sagas';
 
-// actorPage sagas...
+// filesPage sagas...
 import {
-    getCharactersByPlayFlow,
-    getLinesByPlayAndCharacterFlow
-} from '../containers/actorPage/actorPage.sagas';
+    getAllFilesFlow,
+    getFileFlow,
+    postFileFlow
+} from '../containers/filesPage/filesPage.sagas';
 
 import {
   getCharactersFlow
@@ -47,21 +43,16 @@ export default function* Sagas() {
         fork(postNewUserFlow),
         fork(loginFlow),
 
-        // mainHeader sagas...
-
         // scriptPage sagas...
         fork(getAllPlaysFlow),
         fork(getActsFlow),
         fork(getScenesFlow),
         fork(getLinesFlow),
-
-        //schedulePage sagas...
-        fork(getCharactersFlow),
-        fork(getCharactersBySceneFlow),
         fork(getBlockingByLineFlow),
         fork(saveBlockingFlow),
         fork(getDirectorsNoteByLineFlow),
         fork(saveDirectorsNoteFlow),
+        fork(getCharactersByPlayFlow),
         fork(getLightsByLineFlow),
         fork(getSoundsByLineFlow),
         fork(getPropsByLineFlow),
@@ -69,8 +60,13 @@ export default function* Sagas() {
         fork(saveSoundsByLineFlow),
         fork(savePropsByLineFlow),
 
-        // actorPage sagas...
-        fork(getCharactersByPlayFlow),
-        fork(getLinesByPlayAndCharacterFlow)
+        //schedulePage sagas...
+        fork(getCharactersFlow),
+        fork(getCharactersBySceneFlow),
+      
+        // filesPage sagas...
+        fork(getAllFilesFlow),
+        fork(getFileFlow),
+        fork(postFileFlow)
     ];
 }

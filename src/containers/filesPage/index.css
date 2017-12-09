@@ -1,0 +1,15 @@
+.main-container {
+    background-color: rgb(246, 246, 246);
+    padding: 30px;
+    width: 600px;
+    border-radius: 5px;
+    margin: 50px 0;
+}
+
+.file-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}

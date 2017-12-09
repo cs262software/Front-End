@@ -126,6 +126,61 @@ export function saveBlockingStatus(state = arrayState, action) {
     }
 }
 
+export function getDirectorsNoteByLineStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.GET_DIRECTORS_NOTE_BY_LINE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.GET_DIRECTORS_NOTE_BY_LINE_SUCCESS:
+            if (action.data && action.data.length > 0) {
+                document.getElementById("directors-note-text-area").value = action.data[0].DirectorNote;
+            }
+            else {
+                document.getElementById("directors-note-text-area").value = "";
+            }
+
+            return successState(state, action);
+
+        case reduxActions.GET_DIRECTORS_NOTE_BY_LINE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+
+export function saveDirectorsNoteStatus(state = arrayState, action) {
+    switch (action.type) {
+
+        case reduxActions.SAVE_DIRECTORS_NOTE_REQUEST:
+            return requestState(state);
+
+        case reduxActions.SAVE_DIRECTORS_NOTE_SUCCESS:
+            return successState(state, action);
+
+        case reduxActions.SAVE_DIRECTORS_NOTE_FAILURE:
+            return failureState(state, action);
+
+        default:
+            return state;
+    }
+}
+
+export function getCharactersByPlayStatus(state = arrayState, action) {
+    switch (action.type) {
+        case reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST:
+            return requestState(state);
+        case reduxActions.GET_CHARACTERS_BY_PLAY_SUCCESS:
+            return successState(state, action);
+        case reduxActions.GET_CHARACTERS_BY_PLAY_FAILURE:
+            return failureState(state, action);
+        default:
+            return state;
+    }
+}
+
 export function getLightsByLineStatus(state = arrayState, action) {
     switch (action.type) {
         case reduxActions.GET_LIGHTS_BY_LINE_REQUEST:
@@ -176,49 +231,6 @@ export function getPropsByLineStatus(state = arrayState, action) {
     }
 }
 
-export function getDirectorsNoteByLineStatus(state = arrayState, action) {
-    switch (action.type) {
-
-        case reduxActions.GET_DIRECTORS_NOTE_BY_LINE_REQUEST:
-            return requestState(state);
-
-        case reduxActions.GET_DIRECTORS_NOTE_BY_LINE_SUCCESS:
-            if (action.data && action.data.length > 0) {
-                document.getElementById("directors-note-text-area").value = action.data[0].DirectorNote;
-            }
-            else {
-                document.getElementById("directors-note-text-area").value = "";
-            }
-
-            return successState(state, action);
-
-        case reduxActions.GET_DIRECTORS_NOTE_BY_LINE_FAILURE:
-            return failureState(state, action);
-
-        default:
-            return state;
-    }
-}
-
-
-export function saveDirectorsNoteStatus(state = arrayState, action) {
-    switch (action.type) {
-
-        case reduxActions.SAVE_DIRECTORS_NOTE_REQUEST:
-            return requestState(state);
-
-        case reduxActions.SAVE_DIRECTORS_NOTE_SUCCESS:
-            return successState(state, action);
-
-        case reduxActions.SAVE_DIRECTORS_NOTE_FAILURE:
-            return failureState(state, action);
-
-        default:
-            return state;
-    }
-}
-
-
 export function saveLightsByLineStatus(state = arrayState, action) {
     switch (action.type) {
 
@@ -264,38 +276,11 @@ export function savePropsByLineStatus(state = arrayState, action) {
 
         case reduxActions.SAVE_PROPS_BY_LINE_FAILURE:
             return failureState(state, action);
-
+        
         default:
-            return state;
+          return state;
     }
 }
-
-// export function getCharactersByPlayStatus(state = arrayState, action) {
-//     switch (action.type) {
-//         case reduxActions.GET_CHARACTERS_BY_PLAY_REQUEST:
-//             return requestState(state);
-//         case reduxActions.GET_CHARACTERS_BY_PLAY_SUCCESS:
-//             return successState(state, action);
-//         case reduxActions.GET_CHARACTERS_BY_PLAY_FAILURE:
-//             return failureState(state, action);
-//         default:
-//             return state;
-//     }
-// }
-//
-// export function getLinesByPlayAndCharacterStatus(state = arrayState, action) {
-//     switch (action.type) {
-//         case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_REQUEST:
-//             return requestState(state);
-//         case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_SUCCESS:
-//             return successState(state, action);
-//         case reduxActions.GET_LINES_BY_PLAY_AND_CHARACTER_FAILURE:
-//             return failureState(state, action);
-//         default:
-//             return state;
-//     }
-// }
-
 
 const scriptPageReducers = combineReducers({
     getAllPlaysStatus,
@@ -307,6 +292,7 @@ const scriptPageReducers = combineReducers({
     saveBlockingStatus,
     getDirectorsNoteByLineStatus,
     saveDirectorsNoteStatus,
+    getCharactersByPlayStatus,
     getLightsByLineStatus,
     getSoundsByLineStatus,
     getPropsByLineStatus,

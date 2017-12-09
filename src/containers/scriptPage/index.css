@@ -2,12 +2,11 @@ h1.main-page-header {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
-    
+
 }
 
 .main-page-row {
     padding: 10px 5%;
-    
 }
 
 .no-content-text {
@@ -36,4 +35,13 @@ h1.main-page-header {
     flex-direction: row;
     justify-content: center;
     margin: 10px 10px;
+}
+
+.hide-character-line {
+    color: #DDD;
+    background-color: #DDD;
+}
+
+.hide-character-line div {
+    color: #DDD;
 }

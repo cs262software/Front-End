@@ -2,6 +2,7 @@
 
 @import url("../../containers/loginPage/index.css");
 @import url("../../containers/scriptPage/index.css");
+@import url("../../containers/filesPage/index.css");
 
 body {
   /*margin: 0;
