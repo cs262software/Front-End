@@ -7,7 +7,7 @@ import BlockingView from './components/blockingView';
 import LightsNotes from './components/lightsNotes';
 import SoundsNotes from './components/soundsNotes';
 import PropsNotes from './components/propsNotes';
-import { 
+import {
   getAllPlays,
   getActs,
   getScenes,
@@ -20,7 +20,7 @@ import {
   getLightsByLine,
   getSoundsByLine,
   getPropsByLine,
-  /*putLightsByLine, putSoundsByLine, putPropsByLine,*/ 
+  /*putLightsByLine, putSoundsByLine, putPropsByLine,*/
   saveLightsByLine,
   saveSoundsByLine,
   savePropsByLine
@@ -73,7 +73,7 @@ class ScriptPage extends Component {
         this.characterRadioChange = this.characterRadioChange.bind(this);
         this.saveDirectorsNote = this.saveDirectorsNote.bind(this);
         this.loadDirectorsNote = this.loadDirectorsNote.bind(this);
-      
+
         this.handleFieldChange = this.handleFieldChange.bind(this);
 
         //creating new text boxes for notes
@@ -87,7 +87,7 @@ class ScriptPage extends Component {
         this.cancelNewLightsByLine = this.cancelNewLightsByLine.bind(this);
         this.cancelNewSoundsByLine = this.cancelNewSoundsByLine.bind(this);
         this.cancelNewPropsByLine = this.cancelNewPropsByLine.bind(this);
-        
+
 
     }
 
@@ -385,23 +385,6 @@ class ScriptPage extends Component {
                             </Col>
                         </Row>
                         </Well>
-
-                        <div>
-                           { this.state.showLines && this.state.showLineDetails ?
-                                <Row className="main-page-row">
-                                    <Col sm={6}>
-                                        <div className="blocking-view">
-                                            <BlockingView
-                                                selectedLineID={this.state.selectedLineID}
-                                                blockingData={this.props.getBlockingByLineStatus}
-                                            />
-                                        </div>
-                                    </Col>
-                                </Row> : null
-                            }
-                        </div>
-
-                        
 
                         <Well>
                         <Row className="main-page-row">
